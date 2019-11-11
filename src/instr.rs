@@ -1,59 +1,92 @@
 use std::collections::HashMap;
 use std::fmt;
-use std::mem;
 pub enum Instr {
-    ADD { d: u32, s: u32, t: u32 },
-    ADDI { t: u32, s: u32, im: u32 },
-    ADDU { d: u32, s: u32, t: u32 },
-    ADDIU { t: u32, s: u32, im: u32 },
-    SUB { d: u32, s: u32, t: u32 },
-    SUBU { d: u32, s: u32, t: u32 },
-    MULT { s: u32, t: u32 },
-    MULTU { s: u32, t: u32 },
-    DIV { s: u32, t: u32 },
-    DIVU { s: u32, t: u32 },
-    LB { t: u32, s: u32, off: u32 },
-    LW { t: u32, s: u32, off: u32 },
-    SB { t: u32, s: u32, off: u32 },
-    SW { t: u32, s: u32, off: u32 },
-    MFHI { d: u32 },
-    MFLO { d: u32 },
-    AND { d: u32, s: u32, t: u32 },
-    ANDI { t: u32, s: u32, im: u32 },
-    OR { d: u32, s: u32, t: u32 },
-    ORI { t: u32, s: u32, im: u32 },
-    XOR { d: u32, s: u32, t: u32 },
-    XORI { t: u32, s: u32, im: u32 },
-    SLT { d: u32, s: u32, t: u32 },
-    SLTI { t: u32, s: u32, im: u32 },
-    SLTU { d: u32, s: u32, t: u32 },
-    SLTIU { t: u32, s: u32, im: u32 },
-    SLL { d: u32, t: u32, h: u32 },
-    SLLV { d: u32, t: u32, s: u32 },
-    SRL { d: u32, t: u32, h: u32 },
-    SRLV { d: u32, t: u32, s: u32 },
-    SRA { d: u32, t: u32, h: u32 },
-    LUI { t: u32, im: u32 },
-    BEQ { s: u32, t: u32, off: u32 },
-    BGEZ { s: u32, off: u32 },
-    BGEZAL { s: u32, off: u32 },
-    BGTZ { s: u32, off: u32 },
-    BLEZ { s: u32, off: u32 },
-    BLTZ { s: u32, off: u32 },
-    BLTZAL { s: u32, off: u32 },
-    BNE { s: u32, t: u32, off: u32 },
-    J { target: u32 },
-    JAL { target: u32 },
-    JR { s: u32 },
+    ADD { d: usize, s: usize, t: usize },
+    ADDI { t: usize, s: usize, im: isize },
+    ADDU { d: usize, s: usize, t: usize },
+    ADDIU { t: usize, s: usize, im: isize },
+    SUB { d: usize, s: usize, t: usize },
+    SUBU { d: usize, s: usize, t: usize },
+    MULT { s: usize, t: usize },
+    MULTU { s: usize, t: usize },
+    DIV { s: usize, t: usize },
+    DIVU { s: usize, t: usize },
+    LB { t: usize, s: usize, off: isize },
+    LW { t: usize, s: usize, off: isize },
+    SB { t: usize, s: usize, off: isize },
+    SW { t: usize, s: usize, off: isize },
+    MFHI { d: usize },
+    MFLO { d: usize },
+    AND { d: usize, s: usize, t: usize },
+    ANDI { t: usize, s: usize, im: isize },
+    OR { d: usize, s: usize, t: usize },
+    ORI { t: usize, s: usize, im: isize },
+    XOR { d: usize, s: usize, t: usize },
+    XORI { t: usize, s: usize, im: isize },
+
+    SLT { d: usize, s: usize, t: usize },
+    SLTI { t: usize, s: usize, im: isize },
+    SLTU { d: usize, s: usize, t: usize },
+    SLTIU { t: usize, s: usize, im: isize },
+    SLL { d: usize, t: usize, h: usize },
+    SLLV { d: usize, t: usize, s: usize },
+    SRL { d: usize, t: usize, h: usize },
+    SRLV { d: usize, t: usize, s: usize },
+    SRA { d: usize, t: usize, h: usize },
+    LUI { t: usize, im: isize },
+    BEQ { s: usize, t: usize, target: usize },
+    BGEZ { s: usize, target: usize },
+    BGEZAL { s: usize, target: usize },
+    BGTZ { s: usize, target: usize },
+    BLEZ { s: usize, target: usize },
+    BLTZ { s: usize, target: usize },
+    BLTZAL { s: usize, target: usize },
+    BNE { s: usize, t: usize, target: usize },
+    J { target: usize },
+    JAL { target: usize },
+    JR { s: usize },
     NOOP,
-    OUT { s: u32 },
+    OUT { s: usize },
 }
 
 impl fmt::Display for Instr {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            Instr::ADD { d, s, t } => write!(f, "ADD(${}, ${}, ${})", d, s, t),
+            
+            Instr::ADDI { t, s, im } => write!(f, "ADDI(${}, ${}, {})", t, s, im),
+            /*
+            Instr::ADDU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 33),
+            Instr::ADDIU { t, s, im } => getBytesI(9, *s, *t, to_16usize(*im)),
+            Instr::SUB { d, s, t } => getBytesR(0, *s, *t, *d, 0, 34),
+            Instr::SUBU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 35),
+            Instr::MULT { s, t } => getBytesR(0, *s, *t, 0, 0, 24),
+            Instr::MULTU { s, t } => getBytesR(0, *s, *t, 0, 0, 25),
+            Instr::DIV { s, t } => getBytesR(0, *s, *t, 0, 0, 26),
+            Instr::DIVU { s, t } => getBytesR(0, *s, *t, 0, 0, 27),
+            */
+            Instr::LB { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
+            Instr::LW { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
+            Instr::SB { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
+            Instr::SW { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
+            /*
+            Instr::AND { d, s, t } => getBytesR(0, *s, *t, *d, 0, 36),
+            Instr::ANDI { t, s, im } => getBytesI(12, *s, *t, to_16usize(*im)),
+            Instr::OR { d, s, t } => getBytesR(0, *s, *t, *d, 0, 37),
+            Instr::ORI { t, s, im } => getBytesI(13, *s, *t, to_16usize(*im)),
+            Instr::XOR { d, s, t } => getBytesR(0, *s, *t, *d, 0, 38),
+            Instr::XORI { t, s, im } => getBytesI(14, *s, *t, to_16usize(*im)),
+            Instr::SLT { d, s, t } => getBytesR(0, *s, *t, *d, 0, 42),
+            Instr::SLTI { t, s, im } => getBytesI(10, *s, *t, to_16usize(*im)),
+            Instr::SLTU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 43),
+            Instr::SLTIU { t, s, im } => getBytesI(11, *s, *t, to_16usize(*im)),
+
+            Instr::BEQ { s, t, target } => getBytesI(4, *s, *t, *target),
+            */
             Instr::J { target } => write!(f, "jump to, {}", target),
-            Instr::ADDI { t, s, im } => write!(f, "addi"),
+            Instr::JAL { target } => write!(f, "jump and link to, {}", target),
+            Instr::JR { s } => write!(f, "jump to reg ${}", *s),
+            
             _ => write!(f, "({}, {})", "test", "format"),
         }
     }
@@ -62,16 +95,44 @@ impl fmt::Display for Instr {
 impl Instr {
     pub fn getbytes(&self) -> [u8; 4] {
         match self {
-            Instr::ADDI { t, s, im } => getBytesI(8, *s, *t, *im),
-            Instr::J { target } => getBytesJ(2, *target),
-            _ => [0, 0, 0, 0],
+            Instr::ADD { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 32),
+            Instr::ADDI { t, s, im } => get_bytes_i(8, *s, *t, to_16usize(*im)),
+            Instr::ADDU { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 33),
+            Instr::ADDIU { t, s, im } => get_bytes_i(9, *s, *t, to_16usize(*im)),
+            Instr::SUB { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 34),
+            Instr::SUBU { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 35),
+            Instr::MULT { s, t } => get_bytes_r(0, *s, *t, 0, 0, 24),
+            Instr::MULTU { s, t } => get_bytes_r(0, *s, *t, 0, 0, 25),
+            Instr::DIV { s, t } => get_bytes_r(0, *s, *t, 0, 0, 26),
+            Instr::DIVU { s, t } => get_bytes_r(0, *s, *t, 0, 0, 27),
+            Instr::LB { t, s, off } => get_bytes_i(32, *s, *t, to_16usize(*off)),
+            Instr::LW { t, s, off } => get_bytes_i(35, *s, *t, to_16usize(*off)),
+            Instr::SB { t, s, off } => get_bytes_i(40, *s, *t, to_16usize(*off)),
+            Instr::SW { t, s, off } => get_bytes_i(43, *s, *t, to_16usize(*off)),
+            Instr::AND { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 36),
+            Instr::ANDI { t, s, im } => get_bytes_i(12, *s, *t, to_16usize(*im)),
+            Instr::OR { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 37),
+            Instr::ORI { t, s, im } => get_bytes_i(13, *s, *t, to_16usize(*im)),
+            Instr::XOR { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 38),
+            Instr::XORI { t, s, im } => get_bytes_i(14, *s, *t, to_16usize(*im)),
+            Instr::SLT { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 42),
+            Instr::SLTI { t, s, im } => get_bytes_i(10, *s, *t, to_16usize(*im)),
+            Instr::SLTU { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 43),
+            Instr::SLTIU { t, s, im } => get_bytes_i(11, *s, *t, to_16usize(*im)),
+
+            Instr::BEQ { s, t, target } => get_bytes_i(4, *s, *t, *target),
+
+            Instr::J { target } => get_bytes_j(2, *target),
+            Instr::JAL { target } => get_bytes_j(3, *target),
+            Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 8),
+            _ => [255, 255, 255, 255],//not implemented yet
         }
     }
-    pub fn from_s(ir: &str, label_map: &HashMap<String, u32>) -> Result<Self, String> {
+    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
         let mut ir = ir.split_whitespace();
-        let opcode = ir.next().unwrap();
-        if (opcode == "") {
-            let opcode = ir.next().unwrap();
+        let mut opcode = ir.next().unwrap();
+        if opcode == "" {
+            opcode = ir.next().unwrap();
         }
         let ir: Vec<&str> = ir.collect();
         let ir2 = ir.concat();
@@ -89,13 +150,25 @@ impl Instr {
                 let (d, s, t) = get3reg(&ir)?;
                 Ok(Instr::ADDU { d: d, s: s, t: t })
             }
-            "addi" => {
+            "addiu" => {
                 let (t, s, im) = get2reg_i(&ir)?;
                 Ok(Instr::ADDIU { t: t, s: s, im: im })
             }
             "sub" => {
                 let (d, s, t) = get3reg(&ir)?;
                 Ok(Instr::SUB { d: d, s: s, t: t })
+            }
+            "subu" => {
+                let (d, s, t) = get3reg(&ir)?;
+                Ok(Instr::SUBU { d: d, s: s, t: t })
+            }
+            "mult" => {
+                let (s, t) = get2reg(&ir)?;
+                Ok(Instr::MULT { s: s, t: t })
+            }
+            "multu" => {
+                let (s, t) = get2reg(&ir)?;
+                Ok(Instr::MULTU { s: s, t: t })
             }
             "div" => {
                 let (s, t) = get2reg(&ir)?;
@@ -191,7 +264,15 @@ impl Instr {
 
             "sll" => {
                 let (d, t, h) = get2reg_i(&ir)?;
-                Ok(Instr::SLL { d: d, t: t, h: h })
+                if h < 0 {
+                    Err(String::from("negative shift?"))
+                } else {
+                    Ok(Instr::SLL {
+                        d: d,
+                        t: t,
+                        h: h as usize,
+                    })
+                }
             }
             "sllv" => {
                 let (d, t, s) = get3reg(&ir)?;
@@ -199,15 +280,31 @@ impl Instr {
             }
             "srl" => {
                 let (d, t, h) = get2reg_i(&ir)?;
-                Ok(Instr::SRL { d: d, t: t, h: h })
+                if h < 0 {
+                    Err(String::from("negative shift?"))
+                } else {
+                    Ok(Instr::SRL {
+                        d: d,
+                        t: t,
+                        h: h as usize,
+                    })
+                }
             }
             "srlv" => {
                 let (d, t, s) = get3reg(&ir)?;
                 Ok(Instr::SRLV { d: d, t: t, s: s })
             }
             "sra" => {
-                let (d, t, h) = get3reg(&ir)?;
-                Ok(Instr::SRA { d: d, t: t, h: h })
+                let (d, t, h) = get2reg_i(&ir)?;
+                if h < 0 {
+                    Err(String::from("negative shift?"))
+                } else {
+                    Ok(Instr::SRA {
+                        d: d,
+                        t: t,
+                        h: h as usize,
+                    })
+                }
             }
             "lui" => {
                 let (t, im) = get1reg_i(&ir)?;
@@ -215,45 +312,63 @@ impl Instr {
             }
 
             "beq" => {
-                let (s, t, off) = get2reg_i(&ir)?;
+                let (s, t, target) = get2reg_label(&ir, label_map)?;
                 Ok(Instr::BEQ {
                     s: s,
                     t: t,
-                    off: off,
+                    target: target,
                 })
             }
 
             "bgez" => {
-                let (s, off) = get1reg_i(&ir)?;
-                Ok(Instr::BGEZ { s: s, off: off })
+                let (s, target) = get1reg_label(&ir, label_map)?;
+                Ok(Instr::BGEZ {
+                    s: s,
+                    target: target,
+                })
             }
             "bgezal" => {
-                let (s, off) = get1reg_i(&ir)?;
-                Ok(Instr::BGEZAL { s: s, off: off })
+                let (s, target) = get1reg_label(&ir, label_map)?;
+                Ok(Instr::BGEZAL {
+                    s: s,
+                    target: target,
+                })
             }
             "bgtz" => {
-                let (s, off) = get1reg_i(&ir)?;
-                Ok(Instr::BGTZ { s: s, off: off })
+                let (s, target) = get1reg_label(&ir, label_map)?;
+                Ok(Instr::BGTZ {
+                    s: s,
+                    target: target,
+                })
             }
             "blez" => {
-                let (s, off) = get1reg_i(&ir)?;
-                Ok(Instr::BLEZ { s: s, off: off })
+                let (s, target) = get1reg_label(&ir, label_map)?;
+                Ok(Instr::BLEZ {
+                    s: s,
+                    target: target,
+                })
             }
             "bltz" => {
-                let (s, off) = get1reg_i(&ir)?;
-                Ok(Instr::BLTZ { s: s, off: off })
+                let (s, target) = get1reg_label(&ir, label_map)?;
+                Ok(Instr::BLTZ {
+                    s: s,
+                    target: target,
+                })
             }
             "bltzal" => {
-                let (s, off) = get1reg_i(&ir)?;
-                Ok(Instr::BLTZAL { s: s, off: off })
+                let (s, target) = get1reg_label(&ir, label_map)?;
+                Ok(Instr::BLTZAL {
+                    s: s,
+                    target: target,
+                })
             }
 
             "bne" => {
-                let (s, t, off) = get2reg_i(&ir)?;
+                let (s, t, target) = get2reg_label(&ir, label_map)?;
                 Ok(Instr::BNE {
                     s: s,
                     t: t,
-                    off: off,
+                    target: target,
                 })
             }
 
@@ -282,11 +397,11 @@ impl Instr {
                 Ok(Instr::OUT { s: s })
             }
 
-            _ => Err(String::from("no such opcode!")),
+            x => Err(format!("no such opcode: {}", x)),
         }
     }
 }
-fn to_u8(ir: u32) -> [u8; 4] {
+fn to_u8(ir: usize) -> [u8; 4] {
     [
         (ir >> 24) as u8,
         (ir >> 16) as u8,
@@ -294,39 +409,43 @@ fn to_u8(ir: u32) -> [u8; 4] {
         ir as u8,
     ]
 }
-fn getBytesR(opc: u32, rs: u32, rt: u32, rd: u32, shamt: u32, funct: u32) -> [u8; 4] {
+fn to_16usize(im: isize) -> usize {
+    im as i16 as u16 as usize
+}
+fn get_bytes_r(opc: usize, rs: usize, rt: usize, rd: usize, shamt: usize, funct: usize) -> [u8; 4] {
     //type R
     let ir32 = (opc << 26) + (rs << 21) + (rt << 16) + (rd << 11) + (shamt << 6) + funct;
     to_u8(ir32)
 }
 
-fn getBytesI(opc: u32, rs: u32, rt: u32, imm: u32) -> [u8; 4] {
+fn get_bytes_i(opc: usize, rs: usize, rt: usize, imm: usize) -> [u8; 4] {
     //type R
+    //print!("{} {} {} {}", opc, rs, rt, imm);
     let ir32 = (opc << 26) + (rs << 21) + (rt << 16) + imm;
     to_u8(ir32)
 }
-fn getBytesJ(opc: u32, addr: u32) -> [u8; 4] {
+fn get_bytes_j(opc: usize, addr: usize) -> [u8; 4] {
     //type R
     let ir32 = (opc << 26) + addr;
     to_u8(ir32)
 }
-fn get3reg(ir: &Vec<&str>) -> Result<(u32, u32, u32), String> {
-    if (ir.len() < 3) {
+fn get3reg(ir: &Vec<&str>) -> Result<(usize, usize, usize), String> {
+    if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
         Ok((get_reg(&ir[0])?, get_reg(&ir[1])?, get_reg(&ir[2])?))
     }
 }
-fn get2reg(ir: &Vec<&str>) -> Result<(u32, u32), String> {
-    if (ir.len() < 2) {
+fn get2reg(ir: &Vec<&str>) -> Result<(usize, usize), String> {
+    if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
         Ok((get_reg(&ir[0])?, get_reg(&ir[1])?))
     }
 }
 
-fn get2reg_i(ir: &Vec<&str>) -> Result<(u32, u32, u32), String> {
-    if (ir.len() < 3) {
+fn get2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, isize), String> {
+    if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
         Ok((
@@ -337,8 +456,8 @@ fn get2reg_i(ir: &Vec<&str>) -> Result<(u32, u32, u32), String> {
     }
 }
 
-fn get1reg_i(ir: &Vec<&str>) -> Result<(u32, u32), String> {
-    if (ir.len() < 2) {
+fn get1reg_i(ir: &Vec<&str>) -> Result<(usize, isize), String> {
+    if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
         Ok((
@@ -347,17 +466,40 @@ fn get1reg_i(ir: &Vec<&str>) -> Result<(u32, u32), String> {
         ))
     }
 }
+fn get1reg_label(ir: &Vec<&str>, label_map: &HashMap<String, usize>) -> Result<(usize, usize), String> {
+    if ir.len() < 2 {
+        Err(String::from("too few arguments"))
+    } else {
+        let addr = label_map
+            .get(&(ir[1].to_string() + ":"))
+            .ok_or("Invalid label name")?;
+        Ok((get_reg(&ir[0])?, *addr))
+    }
+}
+fn get2reg_label(
+    ir: &Vec<&str>,
+    label_map: &HashMap<String, usize>,
+) -> Result<(usize, usize, usize), String> {
+    if ir.len() < 3 {
+        Err(String::from("too few arguments"))
+    } else {
+        let addr = label_map
+            .get(&(ir[2].to_string() + ":"))
+            .ok_or("Invalid label name")?;
+        Ok((get_reg(&ir[0])?, get_reg(&ir[1])?, *addr))
+    }
+}
 
-fn getreg_offsreg(ir: &Vec<&str>) -> Result<(u32, u32, u32), String> {
+fn getreg_offsreg(ir: &Vec<&str>) -> Result<(usize, usize, isize), String> {
     //return (t,s,im(=offset) )
-    if (ir.len() < 2) {
+    if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
         let (s, im) = get_offsreg(&ir[1])?;
         Ok((get_reg(&ir[0])?, s, im))
     }
 }
-fn get_offsreg(offsreg: &str) -> Result<(u32, u32), String> {
+fn get_offsreg(offsreg: &str) -> Result<(usize, isize), String> {
     let mut split = offsreg.splitn(2, "(");
     let offs = split
         .next()
@@ -365,17 +507,18 @@ fn get_offsreg(offsreg: &str) -> Result<(u32, u32), String> {
         .parse()
         .expect("invalid offset");
     let regstr = split.next().ok_or("invalid offset and reg")?;
+    //print!("----{}",regstr);
     let reg = get_reg(&regstr[..regstr.len() - 1])?;
     Ok((reg, offs))
 }
-fn get1reg(ir: &Vec<&str>) -> Result<u32, String> {
-    if (ir.len() < 1) {
+fn get1reg(ir: &Vec<&str>) -> Result<usize, String> {
+    if ir.len() < 1 {
         Err(String::from("too few arguments"))
     } else {
-        Ok((get_reg(&ir[0])?))
+        Ok(get_reg(&ir[0])?)
     }
 }
-fn get_reg(name: &str) -> Result<u32, String> {
+fn get_reg(name: &str) -> Result<usize, String> {
     match name {
         "$0" | "$zero" => Ok(0),
         "$1" | "$at" => Ok(1),

@@ -16,3 +16,13 @@ add $a0, $a0, $a0
 add $a0, $a0, $a0
 skip3:
 j loop
+    vd  #
+    vd  #
+dar
+    dfg
+df  fd
+
+
+df d
+fgd# f
+vfv#

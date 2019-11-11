@@ -1,5 +1,5 @@
 [package]
-name = "ASM"
+name = "asm"
 version = "0.1.0"
 authors = ["kensho <aaa@example.com>"]
 edition = "2018"
