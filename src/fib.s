@@ -1,7 +1,7 @@
 main: 
     addi $sp, $sp, -4
     sw $ra, 0($sp)
-    addi $a0, $zero, 10
+    addi $a0, $zero, 11
     jal fib
     or $a0, $zero, $v0
     out $a0
@@ -13,8 +13,8 @@ fib:
     sw $s0, 0($sp)
     sw $s1, 4($sp)
     sw $ra, 8($sp)
-    slti $t0, $a0, 2
-    beq $t0, $zero, tag
+    slti $t0, $a0, 2 # 2 より小さければ1にする
+    beq $t0, $zero, tag # 0だったらジャンプ
     addi $v0, $zero, 1
     j tag17
 tag: 

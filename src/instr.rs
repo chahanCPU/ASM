@@ -76,17 +76,19 @@ impl fmt::Display for Instr {
             Instr::ORI { t, s, im } => getBytesI(13, *s, *t, to_16usize(*im)),
             Instr::XOR { d, s, t } => getBytesR(0, *s, *t, *d, 0, 38),
             Instr::XORI { t, s, im } => getBytesI(14, *s, *t, to_16usize(*im)),
-            Instr::SLT { d, s, t } => getBytesR(0, *s, *t, *d, 0, 42),
-            Instr::SLTI { t, s, im } => getBytesI(10, *s, *t, to_16usize(*im)),
-            Instr::SLTU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 43),
-            Instr::SLTIU { t, s, im } => getBytesI(11, *s, *t, to_16usize(*im)),
-
-            Instr::BEQ { s, t, target } => getBytesI(4, *s, *t, *target),
             */
+            Instr::SLT { d, s, t } => write!(f, "SLT(${}, ${}, ${})", d, s, t),
+            Instr::SLTI { t, s, im } => write!(f, "SLTI(${}, ${}, {})", t, s, im),
+            Instr::SLTU { d, s, t } => write!(f, "SLTU(${}, ${}, ${})", d, s, t),
+            Instr::SLTIU { t, s, im } => write!(f, "SLTIU(${}, ${}, {})", t, s, im),
+
+            Instr::BEQ { s, t, target } => write!(f, "BEQ(${}, ${}, {})", s, t, target),
+            
             Instr::J { target } => write!(f, "jump to, {}", target),
             Instr::JAL { target } => write!(f, "jump and link to, {}", target),
             Instr::JR { s } => write!(f, "jump to reg ${}", *s),
-            
+            Instr::NOOP => write!(f,"noop"),
+            Instr::OUT { s } => write!(f,"out ${}", *s),
             _ => write!(f, "({}, {})", "test", "format"),
         }
     }
@@ -125,6 +127,9 @@ impl Instr {
             Instr::J { target } => get_bytes_j(2, *target),
             Instr::JAL { target } => get_bytes_j(3, *target),
             Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 8),
+            Instr::NOOP => [0,0,0,0],
+            Instr::OUT {s} => get_bytes_r(63, *s, 31, 0, 31, 63),
+            
             _ => [255, 255, 255, 255],//not implemented yet
         }
     }
@@ -392,8 +397,10 @@ impl Instr {
             }
 
             "noop" => Ok(Instr::NOOP),
+
             "out" => {
                 let s = get1reg(&ir)?;
+                //print!("ououou\n");
                 Ok(Instr::OUT { s: s })
             }
 
