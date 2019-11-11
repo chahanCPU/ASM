@@ -26,9 +26,9 @@ fn asm(filename: String) {
         }
     }
     let mut writer =
-        BufWriter::new(File::create(format!("{}-binary", filename)).expect("cannot create file"));
+        BufWriter::new(File::create(format!("{}.binary", filename)).expect("cannot create file"));
     let mut writer2 =
-        BufWriter::new(File::create(format!("{}-bintext", filename)).expect("cannot create file"));
+        BufWriter::new(File::create(format!("{}.bintext", filename)).expect("cannot create file"));
     writer2.write("00000000\n".as_bytes()).expect("cannot write bintext");
     writer2.write("10101010\n".as_bytes()).expect("cannot write bintext");
     

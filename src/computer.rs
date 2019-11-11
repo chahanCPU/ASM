@@ -23,7 +23,7 @@ impl Computer {
         while self.pc < self.irmemory.len() {
             let ir = self
                 .irmemory
-                .get(self.pc as usize)
+                .get(self.pc)
                 .expect("irmemory out of range");
             print!("{}\n",ir);
             match ir {
@@ -76,5 +76,5 @@ impl Computer {
     
 }
 fn to_u(i:isize) -> usize{
-    if i>=0 {i as usize} else{panic!("cannot cast to unsigned!!!")}
+    if i>=0 {i as usize} else{panic!("cannot cast to unsigned!!!{}\n",i)}
 }
