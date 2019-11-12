@@ -1,7 +1,7 @@
 main: 
     addi $sp, $sp, -4
     sw $ra, 0($sp)
-    addi $a0, $zero, 11
+    addi $a0, $zero, 35
     jal fib
     or $a0, $zero, $v0
     out $a0

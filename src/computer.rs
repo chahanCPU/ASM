@@ -1,3 +1,6 @@
+//命令列に従って演算を実行するコンピュータ
+//シミュレータの本体
+//462840900命令に25秒かかりました
 use super::instr::Instr;
 const mem_size: usize = 8200;
 
@@ -24,7 +27,7 @@ impl Computer {
         print!("********************RUN BEGIN\n");
         let mut count: usize = 0;
         while self.pc >> 2 < self.irmemory.len() {
-            if count > 10000 {
+            if count > 10000000000000 {
                 print!("mou keisan dekinai tsukareta...\n");
                 break;
             }
@@ -33,7 +36,7 @@ impl Computer {
                 .irmemory
                 .get(self.pc >> 2)
                 .expect("irmemory out of range");
-            print!("{}\n", ir);
+            //print!("{}\n", ir);
             match ir {
                 Instr::ADD { d, s, t } => {
                     self.ireg[*d] = self.ireg[*s] + self.ireg[*t];
@@ -41,19 +44,27 @@ impl Computer {
                 }
                 Instr::ADDI { t, s, im } => {
                     self.ireg[*t] = self.ireg[*s] + *im;
-                    self.pc += 4
+                    self.pc += 4;
                 }
                 /*
                 Instr::ADDU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 33),
                 Instr::ADDIU { t, s, im } => getBytesI(9, *s, *t, to_16usize(*im)),
-                Instr::SUB { d, s, t } => getBytesR(0, *s, *t, *d, 0, 34),
-                Instr::SUBU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 35),
-                Instr::MULT { s, t } => getBytesR(0, *s, *t, 0, 0, 24),
+                */
+                Instr::SUB { d, s, t } => {
+                    self.ireg[*d] = self.ireg[*s] - self.ireg[*t];
+                    self.pc += 4;
+                }
+                //Instr::SUBU { d, s, t } => 
+                Instr::MULT { d, s, t } => {
+                    self.ireg[*d] = self.ireg[*s] * self.ireg[*t];
+                    self.pc += 4;
+                }
+                /*
                 Instr::MULTU { s, t } => getBytesR(0, *s, *t, 0, 0, 25),
                 Instr::DIV { s, t } => getBytesR(0, *s, *t, 0, 0, 26),
                 Instr::DIVU { s, t } => getBytesR(0, *s, *t, 0, 0, 27),
-                Instr::LB { t, s, off } => getBytesI(32, *s, *t, to_16usize(*off)),
                 */
+                //Instr::LB { t, s, off } => getBytesI(32, *s, *t, to_16usize(*off)),
                 Instr::LW { t, s, off } => {
                     self.ireg[*t] = self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2];
                     self.pc += 4
@@ -114,14 +125,13 @@ impl Computer {
                         self.pc += 4
                     }
                 }
-
                 Instr::J { target } => {
                     self.pc = (self.pc & 0xf0000000) | (*target << 2);
                 }
                 Instr::JAL { target } => {
                     self.ireg[31] = (self.pc + 4) as isize;
                     self.pc = (self.pc & 0xf0000000) | (*target << 2);
-                    print!("{}", self.ireg[31]);
+                    //print!("{}", self.ireg[31]);
                 }
                 Instr::JR { s } => {
                     self.pc = to_u(self.ireg[*s]);
@@ -132,16 +142,15 @@ impl Computer {
                     print!("!!!!!!!!OUT:{}", self.ireg[*s]);
                     break;
                 }
-
                 x @ _ => {
                     print!("{} not yet\n", x);
                     self.pc += 4;
                     break;
                 } //not implemented yet
             }
-            print!("sp:{} ", self.ireg[29]);
+            //print!("sp:{} ", self.ireg[29]);
         }
-        print!("******RUN END{}\n", self.pc / 4);
+        print!("******RUN END{}\ncount:{}\n", self.pc / 4,count);
     }
 }
 fn to_u(i: isize) -> usize {

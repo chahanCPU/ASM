@@ -1,3 +1,5 @@
+//現在は与えられたファイル（アセンブリ）をバイナリデータ（と、それをテキストにしたデータ）に変換したあと、それをシミュレータで実行する、という仕様になっている。
+//ファイル読み込みなど以外は他のファイルに処理を移譲しているのであまり読むところはないはず
 use std::collections::HashMap;
 use std::env;
 use std::fs::File;
@@ -14,8 +16,8 @@ fn main() {
 }
 fn asm(filename: String) {//アセンブラ&シミュレータ
     let mut addr: usize = 0;
-    let mut label_map = HashMap::new();
-    for result in BufReader::new(File::open(&filename).unwrap()).lines() {
+    let mut label_map = HashMap::new();//ラベルとアドレスの対応のためのハッシュマップ
+    for result in BufReader::new(File::open(&filename).unwrap()).lines() {//まず各命令を読み込む前に
         let s = result.unwrap();
         let l = trim_space_comment(&s);
         if l.ends_with(":") {
@@ -31,7 +33,7 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
     writer2.write("00000000\n".as_bytes()).unwrap();
     writer2.write("10101010\n".as_bytes()).unwrap();
     
-    let mut irs : Vec<Instr>=Vec::new();
+    let mut irs : Vec<Instr>=Vec::new();//命令
     for (i, result) in BufReader::new(File::open(&filename).unwrap())
         .lines()
         .enumerate()
@@ -56,8 +58,6 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
     }
     let mut cpu : Computer = Computer::new(irs);
     cpu.run();
-    
-
 }
 
 fn trim_space_comment(ir: &str) -> &str {

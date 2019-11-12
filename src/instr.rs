@@ -1,13 +1,15 @@
+//命令データの定義、出力のための関数など
+//パースなどめんどくさい役目を押し付けられてコードは長いが、あまり読む必要はないはず
 use std::collections::HashMap;
 use std::fmt;
-pub enum Instr {
+pub enum Instr {//命令の定義。enum(列挙体)
     ADD { d: usize, s: usize, t: usize },
     ADDI { t: usize, s: usize, im: isize },
     ADDU { d: usize, s: usize, t: usize },
     ADDIU { t: usize, s: usize, im: isize },
     SUB { d: usize, s: usize, t: usize },
     SUBU { d: usize, s: usize, t: usize },
-    MULT { s: usize, t: usize },
+    MULT { d: usize, s: usize, t: usize },
     MULTU { s: usize, t: usize },
     DIV { s: usize, t: usize },
     DIVU { s: usize, t: usize },
@@ -49,7 +51,7 @@ pub enum Instr {
     OUT { s: usize },
 }
 
-impl fmt::Display for Instr {
+impl fmt::Display for Instr {//命令をprint!命令でテキストデータとして出力できるようにした（あまり気にする必要なし）
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Instr::ADD { d, s, t } => write!(f, "ADD(${} = ${}+${})", d, s, t),
@@ -60,7 +62,7 @@ impl fmt::Display for Instr {
             Instr::ADDIU { t, s, im } => write!(f, "ADDIU(${} = ${}+{})", t, s, im),
             Instr::SUB { d, s, t } => write!(f, "ADD(${} = ${}-${})", d, s, t),
             Instr::SUBU { d, s, t } => write!(f, "ADD(${} = ${}-${})", d, s, t),
-            Instr::MULT { s, t } => write!(f, "MULT($LO = ${}+${})", s, t),
+            Instr::MULT { d, s, t } => write!(f, "MULT(${} = ${}+${})", d, s, t),
             Instr::MULTU { s, t } => write!(f, "MULTU($LO = ${}+${})", s, t),
             Instr::DIV { s, t } => write!(f, "DIV($LO = ${}+${})", s, t),
             Instr::DIVU { s, t } => write!(f, "DIVU($LO = ${}+${})", s, t),
@@ -80,9 +82,7 @@ impl fmt::Display for Instr {
             Instr::SLTI { t, s, im } => write!(f, "SLTI(${} = ${}<{}?)", t, s, im),
             Instr::SLTU { d, s, t } => write!(f, "SLTU(${} = ${}<${}?)", d, s, t),
             Instr::SLTIU { t, s, im } => write!(f, "SLTIU(${} = ${}<{}?)", t, s, im),
-
             Instr::BEQ { s, t, target } => write!(f, "BEQ(${} == ${}? ->jump {})", s, t, target),
-            
             Instr::J { target } => write!(f, "J to {}", target),
             Instr::JAL { target } => write!(f, "J and L to, {}", target),
             Instr::JR { s } => write!(f, "J to reg ${}", *s),
@@ -94,7 +94,7 @@ impl fmt::Display for Instr {
 }
 
 impl Instr {
-    pub fn getbytes(&self) -> [u8; 4] {
+    pub fn getbytes(&self) -> [u8; 4] {//命令をバイト列に変換 （[u8; 4]は8ビット整数が4つ（＝4バイト＝32bit）入った配列のこと）
         match self {
             Instr::ADD { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 32),
             Instr::ADDI { t, s, im } => get_bytes_i(8, *s, *t, to_16usize(*im)),
@@ -102,7 +102,7 @@ impl Instr {
             Instr::ADDIU { t, s, im } => get_bytes_i(9, *s, *t, to_16usize(*im)),
             Instr::SUB { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 34),
             Instr::SUBU { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 35),
-            Instr::MULT { s, t } => get_bytes_r(0, *s, *t, 0, 0, 24),
+            Instr::MULT { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 24),
             Instr::MULTU { s, t } => get_bytes_r(0, *s, *t, 0, 0, 25),
             Instr::DIV { s, t } => get_bytes_r(0, *s, *t, 0, 0, 26),
             Instr::DIVU { s, t } => get_bytes_r(0, *s, *t, 0, 0, 27),
@@ -120,19 +120,16 @@ impl Instr {
             Instr::SLTI { t, s, im } => get_bytes_i(10, *s, *t, to_16usize(*im)),
             Instr::SLTU { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 43),
             Instr::SLTIU { t, s, im } => get_bytes_i(11, *s, *t, to_16usize(*im)),
-
             Instr::BEQ { s, t, target } => get_bytes_i(4, *s, *t, *target),
-
             Instr::J { target } => get_bytes_j(2, *target),
             Instr::JAL { target } => get_bytes_j(3, *target),
             Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 8),
             Instr::NOOP => [0,0,0,0],
-            Instr::OUT {s} => get_bytes_r(63, *s, 31, 0, 31, 63),
-            
+            Instr::OUT {s} => get_bytes_r(63, *s, 31, 0, 31, 63),//Don't careも適当に埋めてる
             _ => [255, 255, 255, 255],//not implemented yet
         }
     }
-    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
+    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {//命令パーサー。文字列（アセンブリ）を読み込んで命令データに
         let mut ir = ir.split_whitespace();
         let mut opcode = ir.next().unwrap();
         if opcode == "" {
@@ -167,8 +164,8 @@ impl Instr {
                 Ok(Instr::SUBU { d: d, s: s, t: t })
             }
             "mult" => {
-                let (s, t) = get2reg(&ir)?;
-                Ok(Instr::MULT { s: s, t: t })
+                let (d, s, t) = get3reg(&ir)?;
+                Ok(Instr::MULT { d: d, s: s, t: t })
             }
             "multu" => {
                 let (s, t) = get2reg(&ir)?;
@@ -407,6 +404,7 @@ impl Instr {
         }
     }
 }
+//以下、ちょっとしたデータ整形のための関数
 fn to_u8(ir: usize) -> [u8; 4] {
     [
         (ir >> 24) as u8,
@@ -415,9 +413,10 @@ fn to_u8(ir: usize) -> [u8; 4] {
         ir as u8,
     ]
 }
-fn to_16usize(im: isize) -> usize {
+fn to_16usize(im: isize) -> usize {//符号付き16bit整数を符号なしに
     im as i16 as u16 as usize
 }
+//R,I,J型の命令それぞれに対してバイト列への整形
 fn get_bytes_r(opc: usize, rs: usize, rt: usize, rd: usize, shamt: usize, funct: usize) -> [u8; 4] {
     //type R
     let ir32 = (opc << 26) + (rs << 21) + (rt << 16) + (rd << 11) + (shamt << 6) + funct;
@@ -435,6 +434,7 @@ fn get_bytes_j(opc: usize, addr: usize) -> [u8; 4] {
     let ir32 = (opc << 26) + addr;
     to_u8(ir32)
 }
+//命令タイプごとのパーサー
 fn get3reg(ir: &Vec<&str>) -> Result<(usize, usize, usize), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
@@ -524,7 +524,8 @@ fn get1reg(ir: &Vec<&str>) -> Result<usize, String> {
         Ok(get_reg(&ir[0])?)
     }
 }
-fn get_reg(name: &str) -> Result<usize, String> {
+
+fn get_reg(name: &str) -> Result<usize, String> {//レジスタ名の取得
     match name {
         "$0" | "$zero" => Ok(0),
         "$1" | "$at" => Ok(1),
