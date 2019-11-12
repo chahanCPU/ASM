@@ -3,17 +3,16 @@ use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 mod instr;
+use instr::Instr;
 mod computer;
+use computer::Computer;
 fn main() {
-    //let mut a = 1;
-    //let args: Vec<String> = env::args().collect();
     match env::args().nth(1) {
         None => panic!("No arguments!"),
         Some(file_path) => asm(file_path),
     }
-    
 }
-fn asm(filename: String) {
+fn asm(filename: String) {//アセンブラ&シミュレータ
     let mut addr: usize = 0;
     let mut label_map = HashMap::new();
     for result in BufReader::new(File::open(&filename).unwrap()).lines() {
@@ -26,13 +25,13 @@ fn asm(filename: String) {
         }
     }
     let mut writer =
-        BufWriter::new(File::create(format!("{}.binary", filename)).expect("cannot create file"));
+        BufWriter::new(File::create(format!("{}.binary", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
     let mut writer2 =
-        BufWriter::new(File::create(format!("{}.bintext", filename)).expect("cannot create file"));
-    writer2.write("00000000\n".as_bytes()).expect("cannot write bintext");
-    writer2.write("10101010\n".as_bytes()).expect("cannot write bintext");
+        BufWriter::new(File::create(format!("{}.bintext", filename)).expect("cannot create file"));//こっちに0と1で書いたテキストデータを出力（こっち使う）
+    writer2.write("00000000\n".as_bytes()).unwrap();
+    writer2.write("10101010\n".as_bytes()).unwrap();
     
-    let mut irs : Vec<instr::Instr>=Vec::new();
+    let mut irs : Vec<Instr>=Vec::new();
     for (i, result) in BufReader::new(File::open(&filename).unwrap())
         .lines()
         .enumerate()
@@ -42,20 +41,20 @@ fn asm(filename: String) {
         if l.ends_with(":") || l == "" {
             continue;
         }
-        match instr::Instr::from_s(l, &label_map) {
+        match Instr::from_s(l, &label_map) {
             Err(er) => {
-                writer2.write("!!!!error!!!!\n".as_bytes()).expect("cannot write bintext");
-                println!("error in line {}: {}", i + 1, er);},
+                //writer2.write("!!!!error!!!!\n".as_bytes()).expect("cannot write bintext");
+                println!("error in line {}: {}\n", i + 1, er);break;},
             Ok(ir) => {
                 let bytes = ir.getbytes();
-                writer.write(&bytes).expect("cannot write bytes");
-                writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).expect("cannot write bintext");
-                println!("{}", ir);
+                writer.write(&bytes).unwrap();
+                writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
+                //println!("{}", ir);
                 irs.push(ir);
             }
         }
     }
-    let mut cpu : computer::Computer = computer::Computer::new(irs);
+    let mut cpu : Computer = Computer::new(irs);
     cpu.run();
     
 

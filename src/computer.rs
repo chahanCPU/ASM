@@ -136,6 +136,7 @@ impl Computer {
                 x @ _ => {
                     print!("{} not yet\n", x);
                     self.pc += 4;
+                    break;
                 } //not implemented yet
             }
             print!("sp:{} ", self.ireg[29]);

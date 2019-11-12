@@ -52,43 +52,42 @@ pub enum Instr {
 impl fmt::Display for Instr {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Instr::ADD { d, s, t } => write!(f, "ADD(${}, ${}, ${})", d, s, t),
+            Instr::ADD { d, s, t } => write!(f, "ADD(${} = ${}+${})", d, s, t),
             
-            Instr::ADDI { t, s, im } => write!(f, "ADDI(${}, ${}, {})", t, s, im),
-            /*
-            Instr::ADDU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 33),
-            Instr::ADDIU { t, s, im } => getBytesI(9, *s, *t, to_16usize(*im)),
-            Instr::SUB { d, s, t } => getBytesR(0, *s, *t, *d, 0, 34),
-            Instr::SUBU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 35),
-            Instr::MULT { s, t } => getBytesR(0, *s, *t, 0, 0, 24),
-            Instr::MULTU { s, t } => getBytesR(0, *s, *t, 0, 0, 25),
-            Instr::DIV { s, t } => getBytesR(0, *s, *t, 0, 0, 26),
-            Instr::DIVU { s, t } => getBytesR(0, *s, *t, 0, 0, 27),
-            */
-            Instr::LB { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
-            Instr::LW { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
-            Instr::SB { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
-            Instr::SW { t, s, off } => write!(f, "SW(${}, {}(${}))", t, off, s),
-            /*
-            Instr::AND { d, s, t } => getBytesR(0, *s, *t, *d, 0, 36),
-            Instr::ANDI { t, s, im } => getBytesI(12, *s, *t, to_16usize(*im)),
-            Instr::OR { d, s, t } => getBytesR(0, *s, *t, *d, 0, 37),
-            Instr::ORI { t, s, im } => getBytesI(13, *s, *t, to_16usize(*im)),
-            Instr::XOR { d, s, t } => getBytesR(0, *s, *t, *d, 0, 38),
-            Instr::XORI { t, s, im } => getBytesI(14, *s, *t, to_16usize(*im)),
-            */
-            Instr::SLT { d, s, t } => write!(f, "SLT(${}, ${}, ${})", d, s, t),
-            Instr::SLTI { t, s, im } => write!(f, "SLTI(${}, ${}, {})", t, s, im),
-            Instr::SLTU { d, s, t } => write!(f, "SLTU(${}, ${}, ${})", d, s, t),
-            Instr::SLTIU { t, s, im } => write!(f, "SLTIU(${}, ${}, {})", t, s, im),
+            Instr::ADDI { t, s, im } => write!(f, "ADDI(${} = ${}+{})", t, s, im),
+            
+            Instr::ADDU { d, s, t } => write!(f, "ADDU(${} = ${}+${})", d, s, t),
+            Instr::ADDIU { t, s, im } => write!(f, "ADDIU(${} = ${}+{})", t, s, im),
+            Instr::SUB { d, s, t } => write!(f, "ADD(${} = ${}-${})", d, s, t),
+            Instr::SUBU { d, s, t } => write!(f, "ADD(${} = ${}-${})", d, s, t),
+            Instr::MULT { s, t } => write!(f, "MULT($LO = ${}+${})", s, t),
+            Instr::MULTU { s, t } => write!(f, "MULTU($LO = ${}+${})", s, t),
+            Instr::DIV { s, t } => write!(f, "DIV($LO = ${}+${})", s, t),
+            Instr::DIVU { s, t } => write!(f, "DIVU($LO = ${}+${})", s, t),
+            
+            Instr::LB { t, s, off } => write!(f, "LB(${} <- {}(${}))", t, off, s),
+            Instr::LW { t, s, off } => write!(f, "LW(${} <- {}(${}))", t, off, s),
+            Instr::SB { t, s, off } => write!(f, "SB(${} -> {}(${}))", t, off, s),
+            Instr::SW { t, s, off } => write!(f, "SW(${} -> {}(${}))", t, off, s),
+            
+            Instr::AND { d, s, t } => write!(f, "AND(${} = ${} & ${})", d, s, t),
+            Instr::ANDI { t, s, im } => write!(f, "ANDI(${} = ${} & {})", t, s, im),
+            Instr::OR { d, s, t } => write!(f, "OR(${} = ${} | ${})", d, s, t),
+            Instr::ORI { t, s, im } => write!(f, "ORI(${} = ${} & {})", t, s, im),
+            Instr::XOR { d, s, t } => write!(f, "XOR(${} = ${} ^ ${})", d, s, t),
+            Instr::XORI { t, s, im } => write!(f, "XORI(${} = ${} ^ {})", t, s, im),
+            Instr::SLT { d, s, t } => write!(f, "SLT(${} = ${}<${}?)", d, s, t),
+            Instr::SLTI { t, s, im } => write!(f, "SLTI(${} = ${}<{}?)", t, s, im),
+            Instr::SLTU { d, s, t } => write!(f, "SLTU(${} = ${}<${}?)", d, s, t),
+            Instr::SLTIU { t, s, im } => write!(f, "SLTIU(${} = ${}<{}?)", t, s, im),
 
-            Instr::BEQ { s, t, target } => write!(f, "BEQ(${}, ${}, {})", s, t, target),
+            Instr::BEQ { s, t, target } => write!(f, "BEQ(${} == ${}? ->jump {})", s, t, target),
             
-            Instr::J { target } => write!(f, "jump to, {}", target),
-            Instr::JAL { target } => write!(f, "jump and link to, {}", target),
-            Instr::JR { s } => write!(f, "jump to reg ${}", *s),
-            Instr::NOOP => write!(f,"noop"),
-            Instr::OUT { s } => write!(f,"out ${}", *s),
+            Instr::J { target } => write!(f, "J to {}", target),
+            Instr::JAL { target } => write!(f, "J and L to, {}", target),
+            Instr::JR { s } => write!(f, "J to reg ${}", *s),
+            Instr::NOOP => write!(f,"NOOP"),
+            Instr::OUT { s } => write!(f,"OUT ${}", *s),
             _ => write!(f, "({}, {})", "test", "format"),
         }
     }
