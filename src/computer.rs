@@ -20,14 +20,14 @@ impl Computer {
             pc: 0,
             irmemory: irs,
         };
-        c.ireg[29] = (mem_size << 2) as isize;
+        c.ireg[29] = (mem_size - 100 << 2) as isize;
         c
     }
     pub fn run(&mut self) {
         print!("********************RUN BEGIN\n");
         let mut count: usize = 0;
         while self.pc >> 2 < self.irmemory.len() {
-            if count > 10000000000000 {
+            if count > 1000000000000 {
                 print!("mou keisan dekinai tsukareta...\n");
                 break;
             }
@@ -54,16 +54,17 @@ impl Computer {
                     self.ireg[*d] = self.ireg[*s] - self.ireg[*t];
                     self.pc += 4;
                 }
-                //Instr::SUBU { d, s, t } => 
+                //Instr::SUBU { d, s, t } =>
                 Instr::MULT { d, s, t } => {
                     self.ireg[*d] = self.ireg[*s] * self.ireg[*t];
                     self.pc += 4;
                 }
-                /*
-                Instr::MULTU { s, t } => getBytesR(0, *s, *t, 0, 0, 25),
-                Instr::DIV { s, t } => getBytesR(0, *s, *t, 0, 0, 26),
-                Instr::DIVU { s, t } => getBytesR(0, *s, *t, 0, 0, 27),
-                */
+                //Instr::MULTU { s, t } => getBytesR(0, *s, *t, 0, 0, 25),
+                Instr::DIV { d, s, t } => {
+                    self.ireg[*d] = self.ireg[*s] / self.ireg[*t];
+                    self.pc += 4;
+                }
+                //Instr::DIVU { s, t } => getBytesR(0, *s, *t, 0, 0, 27),
                 //Instr::LB { t, s, off } => getBytesI(32, *s, *t, to_16usize(*off)),
                 Instr::LW { t, s, off } => {
                     self.ireg[*t] = self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2];
@@ -118,8 +119,60 @@ impl Computer {
                 }
                 //Instr::SLTU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 43),
                 //Instr::SLTIU { t, s, im } => getBytesI(11, *s, *t, to_16usize(*im)),
+                Instr::SLL { d, t, h } => {
+                    self.ireg[*d] = self.ireg[*t] << *h;
+                    self.pc += 4;
+                }
+                Instr::SLLV { d, t, s } => {
+                    self.ireg[*d] = self.ireg[*t] << self.ireg[*s];
+                    self.pc += 4;
+                }
+                Instr::SRL { d, t, h } => {
+                    self.ireg[*d] = ((self.ireg[*t] as usize) >> *h) as isize; //usizeにキャストすることで論理シフトに
+                    self.pc += 4;
+                }
+                Instr::SRLV { d, t, s } => {
+                    self.ireg[*d] = ((self.ireg[*t] as usize) >> self.ireg[*s]) as isize;
+                    self.pc += 4;
+                }
+                Instr::SRA { d, t, h } => {
+                    self.ireg[*d] = self.ireg[*t] >> *h;
+                    self.pc += 4;
+                }
+                Instr::LUI { t, im } => {
+                    self.ireg[*t] = im << 16;
+                    self.pc += 4;
+                }
                 Instr::BEQ { s, t, target } => {
                     if self.ireg[*s] == self.ireg[*t] {
+                        self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                    } else {
+                        self.pc += 4
+                    }
+                }
+                Instr::BGEZ { s, target } => {
+                    if self.ireg[*s] >= 0 {
+                        self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                    } else {
+                        self.pc += 4
+                    }
+                }
+                Instr::BGTZ { s, target } => {
+                    if self.ireg[*s] > 0 {
+                        self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                    } else {
+                        self.pc += 4
+                    }
+                }
+                Instr::BLEZ { s, target } => {
+                    if self.ireg[*s] <= 0 {
+                        self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                    } else {
+                        self.pc += 4
+                    }
+                }
+                Instr::BLTZ { s, target } => {
+                    if self.ireg[*s] < 0 {
                         self.pc = (self.pc & 0xf0000000) | (*target << 2);
                     } else {
                         self.pc += 4
@@ -136,11 +189,11 @@ impl Computer {
                 Instr::JR { s } => {
                     self.pc = to_u(self.ireg[*s]);
                 }
-                Instr::NOOP => self.pc += 1,
+                Instr::NOOP => break,
                 Instr::OUT { s } => {
-                    self.pc += 1;
-                    print!("!!!!!!!!OUT:{}", self.ireg[*s]);
-                    break;
+                    //print!("!!!!!!!!OUT:{}\n", self.ireg[*s]);
+                    print!("{}",self.ireg[*s] as u8 as char);
+                    self.pc += 4;
                 }
                 x @ _ => {
                     print!("{} not yet\n", x);
@@ -150,7 +203,7 @@ impl Computer {
             }
             //print!("sp:{} ", self.ireg[29]);
         }
-        print!("******RUN END{}\ncount:{}\n", self.pc / 4,count);
+        print!("\n******RUN END**\npc:{}\ncount:{}\n", self.pc / 4, count);
     }
 }
 fn to_u(i: isize) -> usize {

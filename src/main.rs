@@ -51,7 +51,7 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
                 let bytes = ir.getbytes();
                 writer.write(&bytes).unwrap();
                 writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
-                //println!("{}", ir);
+                println!("{}", ir);
                 irs.push(ir);
             }
         }

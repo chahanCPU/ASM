@@ -2,7 +2,8 @@
 //パースなどめんどくさい役目を押し付けられてコードは長いが、あまり読む必要はないはず
 use std::collections::HashMap;
 use std::fmt;
-pub enum Instr {//命令の定義。enum(列挙体)
+pub enum Instr {
+    //命令の定義。enum(列挙体)
     ADD { d: usize, s: usize, t: usize },
     ADDI { t: usize, s: usize, im: isize },
     ADDU { d: usize, s: usize, t: usize },
@@ -11,7 +12,7 @@ pub enum Instr {//命令の定義。enum(列挙体)
     SUBU { d: usize, s: usize, t: usize },
     MULT { d: usize, s: usize, t: usize },
     MULTU { s: usize, t: usize },
-    DIV { s: usize, t: usize },
+    DIV { d: usize, s: usize, t: usize },
     DIVU { s: usize, t: usize },
     LB { t: usize, s: usize, off: isize },
     LW { t: usize, s: usize, off: isize },
@@ -51,27 +52,24 @@ pub enum Instr {//命令の定義。enum(列挙体)
     OUT { s: usize },
 }
 
-impl fmt::Display for Instr {//命令をprint!命令でテキストデータとして出力できるようにした（あまり気にする必要なし）
+impl fmt::Display for Instr {
+    //命令をprint!命令でテキストデータとして出力できるようにした（あまり気にする必要なし）
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Instr::ADD { d, s, t } => write!(f, "ADD(${} = ${}+${})", d, s, t),
-            
             Instr::ADDI { t, s, im } => write!(f, "ADDI(${} = ${}+{})", t, s, im),
-            
             Instr::ADDU { d, s, t } => write!(f, "ADDU(${} = ${}+${})", d, s, t),
             Instr::ADDIU { t, s, im } => write!(f, "ADDIU(${} = ${}+{})", t, s, im),
             Instr::SUB { d, s, t } => write!(f, "ADD(${} = ${}-${})", d, s, t),
             Instr::SUBU { d, s, t } => write!(f, "ADD(${} = ${}-${})", d, s, t),
             Instr::MULT { d, s, t } => write!(f, "MULT(${} = ${}+${})", d, s, t),
             Instr::MULTU { s, t } => write!(f, "MULTU($LO = ${}+${})", s, t),
-            Instr::DIV { s, t } => write!(f, "DIV($LO = ${}+${})", s, t),
+            Instr::DIV { d, s, t } => write!(f, "DIV($LO = ${}+${})", s, t),
             Instr::DIVU { s, t } => write!(f, "DIVU($LO = ${}+${})", s, t),
-            
             Instr::LB { t, s, off } => write!(f, "LB(${} <- {}(${}))", t, off, s),
             Instr::LW { t, s, off } => write!(f, "LW(${} <- {}(${}))", t, off, s),
             Instr::SB { t, s, off } => write!(f, "SB(${} -> {}(${}))", t, off, s),
             Instr::SW { t, s, off } => write!(f, "SW(${} -> {}(${}))", t, off, s),
-            
             Instr::AND { d, s, t } => write!(f, "AND(${} = ${} & ${})", d, s, t),
             Instr::ANDI { t, s, im } => write!(f, "ANDI(${} = ${} & {})", t, s, im),
             Instr::OR { d, s, t } => write!(f, "OR(${} = ${} | ${})", d, s, t),
@@ -82,19 +80,30 @@ impl fmt::Display for Instr {//命令をprint!命令でテキストデータと�
             Instr::SLTI { t, s, im } => write!(f, "SLTI(${} = ${}<{}?)", t, s, im),
             Instr::SLTU { d, s, t } => write!(f, "SLTU(${} = ${}<${}?)", d, s, t),
             Instr::SLTIU { t, s, im } => write!(f, "SLTIU(${} = ${}<{}?)", t, s, im),
+            Instr::SLL { d, t, h } => write!(f, "SLL(${} = ${}<<{}?)", d, t, h),
+            Instr::SLLV { d, t, s } => write!(f, "SLLV(${} = ${}<<${}?)", d, t, s),
+            Instr::SRL { d, t, h } => write!(f, "SRL(${} = ${}>>{}?)", d, t, h),
+            Instr::SRLV { d, t, s } => write!(f, "SRLV(${} = ${}>>${}?)", d, t, s),
+            Instr::SRA { d, t, h } => write!(f, "SRA(${} = ${}>>{}?)", d, t, h),
+            Instr::LUI { t, im } => write!(f, "LUI(${} = {}<<16?)", t, im),
+            Instr::BGEZ { s, target } => write!(f, "BGEZ(${} >= 0? ->jump {})", s, target),
+            Instr::BGTZ { s, target } => write!(f, "BGTZ(${} > 0? ->jump {})", s, target),
+            Instr::BLEZ { s, target } => write!(f, "BLEZ(${} <= 0? ->jump {})", s, target),
+            Instr::BLTZ { s, target } => write!(f, "BLEZ(${} < 0? ->jump {})", s, target),
             Instr::BEQ { s, t, target } => write!(f, "BEQ(${} == ${}? ->jump {})", s, t, target),
             Instr::J { target } => write!(f, "J to {}", target),
             Instr::JAL { target } => write!(f, "J and L to, {}", target),
             Instr::JR { s } => write!(f, "J to reg ${}", *s),
-            Instr::NOOP => write!(f,"NOOP"),
-            Instr::OUT { s } => write!(f,"OUT ${}", *s),
+            Instr::NOOP => write!(f, "NOOP"),
+            Instr::OUT { s } => write!(f, "OUT ${}", *s),
             _ => write!(f, "({}, {})", "test", "format"),
         }
     }
 }
 
 impl Instr {
-    pub fn getbytes(&self) -> [u8; 4] {//命令をバイト列に変換 （[u8; 4]は8ビット整数が4つ（＝4バイト＝32bit）入った配列のこと）
+    pub fn getbytes(&self) -> [u8; 4] {
+        //命令をバイト列に変換 （[u8; 4]は8ビット整数が4つ（＝4バイト＝32bit）入った配列のこと）
         match self {
             Instr::ADD { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 32),
             Instr::ADDI { t, s, im } => get_bytes_i(8, *s, *t, to_16usize(*im)),
@@ -104,7 +113,7 @@ impl Instr {
             Instr::SUBU { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 35),
             Instr::MULT { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 24),
             Instr::MULTU { s, t } => get_bytes_r(0, *s, *t, 0, 0, 25),
-            Instr::DIV { s, t } => get_bytes_r(0, *s, *t, 0, 0, 26),
+            Instr::DIV { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 26),
             Instr::DIVU { s, t } => get_bytes_r(0, *s, *t, 0, 0, 27),
             Instr::LB { t, s, off } => get_bytes_i(32, *s, *t, to_16usize(*off)),
             Instr::LW { t, s, off } => get_bytes_i(35, *s, *t, to_16usize(*off)),
@@ -120,16 +129,27 @@ impl Instr {
             Instr::SLTI { t, s, im } => get_bytes_i(10, *s, *t, to_16usize(*im)),
             Instr::SLTU { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 43),
             Instr::SLTIU { t, s, im } => get_bytes_i(11, *s, *t, to_16usize(*im)),
+            Instr::SLL { d, t, h } => get_bytes_r(0, 0, *t, *d, *h, 0), //31はDont care
+            Instr::SLLV { d, t, s } => get_bytes_r(0, *s, *t, *d, 31, 4), //31はDont care
+            Instr::SRL { d, t, h } => get_bytes_r(0, 0, *t, *d, *h, 2), //31はDont care
+            Instr::SRLV { d, t, s } => get_bytes_r(0, *s, *t, *d, 31, 6), //31はDont care
+            Instr::SRA { d, t, h } => get_bytes_r(0, 0, *t, *d, *h, 3), //31はDont care
+            Instr::LUI { t, im } => get_bytes_i(15, 0, *t, to_16usize(*im)), //31はDont care
             Instr::BEQ { s, t, target } => get_bytes_i(4, *s, *t, *target),
+            Instr::BGEZ { s, target } => get_bytes_i(1, *s, 1, *target),
+            Instr::BGTZ { s, target } => get_bytes_i(7, *s, 0, *target),
+            Instr::BLEZ { s, target } => get_bytes_i(6, *s, 0, *target),
+            Instr::BLTZ { s, target } => get_bytes_i(1, *s, 0, *target),
             Instr::J { target } => get_bytes_j(2, *target),
             Instr::JAL { target } => get_bytes_j(3, *target),
             Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 8),
-            Instr::NOOP => [0,0,0,0],
-            Instr::OUT {s} => get_bytes_r(63, *s, 31, 0, 31, 63),//Don't careも適当に埋めてる
-            _ => [255, 255, 255, 255],//not implemented yet
+            Instr::NOOP => [0, 0, 0, 0],
+            Instr::OUT { s } => get_bytes_r(63, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
+            _ => [255, 255, 255, 255],                              //not implemented yet
         }
     }
-    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {//命令パーサー。文字列（アセンブリ）を読み込んで命令データに
+    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
+        //命令パーサー。文字列（アセンブリ）を読み込んで命令データに
         let mut ir = ir.split_whitespace();
         let mut opcode = ir.next().unwrap();
         if opcode == "" {
@@ -172,8 +192,8 @@ impl Instr {
                 Ok(Instr::MULTU { s: s, t: t })
             }
             "div" => {
-                let (s, t) = get2reg(&ir)?;
-                Ok(Instr::DIV { s: s, t: t })
+                let (d, s, t) = get3reg(&ir)?;
+                Ok(Instr::DIV { d: d, s: s, t: t })
             }
             "divu" => {
                 let (s, t) = get2reg(&ir)?;
@@ -266,7 +286,9 @@ impl Instr {
             "sll" => {
                 let (d, t, h) = get2reg_i(&ir)?;
                 if h < 0 {
-                    Err(String::from("negative shift?"))
+                    Err(String::from("negative shift"))
+                } else if h > 31 {
+                    Err(String::from("more than 31 bit shift"))
                 } else {
                     Ok(Instr::SLL {
                         d: d,
@@ -282,7 +304,9 @@ impl Instr {
             "srl" => {
                 let (d, t, h) = get2reg_i(&ir)?;
                 if h < 0 {
-                    Err(String::from("negative shift?"))
+                    Err(String::from("negative shift"))
+                } else if h > 31 {
+                    Err(String::from("more than 31 bit shift"))
                 } else {
                     Ok(Instr::SRL {
                         d: d,
@@ -413,7 +437,8 @@ fn to_u8(ir: usize) -> [u8; 4] {
         ir as u8,
     ]
 }
-fn to_16usize(im: isize) -> usize {//符号付き16bit整数を符号なしに
+fn to_16usize(im: isize) -> usize {
+    //符号付き16bit整数を符号なしに
     im as i16 as u16 as usize
 }
 //R,I,J型の命令それぞれに対してバイト列への整形
@@ -454,10 +479,14 @@ fn get2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, isize), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
+        let im = ir[2].parse().unwrap_or_else(|_|{isize::from_str_radix(&(ir[2])[2..],16).expect("invalid immmmediate value")});//遅延評価に
+        if im < -32768 || im > 32767 {
+            return Err(String::from("offset overflow\n"))
+        }
         Ok((
             get_reg(&ir[0])?,
             get_reg(&ir[1])?,
-            ir[2].parse().expect("invalid immediate value"),
+            im,
         ))
     }
 }
@@ -466,13 +495,20 @@ fn get1reg_i(ir: &Vec<&str>) -> Result<(usize, isize), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
+        let im = ir[2].parse().unwrap_or_else(|_|{isize::from_str_radix(&(ir[2])[2..],16).expect("invalid immmmediate value")});
+        if im < -32768 || im > 32767 {
+            return Err(String::from("offset overflow\n"))
+        }
         Ok((
             get_reg(&ir[0])?,
-            ir[1].parse().expect("invalid immediate value"),
+            im,
         ))
     }
 }
-fn get1reg_label(ir: &Vec<&str>, label_map: &HashMap<String, usize>) -> Result<(usize, usize), String> {
+fn get1reg_label(
+    ir: &Vec<&str>,
+    label_map: &HashMap<String, usize>,
+) -> Result<(usize, usize), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
@@ -509,9 +545,12 @@ fn get_offsreg(offsreg: &str) -> Result<(usize, isize), String> {
     let mut split = offsreg.splitn(2, "(");
     let offs = split
         .next()
-        .ok_or("invalid offset and reg")?
+        .ok_or("invalid offset and reg\n")?
         .parse()
-        .expect("invalid offset");
+        .expect("invalid offset\n");
+    if offs < -32768 || offs > 32767 {
+        return Err(String::from("offset overflow\n"))
+    }
     let regstr = split.next().ok_or("invalid offset and reg")?;
     //print!("----{}",regstr);
     let reg = get_reg(&regstr[..regstr.len() - 1])?;
@@ -525,7 +564,8 @@ fn get1reg(ir: &Vec<&str>) -> Result<usize, String> {
     }
 }
 
-fn get_reg(name: &str) -> Result<usize, String> {//レジスタ名の取得
+fn get_reg(name: &str) -> Result<usize, String> {
+    //レジスタ名の取得
     match name {
         "$0" | "$zero" => Ok(0),
         "$1" | "$at" => Ok(1),
