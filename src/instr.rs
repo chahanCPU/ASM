@@ -189,21 +189,21 @@ impl Instr {
             Instr::IN { s } => get_bytes_r(62, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
             Instr::OUT { s } => get_bytes_r(63, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
             //float
-            Instr::ADDf { d, s, t } => get_bytes_r(17, 16 ,*t, *s, *d, 0),
-            Instr::SUBf { d, s, t } => get_bytes_r(17, 16 ,*t, *s, *d, 1),
-            Instr::MULf { d, s, t } => get_bytes_r(17, 16 ,*t, *s, *d, 2),
-            Instr::INVf { d, s} => get_bytes_r(17, 16 , 0, *s, *d, 3),
-            Instr::ABSf { d, s} => get_bytes_r(17, 16 , 0, *s, *d, 5),
-            Instr::NEGf { d, s} => get_bytes_r(17, 16 , 0, *s, *d, 7),
-            Instr::SQRTf { d, s} => get_bytes_r(17, 16 , 0, *s, *d, 4),
-            Instr::EQf { d, s, t } => get_bytes_r(17, 16 ,*t, *s, *d, 0b110010),
-            Instr::LTf { d, s, t } => get_bytes_r(17, 16 ,*t, *s, *d, 0b110100),
-            Instr::LEf { d, s, t } => get_bytes_r(17, 16 ,*t, *s, *d, 0b110110),
-            Instr::FTOI { d, s} => get_bytes_r(17, 16 , 0, *s, *d, 8),
-            Instr::ITOF { d, s} => get_bytes_r(17, 16 , 0, *s, *d, 9),
-            Instr::LUIf { t, im } => get_bytes_i(31, 0, *t, to_16usize(*im)), //0はDont care
-            Instr::LWf { t, s, off } => get_bytes_i(0b110001, *s, *t, to_16usize(*off)),
-            Instr::SWf { t, s, off } => get_bytes_i(0b111001, *s, *t, to_16usize(*off)),
+            Instr::ADDf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d - 32, 0),
+            Instr::SUBf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d - 32, 1),
+            Instr::MULf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d - 32, 2),
+            Instr::INVf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 3),
+            Instr::ABSf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 5),
+            Instr::NEGf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 7),
+            Instr::SQRTf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 4),
+            Instr::EQf { d, s, t } => get_bytes_r(17, 16 ,*t, *s - 32, *d - 32, 0b110010),
+            Instr::LTf { d, s, t } => get_bytes_r(17, 16 ,*t, *s - 32, *d - 32, 0b110100),
+            Instr::LEf { d, s, t } => get_bytes_r(17, 16 ,*t, *s - 32, *d - 32, 0b110110),
+            Instr::FTOI { d, s} => get_bytes_r(17, 16 , 0, *s, *d - 32, 8),
+            Instr::ITOF { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d, 9),
+            Instr::LUIf { t, im } => get_bytes_i(31, 0, *t - 32, to_16usize(*im)), //0はDont care
+            Instr::LWf { t, s, off } => get_bytes_i(0b110001, *s - 32, *t, to_16usize(*off)),
+            Instr::SWf { t, s, off } => get_bytes_i(0b111001, *s - 32, *t, to_16usize(*off)),
             
             
             _ => [255, 255, 255, 255],                              //not implemented yet
