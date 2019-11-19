@@ -43,7 +43,7 @@ impl Computer {
                 .irmemory
                 .get(self.pc >> 2)
                 .expect("irmemory out of range");
-            print!("{}\n", ir);
+            //print!("{}\n", ir);
             match ir {
                 Instr::ADD { d, s, t } => {
                     self.ireg[*d] = self.ireg[*s] + self.ireg[*t];

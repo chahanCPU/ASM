@@ -34,6 +34,7 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
     writer2.write("10101010\n".as_bytes()).unwrap();
     
     let mut irs : Vec<Instr>=Vec::new();//命令
+    let mut count:usize = 0;
     for (i, result) in BufReader::new(File::open(&filename).unwrap())
         .lines()
         .enumerate()
@@ -54,10 +55,11 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
                 let bytes = ir.getbytes();
                 writer.write(&bytes).unwrap();
                 writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
-                //println!("{}", ir);
+                println!("{:>3}:{}", count,ir);
                 irs.push(ir);
             }
         }
+        count += 1;
     }
     drop(writer);
     drop(writer2);
