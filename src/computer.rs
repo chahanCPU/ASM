@@ -1,26 +1,27 @@
 //命令列に従って演算を実行するコンピュータ
 //シミュレータの本体
 //462840900命令に25秒かかりました
+use std::mem;
 use super::instr::Instr;
-const mem_size: usize = 8200;
+const MEM_SIZE: usize = 320000;//バイト数はこの4倍
 
 pub struct Computer {
-    mem: [isize; mem_size],
+    mem: [i32; MEM_SIZE],
     pc: usize,
-    ireg: [isize; 32],
-    freg: [f32; 32],
+    ireg: [i32; 64],
+    //freg: [f32; 32],
     irmemory: Vec<Instr>,
 }
 impl Computer {
     pub fn new(irs: Vec<Instr>) -> Computer {
         let mut c = Computer {
-            ireg: [0; 32],
-            freg: [0.0; 32],
-            mem: [0; mem_size],
+            ireg: [0; 64],
+            //freg: [0.0; 32],
+            mem: [0; MEM_SIZE],
             pc: 0,
             irmemory: irs,
         };
-        c.ireg[29] = (mem_size - 100 << 2) as isize;
+        c.ireg[29] = (MEM_SIZE - 100 << 2) as i32;
         c
     }
     pub fn run(&mut self) {
@@ -66,12 +67,12 @@ impl Computer {
                 }
                 //Instr::DIVU { s, t } => getBytesR(0, *s, *t, 0, 0, 27),
                 //Instr::LB { t, s, off } => getBytesI(32, *s, *t, to_16usize(*off)),
-                Instr::LW { t, s, off } => {
+                Instr::LW { t, s, off } | Instr::LWf { t, s, off } => {
                     self.ireg[*t] = self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2];
                     self.pc += 4
                 }
                 //Instr::SB { t, s, off } => getBytesI(40, *s, *t, to_16usize(*off)),
-                Instr::SW { t, s, off } => {
+                Instr::SW { t, s, off } | Instr::SWf { t, s, off } => {
                     self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2] = self.ireg[*t];
                     self.pc += 4
                 }
@@ -102,20 +103,20 @@ impl Computer {
                 Instr::SLT { d, s, t } => {
                     if self.ireg[*s] < self.ireg[*t] {
                         self.ireg[*d] = 1;
-                        self.pc += 4;
+                        
                     } else {
                         self.ireg[*d] = 0;
-                        self.pc += 4;
+                        
                     }
+                    self.pc += 4;
                 }
                 Instr::SLTI { t, s, im } => {
                     if self.ireg[*s] < *im {
                         self.ireg[*t] = 1;
-                        self.pc += 4;
                     } else {
                         self.ireg[*t] = 0;
-                        self.pc += 4;
                     }
+                    self.pc += 4;
                 }
                 //Instr::SLTU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 43),
                 //Instr::SLTIU { t, s, im } => getBytesI(11, *s, *t, to_16usize(*im)),
@@ -128,18 +129,18 @@ impl Computer {
                     self.pc += 4;
                 }
                 Instr::SRL { d, t, h } => {
-                    self.ireg[*d] = ((self.ireg[*t] as usize) >> *h) as isize; //usizeにキャストすることで論理シフトに
+                    self.ireg[*d] = ((self.ireg[*t] as u32) >> *h) as i32; //u32にキャストすることで論理シフトに
                     self.pc += 4;
                 }
                 Instr::SRLV { d, t, s } => {
-                    self.ireg[*d] = ((self.ireg[*t] as usize) >> self.ireg[*s]) as isize;
+                    self.ireg[*d] = ((self.ireg[*t] as u32) >> self.ireg[*s]) as i32;
                     self.pc += 4;
                 }
                 Instr::SRA { d, t, h } => {
                     self.ireg[*d] = self.ireg[*t] >> *h;
                     self.pc += 4;
                 }
-                Instr::LUI { t, im } => {
+                Instr::LUI { t, im } | Instr::LUIf { t, im } => {
                     self.ireg[*t] = im << 16;
                     self.pc += 4;
                 }
@@ -178,11 +179,18 @@ impl Computer {
                         self.pc += 4
                     }
                 }
+                Instr::BNE { s, t, target } => {
+                    if self.ireg[*s] != self.ireg[*t] {
+                        self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                    } else {
+                        self.pc += 4
+                    }
+                }
                 Instr::J { target } => {
                     self.pc = (self.pc & 0xf0000000) | (*target << 2);
                 }
                 Instr::JAL { target } => {
-                    self.ireg[31] = (self.pc + 4) as isize;
+                    self.ireg[31] = (self.pc + 4) as i32;
                     self.pc = (self.pc & 0xf0000000) | (*target << 2);
                     //print!("{}", self.ireg[31]);
                 }
@@ -192,9 +200,70 @@ impl Computer {
                 Instr::NOOP => break,
                 Instr::OUT { s } => {
                     //print!("!!!!!!!!OUT:{}\n", self.ireg[*s]);
+                    //print!("!!!!!!!!OUTFLOAT:{}\n", itof(self.ireg[*s]));
                     print!("{}",self.ireg[*s] as u8 as char);
                     self.pc += 4;
                 }
+                //float
+                Instr::ADDf { d, s, t } => {
+                    let fd = itof(self.ireg[*s]) + itof(self.ireg[*t]);
+                    self.ireg[*d] = ftoi(fd);
+                    self.pc += 4;
+                }
+                Instr::SUBf { d, s, t } => {
+                    let fd = itof(self.ireg[*s]) - itof(self.ireg[*t]);
+                    self.ireg[*d] = ftoi(fd);
+                    self.pc += 4;
+                }
+                Instr::MULf { d, s, t } => {
+                    let fd = itof(self.ireg[*s]) * itof(self.ireg[*t]);
+                    self.ireg[*d] = ftoi(fd);
+                    self.pc += 4;
+                }
+                Instr::INVf { d, s} => {
+                    let fd = 1.0 / itof(self.ireg[*s]);
+                    self.ireg[*d] = ftoi(fd);
+                    self.pc += 4;
+                }
+                Instr::ABSf { d, s} => {
+                    let fd = itof(self.ireg[*s]).abs();
+                    self.ireg[*d] = ftoi(fd);
+                    self.pc += 4;
+                }
+                Instr::NEGf { d, s} => {
+                    let fd = -itof(self.ireg[*s]);
+                    self.ireg[*d] = ftoi(fd);
+                    self.pc += 4;
+                }
+                Instr::SQRTf { d, s} => {
+                    let fd = itof(self.ireg[*s]).sqrt();
+                    self.ireg[*d] = ftoi(fd);
+                    self.pc += 4;
+                }
+                Instr::EQf { d, s, t } => {
+                    let cond = itof(self.ireg[*s]) == itof(self.ireg[*t]);
+                    self.ireg[*d] = cond as i32;
+                    self.pc += 4;
+                }
+                Instr::LTf { d, s, t } => {
+                    let cond = itof(self.ireg[*s]) < itof(self.ireg[*t]);
+                    self.ireg[*d] = cond as i32;
+                    self.pc += 4;
+                }
+                Instr::LEf { d, s, t } => {
+                    let cond = itof(self.ireg[*s]) <= itof(self.ireg[*t]);
+                    self.ireg[*d] = cond as i32;
+                    self.pc += 4;
+                }
+                Instr::FTOI { d, s} => {
+                    self.ireg[*d] = itof(self.ireg[*s]) as i32;
+                    self.pc += 4;
+                }
+                Instr::ITOF { d, s} => {
+                    self.ireg[*d] = ftoi(self.ireg[*s] as f32);
+                    self.pc += 4;
+                }
+                
                 x @ _ => {
                     print!("{} not yet\n", x);
                     self.pc += 4;
@@ -206,7 +275,18 @@ impl Computer {
         print!("\n******RUN END**\npc:{}\ncount:{}\n", self.pc / 4, count);
     }
 }
-fn to_u(i: isize) -> usize {
+fn itof(i : i32) -> f32{
+    unsafe{
+        mem::transmute::<i32,f32>(i)
+    }
+}
+fn ftoi(f : f32) -> i32{
+    unsafe{
+        mem::transmute::<f32,i32>(f)
+    }
+}
+
+fn to_u(i: i32) -> usize {
     if i >= 0 {
         i as usize
     } else {
