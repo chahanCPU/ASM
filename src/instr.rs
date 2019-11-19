@@ -202,8 +202,8 @@ impl Instr {
             Instr::FTOI { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d, 8),
             Instr::ITOF { d, s} => get_bytes_r(17, 16 , 0, *s, *d - 32, 9),
             Instr::LUIf { t, im } => get_bytes_i(31, 0, *t - 32, to_16usize(*im)), //0はDont care
-            Instr::LWf { t, s, off } => get_bytes_i(0b110001, *s - 32, *t, to_16usize(*off)),
-            Instr::SWf { t, s, off } => get_bytes_i(0b111001, *s - 32, *t, to_16usize(*off)),
+            Instr::LWf { t, s, off } => get_bytes_i(0b110001, *s, *t - 32, to_16usize(*off)),
+            Instr::SWf { t, s, off } => get_bytes_i(0b111001, *s, *t - 32, to_16usize(*off)),
             
             
             _ => [255, 255, 255, 255],                              //not implemented yet
