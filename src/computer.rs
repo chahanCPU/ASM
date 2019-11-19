@@ -1,6 +1,10 @@
 //命令列に従って演算を実行するコンピュータ
 //シミュレータの本体
 //462840900命令に25秒かかりました
+use std::fs::File;
+
+use std::io::{BufWriter, Write};
+
 use std::mem;
 use super::instr::Instr;
 const MEM_SIZE: usize = 320000;//バイト数はこの4倍
@@ -24,7 +28,8 @@ impl Computer {
         c.ireg[29] = (MEM_SIZE - 100 << 2) as i32;
         c
     }
-    pub fn run(&mut self) {
+    pub fn run(&mut self, filename : String) {
+        let mut writer = BufWriter::new(File::create(format!("{}.out", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
         print!("********************RUN BEGIN\n");
         let mut count: usize = 0;
         while self.pc >> 2 < self.irmemory.len() {
@@ -201,7 +206,7 @@ impl Computer {
                 Instr::OUT { s } => {
                     //print!("!!!!!!!!OUT:{}\n", self.ireg[*s]);
                     //print!("!!!!!!!!OUTFLOAT:{}\n", itof(self.ireg[*s]));
-                    print!("{}",self.ireg[*s] as u8 as char);
+                    writer.write(&format!("{}",self.ireg[*s] as u8 as char).as_bytes()).unwrap();
                     self.pc += 4;
                 }
                 //float

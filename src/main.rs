@@ -56,8 +56,11 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
             }
         }
     }
+    drop(writer);
+    drop(writer2);
+    
     let mut cpu : Computer = Computer::new(irs);
-    cpu.run();
+    cpu.run(filename);
 }
 
 fn trim_space_comment(ir: &str) -> &str {
