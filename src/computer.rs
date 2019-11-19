@@ -29,7 +29,7 @@ impl Computer {
         c
     }
     pub fn run(&mut self, filename : String) {
-        let mut writer = BufWriter::new(File::create(format!("{}.out", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
+        let mut writer = BufWriter::new(File::create(format!("{}.res", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
         print!("********************RUN BEGIN\n");
         let mut count: usize = 0;
         while self.pc >> 2 < self.irmemory.len() {
