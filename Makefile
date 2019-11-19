@@ -1,4 +1,4 @@
-TESTS = src/fib.s
+TESTS = src/mandel2.s
 
 all: $(TESTS)
 	cargo run --release $^ 

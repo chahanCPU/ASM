@@ -43,6 +43,9 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
         if l.ends_with(":") || l == "" {
             continue;
         }
+        if l.starts_with("!"){
+            
+        }
         match Instr::from_s(l, &label_map) {
             Err(er) => {
                 //writer2.write("!!!!error!!!!\n".as_bytes()).expect("cannot write bintext");

@@ -25,7 +25,7 @@ impl Computer {
             pc: 0,
             irmemory: irs,
         };
-        c.ireg[29] = (MEM_SIZE - 100 << 2) as i32;
+        c.ireg[29] = 0;
         c
     }
     pub fn run(&mut self, filename : String) {
