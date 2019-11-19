@@ -185,6 +185,7 @@ impl Instr {
             Instr::JAL { target } => get_bytes_j(3, *target),
             Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 8),
             Instr::NOOP => [0, 0, 0, 0],
+            Instr::EOF => get_bytes_r(0, 0, 0, 0, 0, 63),
             Instr::IN { s } => get_bytes_r(62, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
             Instr::OUT { s } => get_bytes_r(63, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
             //float

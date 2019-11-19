@@ -35,12 +35,8 @@ beq_else.116:
 	mul.s	$f4, $f3, $f3
 	mul.s	$f5, $f2, $f2
 	add.s	$f6, $f4, $f5
-	lui	$at, 0x4000		# 2.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f8, 4($sp)
-	lui	$at, 0x4000		# 2.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f9, 4($sp)
+	lui.s	$f8, 0x4000		# 2.000000の上位16bits
+	lui.s	$f9, 0x4000		# 2.000000の上位16bits
 	mul.s	$f8, $f8, $f9
 	c.le.s	$at, $f6, $f8
 	blez	$at, bgtz_else.117
@@ -71,14 +67,10 @@ blez_else.118:
 	jal	dbl.40
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-	lui	$at, 0x43c8		# 400.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f3, 4($sp)
+	lui.s	$f3, 0x43c8		# 400.000000の上位16bits
 	inv.s	$f1, $f3
 	mul.s	$f2, $f2, $f1
-	lui	$at, 0x3fc0		# 1.500000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f3, 4($sp)
+	lui.s	$f3, 0x3fc0		# 1.500000の上位16bits
 	sub.s	$f2, $f2, $f3
 	lw	$2, 4($sp)
 	sw.s	$f2, 8($sp)
@@ -92,28 +84,16 @@ blez_else.118:
 	jal	dbl.40
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-	lui	$at, 0x43c8		# 400.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f3, 4($sp)
+	lui.s	$f3, 0x43c8		# 400.000000の上位16bits
 	inv.s	$f1, $f3
 	mul.s	$f2, $f2, $f1
-	lui	$at, 0x3f80		# 1.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f3, 4($sp)
+	lui.s	$f3, 0x3f80		# 1.000000の上位16bits
 	sub.s	$f7, $f2, $f3
 	ori	$2, $zero, 1000
-	lui	$at, 0x0		# 0.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f2, 4($sp)
-	lui	$at, 0x0		# 0.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f3, 4($sp)
-	lui	$at, 0x0		# 0.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f4, 4($sp)
-	lui	$at, 0x0		# 0.000000の上位16bits
-	sw	$at, 4($sp)
-	lw.s	$f5, 4($sp)
+	lui.s	$f2, 0x0		# 0.000000の上位16bits
+	lui.s	$f3, 0x0		# 0.000000の上位16bits
+	lui.s	$f4, 0x0		# 0.000000の上位16bits
+	lui.s	$f5, 0x0		# 0.000000の上位16bits
 	lw.s	$f6, 8($sp)
 	sw	$ra, 12($sp)
 	addi	$sp, $sp, 16
