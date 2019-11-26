@@ -31,7 +31,9 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
         BufWriter::new(File::create(format!("{}.binary", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
     let mut writer2 =
         BufWriter::new(File::create(format!("{}.bintext", filename)).expect("cannot create file"));//こっちに0と1で書いたテキストデータを出力（こっち使う）
-    writer.write("00aa".as_bytes()).unwrap();
+        writer2.write("00000000\n".as_bytes()).unwrap();
+        writer2.write("10101010\n".as_bytes()).unwrap();
+        writer.write("00aa".as_bytes()).unwrap();
     
     let mut irs : Vec<Instr>=Vec::new();//命令
     let mut count:usize = 0;

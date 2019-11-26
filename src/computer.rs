@@ -7,12 +7,19 @@ use std::io::{BufWriter, Write};
 use std::collections::HashSet;
 use std::mem;
 use super::instr::Instr;
-const MEM_SIZE: usize = 100000;//バイト数はこの4倍。300000くらいまでならRustのスタックサイズで足りる
-/*
-macro_rules! color_str_m {
-    ($text:item,$color:item) => concat!("\u{001b}[",color,"m",s,"\u{001b}[39m");
+const MEM_SIZE: usize = 111000;//バイト数はこの4倍。300000くらいまでならRustのスタックサイズで足りる
+
+macro_rules! color_tx {
+    ($text:expr,$color:expr) => (concat!("\u{001b}[",$color,"m",$text,"\u{001b}[39m"));
 }
-*/
+macro_rules! color_print {
+    ($text:expr,$color:expr) => (print!(concat!("\u{001b}[",$color,"m",$text,"\u{001b}[39m")));
+}
+
+macro_rules! color_bg {
+    ($text:expr,$color:expr) => (concat!("\u{001b}[",$color,"m",$text,"\u{001b}[49m"));
+}
+
 pub struct Computer {
     mem: [i32; MEM_SIZE],
     pc: usize,
@@ -54,69 +61,35 @@ impl Computer {
             let ir = self.get_ir(self.pc >> 2);
             /*
             match ir {
-                Instr::ADD { d, s, t }|Instr::SUB { d, s, t }|Instr::MULT { d, s, t }|Instr::DIV { d, s, t }=> {
-                    self.print_reg(d, s, t, 100, 100, 100)
+                Instr::ADD { d, s, t }
+                |Instr::SUB { d, s, t }
+                |Instr::MULT { d, s, t }
+                |Instr::DIV { d, s, t }
+                |Instr::AND { d, s, t }
+                |Instr::OR { d, s, t }
+                |Instr::XOR { d, s, t }
+                |Instr::SLT { d, s, t }
+                => {
+                    self.print_reg(d, s, t, 99, 99, 99)
                 }
-                Instr::ADDI { t, s, im } => {
-                    self.ireg[*t] = self.ireg[*s] + *im;
-                    self.pc += 4;
+                Instr::ADDI { t, s, im }
+                |Instr::ANDI { t, s, im }
+                |Instr::ORI { t, s, im }
+                |Instr::XORI { t, s, im }
+                |Instr::SLTI { t, s, im }
+                 => {
+                    self.print_reg(t, s, 99, 99, 99, 99)
                 }
-                Instr::LW { t, s, off } | Instr::LWf { t, s, off } => {
-                    self.ireg[*t] = self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2];
-                    self.pc += 4
+                Instr::LW { t, s, off } | Instr::SW { t, s, off }=> {
+                    self.print_reg(t, s, 99, 99, 99, 99)
                 }
                 //Instr::SB { t, s, off } => getBytesI(40, *s, *t, to_16usize(*off)),
-                Instr::SW { t, s, off } | Instr::SWf { t, s, off } => {
-                    self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2] = self.ireg[*t];
-                    self.pc += 4
+                Instr::LWf { t, s, off } | Instr::SWf { t, s, off } => {
+                    self.print_reg(99, 99, 99, t, s, 99)
                 }
-                Instr::AND { d, s, t } => {
-                    self.ireg[*d] = self.ireg[*s] & self.ireg[*t];
-                    self.pc += 4;
-                }
-                Instr::ANDI { t, s, im } => {
-                    self.ireg[*t] = self.ireg[*s] & *im;
-                    self.pc += 4;
-                }
-                Instr::OR { d, s, t } => {
-                    self.ireg[*d] = self.ireg[*s] | self.ireg[*t];
-                    self.pc += 4;
-                }
-                Instr::ORI { t, s, im } => {
-                    self.ireg[*t] = self.ireg[*s] | *im;
-                    self.pc += 4;
-                }
-                Instr::XOR { d, s, t } => {
-                    self.ireg[*d] = self.ireg[*s] ^ self.ireg[*t];
-                    self.pc += 4;
-                }
-                Instr::XORI { t, s, im } => {
-                    self.ireg[*t] = self.ireg[*s] ^ *im;
-                    self.pc += 4;
-                }
-                Instr::SLT { d, s, t } => {
-                    if self.ireg[*s] < self.ireg[*t] {
-                        self.ireg[*d] = 1;
-                        
-                    } else {
-                        self.ireg[*d] = 0;
-                        
-                    }
-                    self.pc += 4;
-                }
-                Instr::SLTI { t, s, im } => {
-                    if self.ireg[*s] < *im {
-                        self.ireg[*t] = 1;
-                    } else {
-                        self.ireg[*t] = 0;
-                    }
-                    self.pc += 4;
-                }
-                //Instr::SLTU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 43),
-                //Instr::SLTIU { t, s, im } => getBytesI(11, *s, *t, to_16usize(*im)),
-                Instr::SLL { d, t, h } => {
-                    self.ireg[*d] = self.ireg[*t] << *h;
-                    self.pc += 4;
+                Instr::SLL { d, t, h }|
+                Instr::SRL { d, t, h } => {
+                    self.print_reg(d, t, 99, 99, 99, 99)
                 }
                 Instr::SLLV { d, t, s } => {
                     self.ireg[*d] = self.ireg[*t] << self.ireg[*s];
@@ -291,7 +264,7 @@ impl Computer {
         for j in 0..7{
             let ind = i*8+j;
             match ind {
-                _ if ind == argi1 => print!("{}",self.ireg[i*8+j]),
+                _ if ind == argi1 => print!(concat!(color_tx!("{:>8x}",34)," "),self.ireg[i*8+j]),
                 _ if ind == argi2 => print!("\u{001b}[36m{:x>8}\u{001b}[39m ",self.ireg[i*8+j]),
                 _ if ind == argi3 => print!("\u{001b}[32m{:x>8}\u{001b}[39m ",self.ireg[i*8+j]),
                 _ => print!("{:x>8} ",self.ireg[i*8+j]),
