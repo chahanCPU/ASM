@@ -2,6 +2,7 @@
 //パースなどめんどくさい役目を押し付けられてコードは長いが、あまり読む必要はないはず
 use std::collections::HashMap;
 use std::fmt;
+#[derive(Clone)]
 pub enum Instr {
     //命令の定義。enum(列挙体)
     ADD { d: usize, s: usize, t: usize },
@@ -53,22 +54,21 @@ pub enum Instr {
     IN { s: usize },
     OUT { s: usize },
     //float
-    
-    ADDf { d: usize, s: usize, t: usize },
-    SUBf { d: usize, s: usize, t: usize },
-    MULf { d: usize, s: usize, t: usize },
-    INVf { d: usize, s: usize},
-    ABSf { d: usize, s: usize},
-    NEGf { d: usize, s: usize},
-    SQRTf { d: usize, s: usize},
-    EQf { d: usize, s: usize, t: usize },
-    LTf { d: usize, s: usize, t: usize },
-    LEf { d: usize, s: usize, t: usize },
-    FTOI { d: usize, s: usize},
-    ITOF { d: usize, s: usize},
-    LUIf { t: usize, im: i32 },
-    LWf { t: usize, s: usize, off: i32 },
-    SWf { t: usize, s: usize, off: i32 },
+    ADDf { fd: usize, fs: usize, ft: usize },
+    SUBf { fd: usize, fs: usize, ft: usize },
+    MULf { fd: usize, fs: usize, ft: usize },
+    INVf { fd: usize, fs: usize },
+    ABSf { fd: usize, fs: usize },
+    NEGf { fd: usize, fs: usize },
+    SQRTf { fd: usize, fs: usize },
+    EQf { d: usize, fs: usize, ft: usize },
+    LTf { d: usize, fs: usize, ft: usize },
+    LEf { d: usize, fs: usize, ft: usize },
+    FTOI { d: usize, fs: usize },
+    ITOF { fd: usize, s: usize },
+    LUIf { ft: usize, im: i32 },
+    LWf { ft: usize, s: usize, off: i32 },
+    SWf { ft: usize, s: usize, off: i32 },
 }
 
 impl fmt::Display for Instr {
@@ -83,7 +83,7 @@ impl fmt::Display for Instr {
             Instr::SUBU { d, s, t } => write!(f, "ADD(${} = ${}-${})", d, s, t),
             Instr::MULT { d, s, t } => write!(f, "MULT(${} = ${}+${})", d, s, t),
             Instr::MULTU { s, t } => write!(f, "MULTU($LO = ${}+${})", s, t),
-            Instr::DIV { d, s, t } => write!(f, "DIV($LO{} = ${}+${})", d, s, t),
+            Instr::DIV { d, s, t } => write!(f, "DIV(${} = ${}+${})", d, s, t),
             Instr::DIVU { s, t } => write!(f, "DIVU($LO = ${}+${})", s, t),
             Instr::LB { t, s, off } => write!(f, "LB(${} <- {}(${}))", t, off, s),
             Instr::LW { t, s, off } => write!(f, "LW(${} <- {}(${}))", t, off, s),
@@ -119,23 +119,22 @@ impl fmt::Display for Instr {
             Instr::IN { s } => write!(f, "IN ${}", *s),
             Instr::OUT { s } => write!(f, "OUT ${}", *s),
             //float
-            Instr::ADDf { d, s, t } => write!(f, "ADDf(${} = ${}+${})", d, s, t),
-            Instr::SUBf { d, s, t } => write!(f, "SUBf(${} = ${}+${})", d, s, t),
-            Instr::MULf { d, s, t } => write!(f, "MULf(${} = ${}+${})", d, s, t),
-            Instr::INVf { d, s} => write!(f, "INVf(${} = 1/${})", d, s),
-            Instr::ABSf { d, s} => write!(f, "ABSf(${} = |${}|)", d, s),
-            Instr::NEGf { d, s} => write!(f, "NEGf(${} = -${})", d, s),
-            Instr::SQRTf { d, s} => write!(f, "SQRTf(${} = sqrt ${})", d, s),
-            Instr::EQf { d, s, t } => write!(f, "EQf(${} = ${} == ${}?)", d, s, t),
-            Instr::LTf { d, s, t } => write!(f, "LTf(${} = ${} < ${}?)", d, s, t),
-            Instr::LEf { d, s, t } => write!(f, "LEf(${} = ${} <= ${}?)", d, s, t),
-            Instr::FTOI { d, s} => write!(f, "FTOI(${} <= ${})", d, s),
-            Instr::ITOF { d, s} => write!(f, "FTOI(${} <= ${})", d, s),
-            Instr::LUIf { t, im } => write!(f, "LUIf(${} = {}<<16?)", t, im),
-            Instr::LWf { t, s, off } => write!(f, "LWf(${} <- {}(${}))", t, off, s),
-            Instr::SWf { t, s, off } => write!(f, "SWf(${} <- {}(${}))", t, off, s),
+            Instr::ADDf { fd, fs, ft } => write!(f, "ADDf(${} = ${}+${})", fd, fs, ft),
+            Instr::SUBf { fd, fs, ft } => write!(f, "SUBf(${} = ${}+${})", fd, fs, ft),
+            Instr::MULf { fd, fs, ft } => write!(f, "MULf(${} = ${}+${})", fd, fs, ft),
+            Instr::INVf { fd, fs } => write!(f, "INVf(${} = 1/${})", fd, fs),
+            Instr::ABSf { fd, fs } => write!(f, "ABSf(${} = |${}|)", fd, fs),
+            Instr::NEGf { fd, fs } => write!(f, "NEGf(${} = -${})", fd, fs),
+            Instr::SQRTf { fd, fs } => write!(f, "SQRTf(${} = sqrt ${})", fd, fs),
+            Instr::EQf { d, fs, ft } => write!(f, "EQf(${} = ${} == ${}?)", d, fs, ft),
+            Instr::LTf { d, fs, ft } => write!(f, "LTf(${} = ${} < ${}?)", d, fs, ft),
+            Instr::LEf { d, fs, ft } => write!(f, "LEf(${} = ${} <= ${}?)", d, fs, ft),
+            Instr::FTOI { d, fs } => write!(f, "FTOI(${} <= ${})", d, fs),
+            Instr::ITOF { fd, s } => write!(f, "ITOF(${} <= ${})", fd, s),
+            Instr::LUIf { ft, im } => write!(f, "LUIf(${} = {}<<16?)", ft, im),
+            Instr::LWf { ft, s, off } => write!(f, "LWf(${} <- {}(${}))", ft, off, s),
+            Instr::SWf { ft, s, off } => write!(f, "SWf(${} <- {}(${}))", ft, off, s),
             _ => write!(f, "({}, {})", "test", "format"),
-
         }
     }
 }
@@ -184,29 +183,28 @@ impl Instr {
             Instr::J { target } => get_bytes_j(2, *target),
             Instr::JAL { target } => get_bytes_j(3, *target),
             Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 8),
-            Instr::NOOP => [0, 0, 0, 0],
+            Instr::NOOP => get_bytes_r(0, 0, 0, 0, 0, 62),
             Instr::EOF => get_bytes_r(0, 0, 0, 0, 0, 63),
             Instr::IN { s } => get_bytes_r(62, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
             Instr::OUT { s } => get_bytes_r(63, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
             //float
-            Instr::ADDf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d - 32, 0),
-            Instr::SUBf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d - 32, 1),
-            Instr::MULf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d - 32, 2),
-            Instr::INVf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 3),
-            Instr::ABSf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 5),
-            Instr::NEGf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 7),
-            Instr::SQRTf { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d - 32, 4),
-            Instr::EQf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d, 0b110010),
-            Instr::LTf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d, 0b110100),
-            Instr::LEf { d, s, t } => get_bytes_r(17, 16 ,*t - 32, *s - 32, *d, 0b110110),
-            Instr::FTOI { d, s} => get_bytes_r(17, 16 , 0, *s - 32, *d, 8),
-            Instr::ITOF { d, s} => get_bytes_r(17, 16 , 0, *s, *d - 32, 9),
-            Instr::LUIf { t, im } => get_bytes_i(31, 0, *t - 32, to_16usize(*im)), //0はDont care
-            Instr::LWf { t, s, off } => get_bytes_i(0b110001, *s, *t - 32, to_16usize(*off)),
-            Instr::SWf { t, s, off } => get_bytes_i(0b111001, *s, *t - 32, to_16usize(*off)),
-            
-            
-            _ => [255, 255, 255, 255],                              //not implemented yet
+            Instr::ADDf { fd, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *fd, 0),
+            Instr::SUBf { fd, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *fd, 1),
+            Instr::MULf { fd, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *fd, 2),
+            Instr::INVf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 3),
+            Instr::ABSf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 5),
+            Instr::NEGf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 7),
+            Instr::SQRTf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 4),
+            Instr::EQf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110010),
+            Instr::LTf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110100),
+            Instr::LEf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110110),
+            Instr::FTOI { d, fs } => get_bytes_r(17, 16, 0, *fs, *d, 8),
+            Instr::ITOF { fd, s } => get_bytes_r(17, 16, 0, *s, *fd, 9),
+            Instr::LUIf { ft, im } => get_bytes_i(31, 0, *ft, to_16usize(*im)), //0はDont care
+            Instr::LWf { ft, s, off } => get_bytes_i(0b110001, *s, *ft, to_16usize(*off)),
+            Instr::SWf { ft, s, off } => get_bytes_i(0b111001, *s, *ft, to_16usize(*off)),
+
+            _ => [255, 255, 255, 255], //not implemented yet
         }
     }
     pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
@@ -491,64 +489,99 @@ impl Instr {
                 Ok(Instr::IN { s: s })
             }
             //float
-            
             "add.s" => {
                 let (d, s, t) = get3reg(&ir)?;
-                Ok(Instr::ADDf { d: d, s: s, t: t })
+                Ok(Instr::ADDf {
+                    fd: d - 32,
+                    fs: s - 32,
+                    ft: t - 32,
+                })
             }
             "sub.s" => {
                 let (d, s, t) = get3reg(&ir)?;
-                Ok(Instr::SUBf { d: d, s: s, t: t })
+                Ok(Instr::SUBf {
+                    fd: d - 32,
+                    fs: s - 32,
+                    ft: t - 32,
+                })
             }
             "mul.s" => {
                 let (d, s, t) = get3reg(&ir)?;
-                Ok(Instr::MULf { d: d, s: s, t: t })
+                Ok(Instr::MULf {
+                    fd: d - 32,
+                    fs: s - 32,
+                    ft: t - 32,
+                })
             }
             "inv.s" => {
                 let (d, s) = get2reg(&ir)?;
-                Ok(Instr::INVf { d: d, s: s})
+                Ok(Instr::INVf {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
             }
             "abs.s" => {
                 let (d, s) = get2reg(&ir)?;
-                Ok(Instr::ABSf { d: d, s: s})
+                Ok(Instr::ABSf {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
             }
             "neg.s" => {
                 let (d, s) = get2reg(&ir)?;
-                Ok(Instr::NEGf { d: d, s: s})
+                Ok(Instr::NEGf {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
             }
             "sqrt.s" => {
                 let (d, s) = get2reg(&ir)?;
-                Ok(Instr::SQRTf { d: d, s: s})
+                Ok(Instr::SQRTf {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
             }
             "c.eq.s" => {
                 let (d, s, t) = get3reg(&ir)?;
-                Ok(Instr::EQf { d: d, s: s, t: t })
+                Ok(Instr::EQf {
+                    d: d,
+                    fs: s - 32,
+                    ft: t - 32,
+                })
             }
             "c.lt.s" => {
                 let (d, s, t) = get3reg(&ir)?;
-                Ok(Instr::LTf { d: d, s: s, t: t })
+                Ok(Instr::LTf {
+                    d: d,
+                    fs: s - 32,
+                    ft: t - 32,
+                })
             }
             "c.le.s" => {
                 let (d, s, t) = get3reg(&ir)?;
-                Ok(Instr::LEf { d: d, s: s, t: t })
+                Ok(Instr::LEf {
+                    d: d,
+                    fs: s - 32,
+                    ft: t - 32,
+                })
             }
             "ftoi" => {
                 let (d, s) = get2reg(&ir)?;
-                Ok(Instr::FTOI { d: d, s: s})
+                Ok(Instr::FTOI { d: d, fs: s - 32 })
             }
             "itof" => {
                 let (d, s) = get2reg(&ir)?;
-                Ok(Instr::ITOF { d: d, s: s})
+                Ok(Instr::ITOF { fd: d - 32, s: s })
             }
             "lui.s" => {
                 let (t, im) = get1reg_i(&ir)?;
-                Ok(Instr::LUIf { t: t, im: im })
+                Ok(Instr::LUIf { ft: t - 32, im: im })
             }
 
             "lw.s" => {
                 let (t, s, off) = getreg_offsreg(&ir)?;
                 Ok(Instr::LWf {
-                    t: t,
+                    ft: t - 32,
                     s: s,
                     off: off,
                 })
@@ -556,13 +589,11 @@ impl Instr {
             "sw.s" => {
                 let (t, s, off) = getreg_offsreg(&ir)?;
                 Ok(Instr::SWf {
-                    t: t,
+                    ft: t - 32,
                     s: s,
                     off: off,
                 })
             }
-            
-            
             x => Err(format!("no such opcode: {}", x)),
         }
     }
@@ -618,15 +649,13 @@ fn get2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
-        let im = ir[2].parse().unwrap_or_else(|_|{i32::from_str_radix(&(ir[2])[2..],16).expect("invalid immmmediate value")});//遅延評価に
+        let im = ir[2].parse().unwrap_or_else(|_| {
+            i32::from_str_radix(&(ir[2])[2..], 16).expect("invalid immmmediate value")
+        }); //遅延評価に
         if im < -32768 || im > 32767 {
-            return Err(String::from("offset overflow\n"))
+            return Err(String::from("offset overflow\n"));
         }
-        Ok((
-            get_reg(&ir[0])?,
-            get_reg(&ir[1])?,
-            im,
-        ))
+        Ok((get_reg(&ir[0])?, get_reg(&ir[1])?, im))
     }
 }
 
@@ -634,14 +663,13 @@ fn get1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
-        let im = ir[1].parse().unwrap_or_else(|_|{i32::from_str_radix(&(ir[1])[2..],16).expect("invalid immmmediate value")});
+        let im = ir[1].parse().unwrap_or_else(|_| {
+            i32::from_str_radix(&(ir[1])[2..], 16).expect("invalid immmmediate value")
+        });
         if im < -32768 || im > 32767 {
-            return Err(String::from("offset overflow\n"))
+            return Err(String::from("offset overflow\n"));
         }
-        Ok((
-            get_reg(&ir[0])?,
-            im,
-        ))
+        Ok((get_reg(&ir[0])?, im))
     }
 }
 fn get1reg_label(
@@ -688,7 +716,7 @@ fn get_offsreg(offsreg: &str) -> Result<(usize, i32), String> {
         .parse()
         .expect("invalid offset\n");
     if offs < -32768 || offs > 32767 {
-        return Err(String::from("offset overflow\n"))
+        return Err(String::from("offset overflow\n"));
     }
     let regstr = split.next().ok_or("invalid offset and reg")?;
     //print!("----{}",regstr);
@@ -744,12 +772,16 @@ fn get_reg(name: &str) -> Result<usize, String> {
         "$29" | "$sp" => Ok(29),
         "$30" | "$fp" => Ok(30),
         "$31" | "$ra" => Ok(31),
-        _ => if name.starts_with("$f") {
-            let reg:usize = name[2..].parse().expect("invalid float register");
-            if reg > 32 {return Err(String::from("Invalid float register name(too big): ")+name)};
-            Ok(reg+31)
-        }else {
-             Err(String::from("Invalid register name: ") + name)
-            },
+        _ => {
+            if name.starts_with("$f") {
+                let reg: usize = name[2..].parse().expect("invalid float register");
+                if reg > 32 {
+                    return Err(String::from("Invalid float register name(too big): ") + name);
+                };
+                Ok(reg + 31)
+            } else {
+                Err(String::from("Invalid register name: ") + name)
+            }
+        }
     }
 }

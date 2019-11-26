@@ -8,6 +8,7 @@ mod instr;
 use instr::Instr;
 mod computer;
 use computer::Computer;
+use std::collections::HashSet;
 fn main() {
     match env::args().nth(1) {
         None => panic!("No arguments!"),
@@ -30,22 +31,23 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
         BufWriter::new(File::create(format!("{}.binary", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
     let mut writer2 =
         BufWriter::new(File::create(format!("{}.bintext", filename)).expect("cannot create file"));//こっちに0と1で書いたテキストデータを出力（こっち使う）
-    writer2.write("00000000\n".as_bytes()).unwrap();
-    writer2.write("10101010\n".as_bytes()).unwrap();
+    writer.write("00aa".as_bytes()).unwrap();
     
     let mut irs : Vec<Instr>=Vec::new();//命令
     let mut count:usize = 0;
+    let mut bpoints : HashSet<usize>=HashSet::new();
     for (i, result) in BufReader::new(File::open(&filename).unwrap())
         .lines()
         .enumerate()
     {
         let s = result.unwrap();
-        let l = trim_space_comment(&s);
+        let mut l = trim_space_comment(&s);
         if l.ends_with(":") || l == "" {
             continue;
         }
         if l.starts_with("!"){
-            
+            bpoints.insert(count);
+            l = &l[1..]
         }
         match Instr::from_s(l, &label_map) {
             Err(er) => {
@@ -53,7 +55,7 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
                 println!("error in line {}: {}\n", i + 1, er);break;},
             Ok(ir) => {
                 let bytes = ir.getbytes();
-                writer.write(&bytes).unwrap();
+                writer.write(&format!("{:0>2x}{:0>2x}{:0>2x}{:0>2x}",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
                 writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
                 println!("{:>3}:{}", count,ir);
                 irs.push(ir);
@@ -61,11 +63,15 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
         }
         count += 1;
     }
+    let bytes = (Instr::EOF).getbytes();
+    writer.write(&format!("{:0>2x}{:0>2x}{:0>2x}{:0>2x}",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
+    writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
+                
     drop(writer);
     drop(writer2);
     
-    let mut cpu : Computer = Computer::new(irs);
-    cpu.run(filename);
+    let mut cpu : Computer = Computer::new(irs, bpoints, filename);
+    cpu.run();
 }
 
 fn trim_space_comment(ir: &str) -> &str {

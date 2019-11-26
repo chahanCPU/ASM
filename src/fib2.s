@@ -13,7 +13,7 @@ min_caml_start:
     noop
 min_caml_print_int:
     slti    $at, $f2, 0
-    blez    $at, min_caml_print_int_loop
+    !blez    $at, min_caml_print_int_loop
     ori $3, $zero, 45       # '-'
     out $3
     sub $f2, $zero, $f2
