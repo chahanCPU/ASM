@@ -219,48 +219,48 @@ impl Instr {
         let ir: Vec<&str> = ir2.split(",").collect();
         match opcode {
             "add" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::ADD { d: d, s: s, t: t })
             }
             "addi" => {
-                let (t, s, im) = get2reg_i(&ir)?;
+                let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::ADDI { t: t, s: s, im: im })
             }
             "addu" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::ADDU { d: d, s: s, t: t })
             }
             "addiu" => {
-                let (t, s, im) = get2reg_i(&ir)?;
+                let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::ADDIU { t: t, s: s, im: im })
             }
             "sub" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::SUB { d: d, s: s, t: t })
             }
             "subu" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::SUBU { d: d, s: s, t: t })
             }
             "mult" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::MULT { d: d, s: s, t: t })
             }
             "multu" => {
-                let (s, t) = get2reg(&ir)?;
+                let (s, t) = parse2reg(&ir)?;
                 Ok(Instr::MULTU { s: s, t: t })
             }
             "div" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::DIV { d: d, s: s, t: t })
             }
             "divu" => {
-                let (s, t) = get2reg(&ir)?;
+                let (s, t) = parse2reg(&ir)?;
                 Ok(Instr::DIVU { s: s, t: t })
             }
 
             "lb" => {
-                let (t, s, off) = getreg_offsreg(&ir)?;
+                let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::LB {
                     t: t,
                     s: s,
@@ -268,7 +268,7 @@ impl Instr {
                 })
             }
             "lw" => {
-                let (t, s, off) = getreg_offsreg(&ir)?;
+                let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::LW {
                     t: t,
                     s: s,
@@ -276,7 +276,7 @@ impl Instr {
                 })
             }
             "sb" => {
-                let (t, s, off) = getreg_offsreg(&ir)?;
+                let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::SB {
                     t: t,
                     s: s,
@@ -284,7 +284,7 @@ impl Instr {
                 })
             }
             "sw" => {
-                let (t, s, off) = getreg_offsreg(&ir)?;
+                let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::SW {
                     t: t,
                     s: s,
@@ -293,57 +293,57 @@ impl Instr {
             }
 
             "mfhi" => {
-                let d = get1reg(&ir)?;
+                let d = parse1reg(&ir)?;
                 Ok(Instr::MFHI { d: d })
             }
             "mflo" => {
-                let d = get1reg(&ir)?;
+                let d = parse1reg(&ir)?;
                 Ok(Instr::MFLO { d: d })
             }
 
             "and" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::AND { d: d, s: s, t: t })
             }
             "andi" => {
-                let (t, s, im) = get2reg_i(&ir)?;
+                let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::ANDI { t: t, s: s, im: im })
             }
             "or" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::OR { d: d, s: s, t: t })
             }
             "ori" => {
-                let (t, s, im) = get2reg_i(&ir)?;
+                let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::ORI { t: t, s: s, im: im })
             }
             "xor" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::XOR { d: d, s: s, t: t })
             }
             "xori" => {
-                let (t, s, im) = get2reg_i(&ir)?;
+                let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::XORI { t: t, s: s, im: im })
             }
             "slt" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::SLT { d: d, s: s, t: t })
             }
             "slti" => {
-                let (t, s, im) = get2reg_i(&ir)?;
+                let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::SLTI { t: t, s: s, im: im })
             }
             "sltu" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::SLTU { d: d, s: s, t: t })
             }
             "sltiu" => {
-                let (t, s, im) = get2reg_i(&ir)?;
+                let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::SLTIU { t: t, s: s, im: im })
             }
 
             "sll" => {
-                let (d, t, h) = get2reg_i(&ir)?;
+                let (d, t, h) = parse2reg_i(&ir)?;
                 if h < 0 {
                     Err(String::from("negative shift"))
                 } else if h > 31 {
@@ -357,11 +357,11 @@ impl Instr {
                 }
             }
             "sllv" => {
-                let (d, t, s) = get3reg(&ir)?;
+                let (d, t, s) = parse3reg(&ir)?;
                 Ok(Instr::SLLV { d: d, t: t, s: s })
             }
             "srl" => {
-                let (d, t, h) = get2reg_i(&ir)?;
+                let (d, t, h) = parse2reg_i(&ir)?;
                 if h < 0 {
                     Err(String::from("negative shift"))
                 } else if h > 31 {
@@ -375,11 +375,11 @@ impl Instr {
                 }
             }
             "srlv" => {
-                let (d, t, s) = get3reg(&ir)?;
+                let (d, t, s) = parse3reg(&ir)?;
                 Ok(Instr::SRLV { d: d, t: t, s: s })
             }
             "sra" => {
-                let (d, t, h) = get2reg_i(&ir)?;
+                let (d, t, h) = parse2reg_i(&ir)?;
                 if h < 0 {
                     Err(String::from("negative shift?"))
                 } else {
@@ -391,12 +391,12 @@ impl Instr {
                 }
             }
             "lui" => {
-                let (t, im) = get1reg_i(&ir)?;
+                let (t, im) = parse1reg_i(&ir)?;
                 Ok(Instr::LUI { t: t, im: im })
             }
 
             "beq" => {
-                let (s, t, target) = get2reg_label(&ir, label_map)?;
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
                 Ok(Instr::BEQ {
                     s: s,
                     t: t,
@@ -405,42 +405,42 @@ impl Instr {
             }
 
             "bgez" => {
-                let (s, target) = get1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGEZ {
                     s: s,
                     target: target,
                 })
             }
             "bgezal" => {
-                let (s, target) = get1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGEZAL {
                     s: s,
                     target: target,
                 })
             }
             "bgtz" => {
-                let (s, target) = get1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGTZ {
                     s: s,
                     target: target,
                 })
             }
             "blez" => {
-                let (s, target) = get1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BLEZ {
                     s: s,
                     target: target,
                 })
             }
             "bltz" => {
-                let (s, target) = get1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BLTZ {
                     s: s,
                     target: target,
                 })
             }
             "bltzal" => {
-                let (s, target) = get1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BLTZAL {
                     s: s,
                     target: target,
@@ -448,7 +448,7 @@ impl Instr {
             }
 
             "bne" => {
-                let (s, t, target) = get2reg_label(&ir, label_map)?;
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
                 Ok(Instr::BNE {
                     s: s,
                     t: t,
@@ -456,6 +456,10 @@ impl Instr {
                 })
             }
 
+            "li" => {
+                let (t, target) = parse1reg_label(&ir, label_map)?;
+                Ok(Instr::ORI {t: t, s: 0, im: (target << 2) as i32})
+            }
             "j" => {
                 let label_name = ir.get(0).ok_or("No label")?;
                 let addr = label_map
@@ -471,7 +475,7 @@ impl Instr {
                 Ok(Instr::JAL { target: *addr })
             }
             "jr" => {
-                let s = get1reg(&ir)?;
+                let s = parse1reg(&ir)?;
                 Ok(Instr::JR { s: s })
             }
 
@@ -479,18 +483,18 @@ impl Instr {
             "eof" => Ok(Instr::EOF),
 
             "out" => {
-                let s = get1reg(&ir)?;
+                let s = parse1reg(&ir)?;
                 //print!("ououou\n");
                 Ok(Instr::OUT { s: s })
             }
             "in" => {
-                let s = get1reg(&ir)?;
+                let s = parse1reg(&ir)?;
                 //print!("ououou\n");
                 Ok(Instr::IN { s: s })
             }
             //float
             "add.s" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::ADDf {
                     fd: d - 32,
                     fs: s - 32,
@@ -498,7 +502,7 @@ impl Instr {
                 })
             }
             "sub.s" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::SUBf {
                     fd: d - 32,
                     fs: s - 32,
@@ -506,7 +510,7 @@ impl Instr {
                 })
             }
             "mul.s" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::MULf {
                     fd: d - 32,
                     fs: s - 32,
@@ -514,35 +518,35 @@ impl Instr {
                 })
             }
             "inv.s" => {
-                let (d, s) = get2reg(&ir)?;
+                let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::INVf {
                     fd: d - 32,
                     fs: s - 32,
                 })
             }
             "abs.s" => {
-                let (d, s) = get2reg(&ir)?;
+                let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::ABSf {
                     fd: d - 32,
                     fs: s - 32,
                 })
             }
             "neg.s" => {
-                let (d, s) = get2reg(&ir)?;
+                let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::NEGf {
                     fd: d - 32,
                     fs: s - 32,
                 })
             }
             "sqrt.s" => {
-                let (d, s) = get2reg(&ir)?;
+                let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::SQRTf {
                     fd: d - 32,
                     fs: s - 32,
                 })
             }
             "c.eq.s" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::EQf {
                     d: d,
                     fs: s - 32,
@@ -550,7 +554,7 @@ impl Instr {
                 })
             }
             "c.lt.s" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::LTf {
                     d: d,
                     fs: s - 32,
@@ -558,7 +562,7 @@ impl Instr {
                 })
             }
             "c.le.s" => {
-                let (d, s, t) = get3reg(&ir)?;
+                let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::LEf {
                     d: d,
                     fs: s - 32,
@@ -566,20 +570,20 @@ impl Instr {
                 })
             }
             "ftoi" => {
-                let (d, s) = get2reg(&ir)?;
+                let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::FTOI { d: d, fs: s - 32 })
             }
             "itof" => {
-                let (d, s) = get2reg(&ir)?;
+                let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::ITOF { fd: d - 32, s: s })
             }
             "lui.s" => {
-                let (t, im) = get1reg_i(&ir)?;
+                let (t, im) = parse1reg_i(&ir)?;
                 Ok(Instr::LUIf { ft: t - 32, im: im })
             }
 
             "lw.s" => {
-                let (t, s, off) = getreg_offsreg(&ir)?;
+                let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::LWf {
                     ft: t - 32,
                     s: s,
@@ -587,7 +591,7 @@ impl Instr {
                 })
             }
             "sw.s" => {
-                let (t, s, off) = getreg_offsreg(&ir)?;
+                let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::SWf {
                     ft: t - 32,
                     s: s,
@@ -598,6 +602,104 @@ impl Instr {
         }
     }
 }
+///////////////////////////////////////////////
+
+
+macro_rules! BITMASK(
+    ($n:expr) => (
+        ((1 << $n) - 1)
+    );
+);
+pub fn disassemble(encoded_instruction: u32) -> Result<Instr, String> {
+    if encoded_instruction == 62 {
+        return Ok(Instr::NOOP);
+    }
+    let op = (encoded_instruction >> 26) as usize;
+    let op_upper = (op >> 3) & BITMASK!(3);
+    let op_lower = op & BITMASK!(3);
+
+    let rs = ((encoded_instruction >> 21) & BITMASK!(5)) as usize;
+
+    let rt = ((encoded_instruction >> 16) & BITMASK!(5)) as usize;
+    let rt_upper = rt >> 3;
+    let rt_lower = rt & BITMASK!(3);
+
+    let rd = ((encoded_instruction >> 11) & BITMASK!(5)) as usize;
+    let sa = ((encoded_instruction >> 6) & BITMASK!(5)) as usize;
+
+    let funct = (encoded_instruction & BITMASK!(6)) as usize;
+    let funct_upper = (funct >> 3) & BITMASK!(3);
+    let funct_lower = funct & BITMASK!(3);
+
+    let imm: i32 = (encoded_instruction & BITMASK!(16)) as i32;
+
+    // Tricky business: two's complement 26-bit
+    let mut target: usize = (encoded_instruction & BITMASK!(26)) as usize;
+    let ir = match op {
+        2 => Instr::J{target: target},
+        3 => Instr::JAL{target: target},
+        4 => Instr::BEQ{t:rt, s:rs, target: imm as usize},
+        5 => Instr::BNE{t:rt, s:rs, target: imm as usize},
+        6 => Instr::BLEZ{s:rs, target: imm as usize},
+        7 => Instr::BGTZ{s:rs, target: imm as usize},
+        8 => Instr::ADDI{t:rt, s:rs, im: imm},
+        9 => Instr::ADDIU{t:rt, s:rs, im: imm},
+        10 => Instr::SLTI{t:rt, s:rs, im: imm},
+        11 => Instr::SLTIU{t:rt, s:rs, im: imm},
+        12 => Instr::ANDI{t:rt, s:rs, im: imm},
+        13 => Instr::ORI{t:rt, s:rs, im: imm},
+        14 => Instr::XORI{t:rt, s:rs, im: imm},
+        15 => Instr::LUI{t:rt, im: imm},
+        0 => match funct {
+            0  => Instr::SLL{d: rd, h: sa, t: rt},
+            2  => Instr::SRL{d: rd, h: sa, t: rt},
+            3  => Instr::SRA{d: rd, h: sa, t: rt},
+            4  => Instr::SLLV{d: rd, s: rs, t: rt},
+            6  => Instr::SRLV{d: rd, s: rs, t: rt},
+            //7  => Instr::SRAV{d: rd, s: rs, t: rt},
+            8  => Instr::JR{s: rs},
+            24 => Instr::MULT{d: rd, s: rs, t: rt},
+            26 => Instr::DIV{d: rd, s: rs, t: rt},
+            32 => Instr::ADD{d: rd, s: rs, t: rt},
+            33 => Instr::ADDU{d: rd, s: rs, t: rt},
+            34 => Instr::SUB{d: rd, s: rs, t: rt},
+            35 => Instr::SUBU{d: rd, s: rs, t: rt},
+            36 => Instr::AND{d: rd, s: rs, t: rt},
+            37 => Instr::OR{d: rd, s: rs, t: rt},
+            38 => Instr::XOR{d: rd, s: rs, t: rt},
+            //39 => Instr::NOR{d: rd, s: rs, t: rt},
+            42 => Instr::SLT{d: rd, s: rs, t: rt},
+            43 => Instr::SLTU{d: rd, s: rs, t: rt},
+            _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
+        },
+        17 => match rs {
+            0 => match funct{
+                0  => Instr::ADDf{fd: sa, fs: rd, ft: rt},
+                1  => Instr::SUBf{fd: sa, fs: rd, ft: rt},
+                2  => Instr::MULf{fd: sa, fs: rd, ft: rt},
+                //3  => Instr::DIVf{fd: sa, fs: rd, ft: rt},
+                8  => Instr::FTOI{d: sa, fs: rd},
+                9  => Instr::ITOF{fd: sa, s: rd},
+                50 => Instr::EQf{d: sa, fs: rd, ft: rt},
+                52 => Instr::LTf{d: sa, fs: rd, ft: rt},
+                54 => Instr::LEf{d: sa, fs: rd, ft: rt},
+                _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
+            }
+            _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
+        }
+        35 => Instr::LW{t: rt, s: rs, off: imm},
+        43 => Instr::SW{t: rt, s: rs, off: imm},
+        49 => Instr::LWf{ft: rt, s: rs, off: imm},
+        57 => Instr::SWf{ft: rt, s: rs, off: imm},
+        
+        _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
+    };
+    return Ok(ir);
+}
+
+
+
+///////////////////////////////////////////////
 //以下、ちょっとしたデータ整形のための関数
 fn to_u8(ir: usize) -> [u8; 4] {
     [
@@ -630,22 +732,22 @@ fn get_bytes_j(opc: usize, addr: usize) -> [u8; 4] {
     to_u8(ir32)
 }
 //命令タイプごとのパーサー
-fn get3reg(ir: &Vec<&str>) -> Result<(usize, usize, usize), String> {
+fn parse3reg(ir: &Vec<&str>) -> Result<(usize, usize, usize), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
-        Ok((get_reg(&ir[0])?, get_reg(&ir[1])?, get_reg(&ir[2])?))
+        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, parse_reg(&ir[2])?))
     }
 }
-fn get2reg(ir: &Vec<&str>) -> Result<(usize, usize), String> {
+fn parse2reg(ir: &Vec<&str>) -> Result<(usize, usize), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
-        Ok((get_reg(&ir[0])?, get_reg(&ir[1])?))
+        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?))
     }
 }
 
-fn get2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
+fn parse2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
@@ -655,11 +757,11 @@ fn get2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
         if im < -32768 || im > 32767 {
             return Err(String::from("offset overflow\n"));
         }
-        Ok((get_reg(&ir[0])?, get_reg(&ir[1])?, im))
+        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, im))
     }
 }
 
-fn get1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
+fn parse1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
@@ -669,10 +771,10 @@ fn get1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
         if im < -32768 || im > 32767 {
             return Err(String::from("offset overflow\n"));
         }
-        Ok((get_reg(&ir[0])?, im))
+        Ok((parse_reg(&ir[0])?, im))
     }
 }
-fn get1reg_label(
+fn parse1reg_label(
     ir: &Vec<&str>,
     label_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize), String> {
@@ -682,10 +784,10 @@ fn get1reg_label(
         let addr = label_map
             .get(&(ir[1].to_string() + ":"))
             .ok_or("Invalid label name")?;
-        Ok((get_reg(&ir[0])?, *addr))
+        Ok((parse_reg(&ir[0])?, *addr))
     }
 }
-fn get2reg_label(
+fn parse2reg_label(
     ir: &Vec<&str>,
     label_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize, usize), String> {
@@ -695,20 +797,20 @@ fn get2reg_label(
         let addr = label_map
             .get(&(ir[2].to_string() + ":"))
             .ok_or("Invalid label name")?;
-        Ok((get_reg(&ir[0])?, get_reg(&ir[1])?, *addr))
+        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, *addr))
     }
 }
 
-fn getreg_offsreg(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
+fn parsereg_offsreg(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
     //return (t,s,im(=offset) )
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
-        let (s, im) = get_offsreg(&ir[1])?;
-        Ok((get_reg(&ir[0])?, s, im))
+        let (s, im) = parse_offsreg(&ir[1])?;
+        Ok((parse_reg(&ir[0])?, s, im))
     }
 }
-fn get_offsreg(offsreg: &str) -> Result<(usize, i32), String> {
+fn parse_offsreg(offsreg: &str) -> Result<(usize, i32), String> {
     let mut split = offsreg.splitn(2, "(");
     let offs = split
         .next()
@@ -720,18 +822,18 @@ fn get_offsreg(offsreg: &str) -> Result<(usize, i32), String> {
     }
     let regstr = split.next().ok_or("invalid offset and reg")?;
     //print!("----{}",regstr);
-    let reg = get_reg(&regstr[..regstr.len() - 1])?;
+    let reg = parse_reg(&regstr[..regstr.len() - 1])?;
     Ok((reg, offs))
 }
-fn get1reg(ir: &Vec<&str>) -> Result<usize, String> {
+fn parse1reg(ir: &Vec<&str>) -> Result<usize, String> {
     if ir.len() < 1 {
         Err(String::from("too few arguments"))
     } else {
-        Ok(get_reg(&ir[0])?)
+        Ok(parse_reg(&ir[0])?)
     }
 }
 
-fn get_reg(name: &str) -> Result<usize, String> {
+fn parse_reg(name: &str) -> Result<usize, String> {
     //レジスタ名の取得
     match name {
         "$0" | "$zero" => Ok(0),

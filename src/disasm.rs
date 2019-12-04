@@ -12,10 +12,10 @@ use std::collections::HashSet;
 fn main() {
     match env::args().nth(1) {
         None => panic!("No arguments!"),
-        Some(file_path) => asm(file_path),
+        Some(file_path) => disasm(file_path),
     }
 }
-fn asm(filename: String) {//アセンブラ&シミュレータ
+fn disasm(filename: String) {//アセンブラ&シミュレータ
     let mut addr: usize = 0;
     let mut label_map = HashMap::new();//ラベルとアドレスの対応のためのハッシュマップ
     for result in BufReader::new(File::open(&filename).unwrap()).lines() {//まず各命令を読み込む前に

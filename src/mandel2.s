@@ -13,7 +13,8 @@ iloop.58:
     ori $at, $zero, 0
     bne $2, $at, beq_else.116
     ori $2, $zero, 1
-    j   min_caml_print_int
+    li $15, min_caml_print_int
+    jr $15
 beq_else.116:
     sub.s   $f4, $f4, $f5
     add.s   $f4, $f4, $f6
@@ -124,7 +125,7 @@ blez_else.120:
     j   yloop.42
 min_caml_print_int:
     addi    $2, $2, 48
-    !out $2
+    out $2
     jr  $ra
 min_caml_print_newline:
     ori $2, $zero, 10

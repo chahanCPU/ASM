@@ -94,7 +94,7 @@ impl Computer {
 
             self.arg_ireg = [0; 32];
             self.arg_freg = [0; 32];
-
+            
             if self.bpoints.contains(&(self.pc >> 2)) || flag {
                 flag = false;
                 self.print_stat();
@@ -128,7 +128,6 @@ impl Computer {
                         self.arg_ireg[s] = 1;
                     }
                     Instr::SLL { d, t, h }
-                    | Instr::SRL { d, t, h }
                     | Instr::SRL { d, t, h }
                     | Instr::SRA { d, t, h } => {
                         self.arg_ireg[d] = 1;
@@ -202,6 +201,8 @@ impl Computer {
                 }
                 buf.clear();
             }
+
+            
             if self.run_ir(&ir) {
                 break;
             };
