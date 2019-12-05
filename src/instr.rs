@@ -2,6 +2,12 @@
 //パースなどめんどくさい役目を押し付けられてコードは長いが、あまり読む必要はないはず
 use std::collections::HashMap;
 use std::fmt;
+macro_rules! BITMASK(
+    ($n:expr) => (
+        ((1 << $n) - 1)
+    );
+);
+
 #[derive(Clone)]
 pub enum Instr {
     //命令の定義。enum(列挙体)
@@ -140,6 +146,71 @@ impl fmt::Display for Instr {
 }
 
 impl Instr {
+    pub fn to_str(&self) -> String{
+        match self {
+            Instr::ADD { d, s, t } => format!("    add ${}, ${}, ${}",d,s,t),
+            Instr::ADDI { t, s, im } => format!("    addi ${}, ${}, {}",t,s,im),
+            Instr::ADDU { d, s, t } => format!("    addu ${}, ${}, ${}",d,s,t),
+            Instr::ADDIU { t, s, im } => format!("    addiu ${}, ${}, {}",t,s,im),
+            Instr::SUB { d, s, t } => format!("    sub ${}, ${}, ${}",d,s,t),
+            Instr::SUBU { d, s, t } => format!("    subu ${}, ${}, ${}",d,s,t),
+            Instr::MULT { d, s, t } => format!("    mult ${}, ${}, ${}",d,s,t),
+            Instr::MULTU { s, t } => format!("    multu ${}, ${}",s,t),
+            Instr::DIV { d, s, t } => format!("    div ${}, ${}, ${}",d,s,t),
+            Instr::DIVU { s, t } => format!("    divu ${}, ${}",s,t),
+            Instr::LB { t, s, off } => format!("    lb ${}, {}(${})",t,off,s),
+            Instr::LW { t, s, off } => format!("    lw ${}, {}(${})",t,off,s),
+            Instr::SB { t, s, off } => format!("    sb ${}, {}(${})",t,off,s),
+            Instr::SW { t, s, off } => format!("    sw ${}, {}(${})",t,off,s),
+            Instr::AND { d, s, t } => format!("    and ${}, ${}, ${}",d,s,t),
+            Instr::ANDI { t, s, im } => format!("    andi ${}, ${}, {}",t,s,im),
+            Instr::OR { d, s, t } => format!("    or ${}, ${}, ${}",d,s,t),
+            Instr::ORI { t, s, im } => format!("    ori ${}, ${}, {}",t,s,im),
+            Instr::XOR { d, s, t } => format!("    xor ${}, ${}, ${}",d,s,t),
+            Instr::XORI { t, s, im } => format!("    xori ${}, ${}, {}",t,s,im),
+            Instr::SLT { d, s, t } => format!("    slt ${}, ${}, ${}",d,s,t),
+            Instr::SLTI { t, s, im } => format!("    slti ${}, ${}, {}",t,s,im),
+            Instr::SLTU { d, s, t } => format!("    sltu ${}, ${}, ${}",d,s,t),
+            Instr::SLTIU { t, s, im } => format!("    sltiu ${}, ${}, {}",t,s,im),
+            Instr::SLL { d, t, h } => format!("    sll ${}, ${}, {}",d,t,h),
+            Instr::SLLV { d, t, s } =>format!("    sllv ${}, ${}, ${}",d,t,s),
+            Instr::SRL { d, t, h } => format!("    srl ${}, ${}, {}",d,t,h),
+            Instr::SRLV { d, t, s } =>format!("    srlv ${}, ${}, ${}",d,t,s),
+            Instr::SRA { d, t, h } => format!("    sra ${}, ${}, {}",d,t,h),
+            Instr::LUI { t, im } => format!("    lui ${}, {}",t,im),
+            Instr::BEQ { s, t, target } => format!("    beq ${}, ${}, PC{}",s,t,target<<2),
+            Instr::BGEZ { s, target } => format!("    bgez ${}, PC{}",s,target<<2),
+            Instr::BGTZ { s, target } => format!("    bgtz ${}, PC{}",s,target<<2),
+            Instr::BLEZ { s, target } => format!("    blez ${}, PC{}",s,target<<2),
+            Instr::BLTZ { s, target } => format!("    bltz ${}, PC{}",s,target<<2),
+            Instr::BNE { s, t, target } => format!("    bne ${}, ${}, PC{}",s,t,target<<2),
+            /////
+            Instr::J { target } => format!("    j PC{}",target<<2),
+            Instr::JAL { target } => format!("    jal PC{}",target<<2),
+            Instr::JR { s } => format!("    jr ${}",s),
+            Instr::NOOP => format!("    noop"),
+            Instr::EOF => format!("    eof"),
+            Instr::IN { s } => format!("    in ${}",s),
+            Instr::OUT { s } => format!("    out ${}",s),
+            //float
+            Instr::ADDf { fd, fs, ft } => format!("    add.s $f{}, $f{}, $f{}",fd,fs,ft),
+            Instr::SUBf { fd, fs, ft } => format!("    sub.s $f{}, $f{}, $f{}",fd,fs,ft),
+            Instr::MULf { fd, fs, ft } => format!("    mul.s $f{}, $f{}, $f{}",fd,fs,ft),
+            Instr::INVf { fd, fs } => format!("    inv.s $f{}, $f{}",fd,fs),
+            Instr::ABSf { fd, fs } => format!("    abs.s $f{}, $f{}",fd,fs),
+            Instr::NEGf { fd, fs } => format!("    neg.s $f{}, $f{}",fd,fs),
+            Instr::SQRTf { fd, fs } => format!("    sqrt.s $f{}, $f{}",fd,fs),
+            Instr::EQf { d, fs, ft } => format!("    eq.s ${}, $f{}, $f{}",d,fs,ft),
+            Instr::LTf { d, fs, ft } => format!("    lt.s ${}, $f{}, $f{}",d,fs,ft),
+            Instr::LEf { d, fs, ft } => format!("    le.s ${}, $f{}, $f{}",d,fs,ft),
+            Instr::FTOI { d, fs } => format!("    ftoi ${}, $f{}",d,fs),
+            Instr::ITOF { fd, s } => format!("    ftoi $f{}, ${}",fd,s),
+            Instr::LUIf { ft, im } => format!("    lui.s $f{}, {}",ft,im),
+            Instr::LWf { ft, s, off } => format!("    lw $f{}, {}(${})",ft,off,s),
+            Instr::SWf { ft, s, off } => format!("    sw $f{}, {}(${})",ft,off,s),
+            _ => format!("    !!!unsupported_instr!!!!"),
+        }
+    }
     pub fn getbytes(&self) -> [u8; 4] {
         //命令をバイト列に変換 （[u8; 4]は8ビット整数が4つ（＝4バイト＝32bit）入った配列のこと）
         match self {
@@ -207,7 +278,7 @@ impl Instr {
             _ => [255, 255, 255, 255], //not implemented yet
         }
     }
-    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
+    pub fn from_s(ir: &str, PC_map: &HashMap<String, usize>) -> Result<Self, String> {
         //命令パーサー。文字列（アセンブリ）を読み込んで命令データに
         let mut ir = ir.split_whitespace();
         let mut opcode = ir.next().unwrap();
@@ -396,7 +467,7 @@ impl Instr {
             }
 
             "beq" => {
-                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                let (s, t, target) = parse2reg_PC(&ir, PC_map)?;
                 Ok(Instr::BEQ {
                     s: s,
                     t: t,
@@ -405,42 +476,42 @@ impl Instr {
             }
 
             "bgez" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BGEZ {
                     s: s,
                     target: target,
                 })
             }
             "bgezal" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BGEZAL {
                     s: s,
                     target: target,
                 })
             }
             "bgtz" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BGTZ {
                     s: s,
                     target: target,
                 })
             }
             "blez" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BLEZ {
                     s: s,
                     target: target,
                 })
             }
             "bltz" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BLTZ {
                     s: s,
                     target: target,
                 })
             }
             "bltzal" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BLTZAL {
                     s: s,
                     target: target,
@@ -448,7 +519,7 @@ impl Instr {
             }
 
             "bne" => {
-                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                let (s, t, target) = parse2reg_PC(&ir, PC_map)?;
                 Ok(Instr::BNE {
                     s: s,
                     t: t,
@@ -457,21 +528,21 @@ impl Instr {
             }
 
             "li" => {
-                let (t, target) = parse1reg_label(&ir, label_map)?;
+                let (t, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::ORI {t: t, s: 0, im: (target << 2) as i32})
             }
             "j" => {
-                let label_name = ir.get(0).ok_or("No label")?;
-                let addr = label_map
-                    .get(&(label_name.to_string() + ":"))
-                    .ok_or("Invalid label name")?;
+                let PC_name = ir.get(0).ok_or("No PC")?;
+                let addr = PC_map
+                    .get(&(PC_name.to_string() + ":"))
+                    .ok_or("Invalid PC name")?;
                 Ok(Instr::J { target: *addr })
             }
             "jal" => {
-                let label_name = ir.get(0).ok_or("No label")?;
-                let addr = label_map
-                    .get(&(label_name.to_string() + ":"))
-                    .ok_or("Invalid label name")?;
+                let PC_name = ir.get(0).ok_or("No PC")?;
+                let addr = PC_map
+                    .get(&(PC_name.to_string() + ":"))
+                    .ok_or("Invalid PC name")?;
                 Ok(Instr::JAL { target: *addr })
             }
             "jr" => {
@@ -601,101 +672,106 @@ impl Instr {
             x => Err(format!("no such opcode: {}", x)),
         }
     }
+    pub fn disassemble(encoded_instruction: u32) -> Result<(Instr,Option<usize>), String> {
+        if encoded_instruction == 62 {
+            return Ok((Instr::NOOP, None));
+        }
+        if encoded_instruction == 63 {
+            return Ok((Instr::EOF, None));
+        }
+        
+        let op = (encoded_instruction >> 26) as usize;
+        let op_upper = (op >> 3) & BITMASK!(3);
+        let op_lower = op & BITMASK!(3);
+    
+        let rs = ((encoded_instruction >> 21) & BITMASK!(5)) as usize;
+    
+        let rt = ((encoded_instruction >> 16) & BITMASK!(5)) as usize;
+        let rt_upper = rt >> 3;
+        let rt_lower = rt & BITMASK!(3);
+    
+        let rd = ((encoded_instruction >> 11) & BITMASK!(5)) as usize;
+        let sa = ((encoded_instruction >> 6) & BITMASK!(5)) as usize;
+    
+        let funct = (encoded_instruction & BITMASK!(6)) as usize;
+        let funct_upper = (funct >> 3) & BITMASK!(3);
+        let funct_lower = funct & BITMASK!(3);
+    
+        let imm: i32 = (encoded_instruction & BITMASK!(16)) as i32;
+        print!("{:2}\n",encoded_instruction);
+        // Tricky business: two's complement 26-bit
+        let mut target: usize = (encoded_instruction & BITMASK!(26)) as usize;
+        return match op {
+            2 => Ok((Instr::J{target: target},Some(target))),
+            3 => Ok((Instr::JAL{target: target},Some(target))),
+            4 => Ok((Instr::BEQ{t:rt, s:rs, target: imm as usize},Some(imm as usize))),
+            5 => Ok((Instr::BNE{t:rt, s:rs, target: imm as usize},Some(imm as usize))),
+            6 => Ok((Instr::BLEZ{s:rs, target: imm as usize},Some(imm as usize))),
+            7 => Ok((Instr::BGTZ{s:rs, target: imm as usize},Some(imm as usize))),
+            8 => Ok((Instr::ADDI{t:rt, s:rs, im: imm},None)),
+            9 => Ok((Instr::ADDIU{t:rt, s:rs, im: imm},None)),
+            10 => Ok((Instr::SLTI{t:rt, s:rs, im: imm},None)),
+            11 => Ok((Instr::SLTIU{t:rt, s:rs, im: imm},None)),
+            12 => Ok((Instr::ANDI{t:rt, s:rs, im: imm},None)),
+            13 => Ok((Instr::ORI{t:rt, s:rs, im: imm},None)),
+            14 => Ok((Instr::XORI{t:rt, s:rs, im: imm},None)),
+            15 => Ok((Instr::LUI{t:rt, im: imm},None)),
+            0 => Ok((match funct {
+                0  => Instr::SLL{d: rd, h: sa, t: rt},
+                2  => Instr::SRL{d: rd, h: sa, t: rt},
+                3  => Instr::SRA{d: rd, h: sa, t: rt},
+                4  => Instr::SLLV{d: rd, s: rs, t: rt},
+                6  => Instr::SRLV{d: rd, s: rs, t: rt},
+                //7  => Instr::SRAV{d: rd, s: rs, t: rt},
+                8  => Instr::JR{s: rs},
+                24 => Instr::MULT{d: rd, s: rs, t: rt},
+                26 => Instr::DIV{d: rd, s: rs, t: rt},
+                32 => Instr::ADD{d: rd, s: rs, t: rt},
+                33 => Instr::ADDU{d: rd, s: rs, t: rt},
+                34 => Instr::SUB{d: rd, s: rs, t: rt},
+                35 => Instr::SUBU{d: rd, s: rs, t: rt},
+                36 => Instr::AND{d: rd, s: rs, t: rt},
+                37 => Instr::OR{d: rd, s: rs, t: rt},
+                38 => Instr::XOR{d: rd, s: rs, t: rt},
+                //39 => Instr::NOR{d: rd, s: rs, t: rt},
+                42 => Instr::SLT{d: rd, s: rs, t: rt},
+                43 => Instr::SLTU{d: rd, s: rs, t: rt},
+                _ => panic!(format!("unknown instr bit: {:b}",encoded_instruction))
+            },None)),
+            17 => Ok((match rs {
+                _ => match funct{//なぜ？
+                    0  => Instr::ADDf{fd: sa, fs: rd, ft: rt},
+                    1  => Instr::SUBf{fd: sa, fs: rd, ft: rt},
+                    2  => Instr::MULf{fd: sa, fs: rd, ft: rt},
+                    3  => Instr::INVf{fd: sa, fs: rd},//本来はdiv?
+                    5  => Instr::ABSf{fd: sa, fs: rd},//本来はdiv?
+                    7  => Instr::NEGf{fd: sa, fs: rd},//本来はdiv?
+                    4  => Instr::SQRTf{fd: sa, fs: rd},//本来はdiv?
+                    8  => Instr::FTOI{d: sa, fs: rd},
+                    9  => Instr::ITOF{fd: sa, s: rd},
+                    50 => Instr::EQf{d: sa, fs: rd, ft: rt},
+                    52 => Instr::LTf{d: sa, fs: rd, ft: rt},
+                    54 => Instr::LEf{d: sa, fs: rd, ft: rt},
+                    _ => panic!(format!("unknown fpu instr: {:b}",encoded_instruction))
+                }
+                _ => panic!(format!("unknown fpu instr rs: {:b}",encoded_instruction))
+            },None)),
+            31 => Ok((Instr::LUIf{ft: rt, im: imm},None)),
+            35 => Ok((Instr::LW{t: rt, s: rs, off: imm},None)),
+            43 => Ok((Instr::SW{t: rt, s: rs, off: imm},None)),
+            49 => Ok((Instr::LWf{ft: rt, s: rs, off: imm},None)),
+            57 => Ok((Instr::SWf{ft: rt, s: rs, off: imm},None)),
+            62 => Ok((Instr::IN{s: rs},None)),
+            63 => Ok((Instr::OUT{s: rs},None)),
+            
+            _ => panic!(format!("unknown instr: {:b},opcode:{}",encoded_instruction,op))
+        }
+    }
+    
 }
 ///////////////////////////////////////////////
 
 
-macro_rules! BITMASK(
-    ($n:expr) => (
-        ((1 << $n) - 1)
-    );
-);
-pub fn disassemble(encoded_instruction: u32) -> Result<Instr, String> {
-    if encoded_instruction == 62 {
-        return Ok(Instr::NOOP);
-    }
-    let op = (encoded_instruction >> 26) as usize;
-    let op_upper = (op >> 3) & BITMASK!(3);
-    let op_lower = op & BITMASK!(3);
-
-    let rs = ((encoded_instruction >> 21) & BITMASK!(5)) as usize;
-
-    let rt = ((encoded_instruction >> 16) & BITMASK!(5)) as usize;
-    let rt_upper = rt >> 3;
-    let rt_lower = rt & BITMASK!(3);
-
-    let rd = ((encoded_instruction >> 11) & BITMASK!(5)) as usize;
-    let sa = ((encoded_instruction >> 6) & BITMASK!(5)) as usize;
-
-    let funct = (encoded_instruction & BITMASK!(6)) as usize;
-    let funct_upper = (funct >> 3) & BITMASK!(3);
-    let funct_lower = funct & BITMASK!(3);
-
-    let imm: i32 = (encoded_instruction & BITMASK!(16)) as i32;
-
-    // Tricky business: two's complement 26-bit
-    let mut target: usize = (encoded_instruction & BITMASK!(26)) as usize;
-    let ir = match op {
-        2 => Instr::J{target: target},
-        3 => Instr::JAL{target: target},
-        4 => Instr::BEQ{t:rt, s:rs, target: imm as usize},
-        5 => Instr::BNE{t:rt, s:rs, target: imm as usize},
-        6 => Instr::BLEZ{s:rs, target: imm as usize},
-        7 => Instr::BGTZ{s:rs, target: imm as usize},
-        8 => Instr::ADDI{t:rt, s:rs, im: imm},
-        9 => Instr::ADDIU{t:rt, s:rs, im: imm},
-        10 => Instr::SLTI{t:rt, s:rs, im: imm},
-        11 => Instr::SLTIU{t:rt, s:rs, im: imm},
-        12 => Instr::ANDI{t:rt, s:rs, im: imm},
-        13 => Instr::ORI{t:rt, s:rs, im: imm},
-        14 => Instr::XORI{t:rt, s:rs, im: imm},
-        15 => Instr::LUI{t:rt, im: imm},
-        0 => match funct {
-            0  => Instr::SLL{d: rd, h: sa, t: rt},
-            2  => Instr::SRL{d: rd, h: sa, t: rt},
-            3  => Instr::SRA{d: rd, h: sa, t: rt},
-            4  => Instr::SLLV{d: rd, s: rs, t: rt},
-            6  => Instr::SRLV{d: rd, s: rs, t: rt},
-            //7  => Instr::SRAV{d: rd, s: rs, t: rt},
-            8  => Instr::JR{s: rs},
-            24 => Instr::MULT{d: rd, s: rs, t: rt},
-            26 => Instr::DIV{d: rd, s: rs, t: rt},
-            32 => Instr::ADD{d: rd, s: rs, t: rt},
-            33 => Instr::ADDU{d: rd, s: rs, t: rt},
-            34 => Instr::SUB{d: rd, s: rs, t: rt},
-            35 => Instr::SUBU{d: rd, s: rs, t: rt},
-            36 => Instr::AND{d: rd, s: rs, t: rt},
-            37 => Instr::OR{d: rd, s: rs, t: rt},
-            38 => Instr::XOR{d: rd, s: rs, t: rt},
-            //39 => Instr::NOR{d: rd, s: rs, t: rt},
-            42 => Instr::SLT{d: rd, s: rs, t: rt},
-            43 => Instr::SLTU{d: rd, s: rs, t: rt},
-            _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
-        },
-        17 => match rs {
-            0 => match funct{
-                0  => Instr::ADDf{fd: sa, fs: rd, ft: rt},
-                1  => Instr::SUBf{fd: sa, fs: rd, ft: rt},
-                2  => Instr::MULf{fd: sa, fs: rd, ft: rt},
-                //3  => Instr::DIVf{fd: sa, fs: rd, ft: rt},
-                8  => Instr::FTOI{d: sa, fs: rd},
-                9  => Instr::ITOF{fd: sa, s: rd},
-                50 => Instr::EQf{d: sa, fs: rd, ft: rt},
-                52 => Instr::LTf{d: sa, fs: rd, ft: rt},
-                54 => Instr::LEf{d: sa, fs: rd, ft: rt},
-                _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
-            }
-            _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
-        }
-        35 => Instr::LW{t: rt, s: rs, off: imm},
-        43 => Instr::SW{t: rt, s: rs, off: imm},
-        49 => Instr::LWf{ft: rt, s: rs, off: imm},
-        57 => Instr::SWf{ft: rt, s: rs, off: imm},
-        
-        _ => panic!(format!("unknown instr: {:b}",encoded_instruction))
-    };
-    return Ok(ir);
-}
 
 
 
@@ -774,29 +850,29 @@ fn parse1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
         Ok((parse_reg(&ir[0])?, im))
     }
 }
-fn parse1reg_label(
+fn parse1reg_PC(
     ir: &Vec<&str>,
-    label_map: &HashMap<String, usize>,
+    PC_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
-        let addr = label_map
+        let addr = PC_map
             .get(&(ir[1].to_string() + ":"))
-            .ok_or("Invalid label name")?;
+            .ok_or("Invalid PC name")?;
         Ok((parse_reg(&ir[0])?, *addr))
     }
 }
-fn parse2reg_label(
+fn parse2reg_PC(
     ir: &Vec<&str>,
-    label_map: &HashMap<String, usize>,
+    PC_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize, usize), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
-        let addr = label_map
+        let addr = PC_map
             .get(&(ir[2].to_string() + ":"))
-            .ok_or("Invalid label name")?;
+            .ok_or("Invalid PC name")?;
         Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, *addr))
     }
 }

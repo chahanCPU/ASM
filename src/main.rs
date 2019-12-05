@@ -7,18 +7,33 @@ use std::io::{BufRead, BufReader, BufWriter, Write};
 mod instr;
 use instr::Instr;
 mod computer;
+use std::thread;
 use computer::Computer;
 use std::collections::HashSet;
 fn main() {
-
     let arg_array:Vec<String> =  env::args().collect();
-    if arg_array.len() < 3 {
-        panic!("too few arguments!")
+    if arg_array.len() < 2 {
+        panic!("No arguments!")
     }else {
-        asm(arg_array[1].clone(),arg_array[2].clone())
+        // スレッド生成器の準備
+    let builder = thread::Builder::new();
+
+    // スタックサイズを指定してスレッドを生成する
+    let th = builder.stack_size(10000000);
+
+    // 実行
+    let handle = th.spawn(move || {
+        asm(arg_array[1].clone(),arg_array.get(2))
+    }).unwrap();
+    let _ = handle.join();
+    
+        
     }
+    
+
+    
 }
-fn asm(filename: String,in_filename: String) {//アセンブラ&シミュレータ
+fn asm(filename: String,in_filename: Option<&String>) {//アセンブラ&シミュレータ
     let mut addr: usize = 0;
     let mut label_map = HashMap::new();//ラベルとアドレスの対応のためのハッシュマップ
     for result in BufReader::new(File::open(&filename).unwrap()).lines() {//まず各命令を読み込む前に

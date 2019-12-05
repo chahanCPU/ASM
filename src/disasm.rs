@@ -15,73 +15,30 @@ fn main() {
         Some(file_path) => disasm(file_path),
     }
 }
-fn disasm(filename: String) {//アセンブラ&シミュレータ
-    let mut addr: usize = 0;
-    let mut label_map = HashMap::new();//ラベルとアドレスの対応のためのハッシュマップ
-    for result in BufReader::new(File::open(&filename).unwrap()).lines() {//まず各命令を読み込む前に
-        let s = result.unwrap();
-        let l = trim_space_comment(&s);
-        if l.ends_with(":") {
-            label_map.insert(l.to_string(), addr);
-        } else if !is_blank(l) {
-            addr += 1;
-        }
-    }
-    let mut writer =
-        BufWriter::new(File::create(format!("{}.binary", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
-    let mut writer2 =
-        BufWriter::new(File::create(format!("{}.bintext", filename)).expect("cannot create file"));//こっちに0と1で書いたテキストデータを出力（こっち使う）
-        writer2.write("00000000\n".as_bytes()).unwrap();
-        writer2.write("10101010\n".as_bytes()).unwrap();
-        writer.write("00aa".as_bytes()).unwrap();
-    
-    let mut irs : Vec<Instr>=Vec::new();//命令
-    let mut count:usize = 0;
-    let mut bpoints : HashSet<usize>=HashSet::new();
-    for (i, result) in BufReader::new(File::open(&filename).unwrap())
-        .lines()
-        .enumerate()
-    {
-        let s = result.unwrap();
-        let mut l = trim_space_comment(&s);
-        if l.ends_with(":") || l == "" {
-            continue;
-        }
-        if l.starts_with("!"){
-            bpoints.insert(count);
-            l = &l[1..]
-        }
-        match Instr::from_s(l, &label_map) {
-            Err(er) => {
-                //writer2.write("!!!!error!!!!\n".as_bytes()).expect("cannot write bintext");
-                println!("error in line {}: {}\n", i + 1, er);break;},
-            Ok(ir) => {
-                let bytes = ir.getbytes();
-                writer.write(&format!("{:0>2x}{:0>2x}{:0>2x}{:0>2x}",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
-                writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
-                println!("{:>3}:{}", count,ir);
-                irs.push(ir);
-            }
-        }
-        count += 1;
-    }
-    let bytes = (Instr::EOF).getbytes();
-    writer.write(&format!("{:0>2x}{:0>2x}{:0>2x}{:0>2x}",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
-    writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
-                
-    drop(writer);
-    drop(writer2);
-    
-    //let mut cpu : Computer = Computer::new(irs, bpoints, filename);
-    //cpu.run();
-}
 
-fn trim_space_comment(ir: &str) -> &str {
-    ir.trim_start().trim_end().splitn(2, "#").next().unwrap().trim_end()
-}
-fn is_blank(ir: &str) -> bool {
-    match ir.trim_start().chars().next() {
-        None => true,
-        _ => false,
+fn disasm(filename: String) {//アセンブラ&シミュレータ
+    let mut writer =
+        BufWriter::new(File::create(format!("{}.disasm.s", filename)).expect("cannot create file"));//こっちにバイナリを出力（多分使わない）
+    let bindata:Vec<u32>= std::fs::read_to_string(filename).unwrap().split_whitespace().map(|s| u32::from_str_radix(s,2).unwrap()).collect();
+    let asm_len = (bindata.len()-2) / 4;
+    let mut irvec = Vec::new();
+    let mut label_vec = Vec::new();
+    println!("{:?}",bindata);
+    for x in 0..asm_len {
+        let (ir,require_label) = Instr::disassemble((bindata[4*x+2]<<24) + (bindata[4*x+3]<<16) + (bindata[4*x+4]<<8) + bindata[4*x+5]).unwrap();
+        irvec.push(ir.to_str());
+        match require_label {
+            Some(addr) => {label_vec.push(addr)},
+            _ => {}
+        }
+        
+    }
+    for x in 0..irvec.len(){
+        if label_vec.contains(&x){
+            writer.write(format!("PC{}:\n",x<<2).as_bytes());
+        }
+        writer.write(irvec[x].as_bytes());
+        writer.write("\n".as_bytes());
+        writer.flush();
     }
 }

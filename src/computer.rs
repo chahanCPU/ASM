@@ -8,7 +8,7 @@ use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write, BufReader, Read};
 use std::mem;
-const MEM_SIZE: usize = 111000; //バイト数はこの4倍。300000くらいまでならRustのスタックサイズで足りる
+const MEM_SIZE: usize = 2000000; //バイト数はこの4倍。300000くらいまでならRustのスタックサイズで足りる
 macro_rules! fg_green {
     ($text:expr) => {
         concat!("\x1b[32m", $text, "\x1b[39m")
@@ -63,9 +63,15 @@ pub struct Computer {
     
 }
 impl Computer {
-    pub fn new(irs: Vec<Instr>, bpoints: HashSet<usize>, filename: String, in_filename: String) -> Computer {
-        let content = std::fs::read_to_string(in_filename).unwrap();
-        let indata_8bit:Vec<i32>= content.split_whitespace().map(|s| i32::from_str_radix(s,16).unwrap()).collect();
+    pub fn new(irs: Vec<Instr>, bpoints: HashSet<usize>, filename: String, in_filename: Option<&String>) -> Computer {
+        let mut indata_8bit=Vec::new();
+        match in_filename{
+            Some(filepath) => {
+                let content = std::fs::read_to_string(filepath).unwrap();
+                indata_8bit = content.split_whitespace().map(|s| i32::from_str_radix(s,16).unwrap()).collect();
+            }
+            _ => {}
+        }
         /*let mut in_data: Vec<u32>=Vec::new();
         for x in 0..(indata_8bit.len() / 4) {
             in_data.push((indata_8bit[4*x]<<24 + indata_8bit[4*x+1]<<16 + indata_8bit[4*x+2]<<8 + indata_8bit[4*x+3]) as u32);
@@ -89,7 +95,8 @@ impl Computer {
             in_data: indata_8bit,
             indata_count: 0,
         };
-        c.ireg[29] = 0;
+        c.ireg[28] = 2000000;//stack pointer バイト数
+        c.ireg[29] = 48;//stack pointer
         c
     }
     pub fn run(&mut self) {
