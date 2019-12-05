@@ -10,12 +10,15 @@ mod computer;
 use computer::Computer;
 use std::collections::HashSet;
 fn main() {
-    match env::args().nth(1) {
-        None => panic!("No arguments!"),
-        Some(file_path) => asm(file_path),
+
+    let arg_array:Vec<String> =  env::args().collect();
+    if arg_array.len() < 3 {
+        panic!("too few arguments!")
+    }else {
+        asm(arg_array[1].clone(),arg_array[2].clone())
     }
 }
-fn asm(filename: String) {//アセンブラ&シミュレータ
+fn asm(filename: String,in_filename: String) {//アセンブラ&シミュレータ
     let mut addr: usize = 0;
     let mut label_map = HashMap::new();//ラベルとアドレスの対応のためのハッシュマップ
     for result in BufReader::new(File::open(&filename).unwrap()).lines() {//まず各命令を読み込む前に
@@ -65,6 +68,7 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
         }
         count += 1;
     }
+    
     let bytes = (Instr::EOF).getbytes();
     writer.write(&format!("{:0>2x}{:0>2x}{:0>2x}{:0>2x}",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
     writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
@@ -72,7 +76,7 @@ fn asm(filename: String) {//アセンブラ&シミュレータ
     drop(writer);
     drop(writer2);
     
-    let mut cpu : Computer = Computer::new(irs, bpoints, filename);
+    let mut cpu : Computer = Computer::new(irs, bpoints, filename, in_filename);
     cpu.run();
 }
 

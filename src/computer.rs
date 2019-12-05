@@ -6,7 +6,7 @@ use ansi_term::Colour;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io;
-use std::io::{BufWriter, Write};
+use std::io::{BufWriter, Write, BufReader, Read};
 use std::mem;
 const MEM_SIZE: usize = 111000; //バイト数はこの4倍。300000くらいまでならRustのスタックサイズで足りる
 macro_rules! fg_green {
@@ -58,11 +58,23 @@ pub struct Computer {
     changed_reg: [bool; 32],
     arg_ireg: [isize; 32],
     arg_freg: [isize; 32],
+    in_data: Vec<i32>,
+    indata_count: usize,
+    
 }
 impl Computer {
-    pub fn new(irs: Vec<Instr>, bpoints: HashSet<usize>, filename: String) -> Computer {
+    pub fn new(irs: Vec<Instr>, bpoints: HashSet<usize>, filename: String, in_filename: String) -> Computer {
+        let content = std::fs::read_to_string(in_filename).unwrap();
+        let indata_8bit:Vec<i32>= content.split_whitespace().map(|s| i32::from_str_radix(s,16).unwrap()).collect();
+        /*let mut in_data: Vec<u32>=Vec::new();
+        for x in 0..(indata_8bit.len() / 4) {
+            in_data.push((indata_8bit[4*x]<<24 + indata_8bit[4*x+1]<<16 + indata_8bit[4*x+2]<<8 + indata_8bit[4*x+3]) as u32);
+        }
+        println!("{:?}", in_data);
+        */
         let writer =
             BufWriter::new(File::create(format!("{}.res", filename)).expect("cannot create file")); //こっちにバイナリを出力（多分使わない）
+            
         let mut c = Computer {
             ireg: [0; 32],
             freg: [0.0; 32],
@@ -74,6 +86,8 @@ impl Computer {
             changed_reg: [false; 32],
             arg_ireg: [0; 32],
             arg_freg: [0; 32],
+            in_data: indata_8bit,
+            indata_count: 0,
         };
         c.ireg[29] = 0;
         c
@@ -414,6 +428,11 @@ impl Computer {
                 self.pc = to_u(self.ireg[*s]);
             }
             Instr::NOOP => return true,
+            Instr::IN { s } => {
+                self.ireg[*s] = self.in_data[self.indata_count];
+                self.indata_count += 1;
+                self.pc += 4;
+            }
             Instr::OUT { s } => {
                 //print!("!!!!!!!!OUT:{}\n", self.ireg[*s]);
                 //print!("!!!!!!!!OUTFLOAT:{}\n", self.freg[*fs]);

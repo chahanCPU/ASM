@@ -72,8 +72,8 @@ fn disasm(filename: String) {//アセンブラ&シミュレータ
     drop(writer);
     drop(writer2);
     
-    let mut cpu : Computer = Computer::new(irs, bpoints, filename);
-    cpu.run();
+    //let mut cpu : Computer = Computer::new(irs, bpoints, filename);
+    //cpu.run();
 }
 
 fn trim_space_comment(ir: &str) -> &str {
