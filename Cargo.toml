@@ -13,6 +13,9 @@ ansi_term = "0.12"
 [[bin]]
 name = "disasm"
 path = "src/disasm.rs"
+[[bin]]
+name = "sld2indata"
+path = "src/sld2indata.rs"
 
 [[bin]]
 name = "asm"

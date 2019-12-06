@@ -828,7 +828,7 @@ fn parse2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
         Err(String::from("too few arguments"))
     } else {
         let im = ir[2].parse().unwrap_or_else(|_| {
-            u16::from_str_radix(&(ir[2])[2..], 16).expect("invalid hex value(overflow?)") as i16
+            u16::from_str_radix(&(ir[2])[2..], 16).expect("invalid hex value(overflow?)") as i16 as i32
         }); //遅延評価に
         if im < -32768 || im > 32767 {
             return Err(String::from("offset decimal overflow\n"));
@@ -842,7 +842,7 @@ fn parse1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
         Err(String::from("too few arguments"))
     } else {
         let im = ir[1].parse().unwrap_or_else(|_| {
-            u16::from_str_radix(&(ir[1])[2..], 16).expect("invalid hex value(overflow?)") as i16
+            u16::from_str_radix(&(ir[1])[2..], 16).expect("invalid hex value(overflow?)") as i16 as i32
         }); //遅延評価に
         if im < -32768 || im > 32767 {
             return Err(String::from("offset decimal overflow\n"));
@@ -953,10 +953,10 @@ fn parse_reg(name: &str) -> Result<usize, String> {
         _ => {
             if name.starts_with("$f") {
                 let reg: usize = name[2..].parse().expect("invalid float register");
-                if reg > 32 {
+                if reg > 31 {
                     return Err(String::from("Invalid float register name(too big): ") + name);
                 };
-                Ok(reg + 31)
+                Ok(reg + 32)
             } else {
                 Err(String::from("Invalid register name: ") + name)
             }

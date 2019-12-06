@@ -113,7 +113,7 @@ impl Computer {
             count += 1;
             */
 
-            /*
+            
             //debug/////////////////////////////////
             self.arg_ireg = [0; 32];
             self.arg_freg = [0; 32];
@@ -121,6 +121,8 @@ impl Computer {
             if self.bpoints.contains(&(self.pc >> 2)) || flag {
                 flag = false;
                 self.print_stat();
+                let ir = irmemory[self.pc >> 2].clone();
+                println!("{}",ir);
                 match ir {
                     Instr::ADD { d, s, t }
                     | Instr::SUB { d, s, t }
@@ -225,7 +227,8 @@ impl Computer {
                 buf.clear();
             }
             //debug/////////////////////////////////
-*/
+
+            
             
             if self.run_ir(&irmemory[self.pc >> 2]) {
                 break;
@@ -281,6 +284,7 @@ impl Computer {
             .clone()
     }*/
     fn run_ir(&mut self, ir: &Instr) -> bool {
+        //println!("{}",ir);
         match ir {
             Instr::ADD { d, s, t } => {
                 self.ireg[*d] = self.ireg[*s] + self.ireg[*t];

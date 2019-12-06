@@ -8,6 +8,10 @@ min_caml_start:
 	lw	$ra, 4($sp)
 	ori	$3, $zero, 0
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 0($sp)
@@ -47,6 +51,10 @@ min_caml_start:
 	lw	$ra, 4($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 4($sp)
@@ -58,6 +66,10 @@ min_caml_start:
 	lw	$ra, 12($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 8($sp)
@@ -69,6 +81,10 @@ min_caml_start:
 	lw	$ra, 12($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 12($sp)
@@ -80,6 +96,10 @@ min_caml_start:
 	lw	$ra, 20($sp)
 	ori	$3, $zero, 1
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 16($sp)
@@ -129,6 +149,10 @@ min_caml_start:
 	lw	$ra, 36($sp)
 	ori	$3, $zero, 1
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 36($sp)
@@ -150,7 +174,10 @@ min_caml_start:
 	lw	$ra, 44($sp)
 	ori	$3, $zero, 1
 	lui	$at, 0x4e6e		# 1000000000.000000の上位16bits
-	ori	$at, $at, 0x6b28		# 1000000000.000000の下位16bits
+	lui	$0, 0x6b28		# 1000000000.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 44($sp)
@@ -162,6 +189,10 @@ min_caml_start:
 	lw	$ra, 52($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 48($sp)
@@ -183,6 +214,10 @@ min_caml_start:
 	lw	$ra, 60($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 56($sp)
@@ -194,6 +229,10 @@ min_caml_start:
 	lw	$ra, 60($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 60($sp)
@@ -205,6 +244,10 @@ min_caml_start:
 	lw	$ra, 68($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 64($sp)
@@ -216,6 +259,10 @@ min_caml_start:
 	lw	$ra, 68($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 68($sp)
@@ -247,6 +294,10 @@ min_caml_start:
 	lw	$ra, 84($sp)
 	ori	$3, $zero, 1
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 80($sp)
@@ -258,6 +309,10 @@ min_caml_start:
 	lw	$ra, 84($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 84($sp)
@@ -269,6 +324,10 @@ min_caml_start:
 	lw	$ra, 92($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 88($sp)
@@ -280,6 +339,10 @@ min_caml_start:
 	lw	$ra, 92($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 92($sp)
@@ -291,6 +354,10 @@ min_caml_start:
 	lw	$ra, 100($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 96($sp)
@@ -302,6 +369,10 @@ min_caml_start:
 	lw	$ra, 100($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 100($sp)
@@ -313,6 +384,10 @@ min_caml_start:
 	lw	$ra, 108($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 104($sp)
@@ -324,6 +399,10 @@ min_caml_start:
 	lw	$ra, 108($sp)
 	ori	$3, $zero, 0
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 108($sp)
@@ -365,6 +444,10 @@ min_caml_start:
 	lw	$ra, 116($sp)
 	ori	$3, $zero, 0
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 116($sp)
@@ -376,6 +459,10 @@ min_caml_start:
 	lw	$ra, 124($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 120($sp)
@@ -403,6 +490,10 @@ min_caml_start:
 	or	$2, $zero, $3
 	ori	$3, $zero, 0
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 128($sp)
@@ -429,6 +520,10 @@ min_caml_start:
 	ori	$3, $zero, 180
 	ori	$4, $zero, 0
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	or	$5, $zero, $gp
@@ -1033,6 +1128,10 @@ tmp.8948:
 	noop
 fless.2576:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	add.s	$f2, $f2, $f4
@@ -1045,6 +1144,10 @@ bgtz_else.8949:
 	jr	$ra
 fispos.2579:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f2, $f3
@@ -1056,6 +1159,10 @@ bgtz_else.8950:
 	jr	$ra
 fisneg.2581:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
@@ -1067,6 +1174,10 @@ bgtz_else.8951:
 	jr	$ra
 fiszero.2583:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.eq.s	$at, $f2, $f3
@@ -1078,6 +1189,10 @@ bgtz_else.8952:
 	jr	$ra
 fhalf.2588:
 	lui	$at, 0x3f00		# 0.500000の上位16bits
+	lui	$0, 0x0		# 0.500000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
@@ -1087,6 +1202,10 @@ fsqr.2590:
 	jr	$ra
 fabs.2592:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
@@ -1111,6 +1230,10 @@ floor.2596:
 	addi	$sp, $sp, -8
 	lw	$ra, 4($sp)
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw.s	$f4, 0($sp)
@@ -1124,6 +1247,10 @@ bgtz_else.8954:
 	jr	$ra
 bgtz_else.8955:
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
@@ -1131,17 +1258,31 @@ bgtz_else.8955:
 taylor_cos.2598:
 	mul.s	$f2, $f2, $f2
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lui	$at, 0x3f00		# 0.500000の上位16bits
+	lui	$0, 0x0		# 0.500000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	lui	$at, 0x3d2a		# 0.041664の上位16bits
-	ori	$at, $at, 0xa789		# 0.041664の下位16bits
+	lui	$0, 0xa789		# 0.041664の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f5, 4($zero)
 	lui	$at, 0x3ab3		# 0.001370の上位16bits
-	ori	$at, $at, 0x8106		# 0.001370の下位16bits
+	lui	$0, 0x8106		# 0.001370の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f6, 4($zero)
 	mul.s	$f6, $f2, $f6
@@ -1154,18 +1295,31 @@ taylor_cos.2598:
 taylor_sin.2600:
 	mul.s	$f3, $f2, $f2
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	lui	$at, 0x3e2a		# 0.166667の上位16bits
-	ori	$at, $at, 0xaaac		# 0.166667の下位16bits
+	lui	$0, 0xaaac		# 0.166667の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f5, 4($zero)
 	lui	$at, 0x3c08		# 0.008333の上位16bits
-	ori	$at, $at, 0x8666		# 0.008333の下位16bits
+	lui	$0, 0x8666		# 0.008333の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f6, 4($zero)
 	lui	$at, 0x394d		# 0.000196の上位16bits
-	ori	$at, $at, 0x64b6		# 0.000196の下位16bits
+	lui	$0, 0x64b6		# 0.000196の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f7, 4($zero)
 	mul.s	$f7, $f3, $f7
@@ -1178,61 +1332,92 @@ taylor_sin.2600:
 	jr	$ra
 cos.2602:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8956
 	lui	$at, 0x40c9		# 6.283185の上位16bits
-	ori	$at, $at, 0xfdb		# 6.283185の下位16bits
+	lui	$0, 0xfdb		# 6.283185の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f2, $f3
 	blez	$at, bgtz_else.8957
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8958
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8959
 	lui	$at, 0x4016		# 2.356194の上位16bits
-	ori	$at, $at, 0xcbe4		# 2.356194の下位16bits
+	lui	$0, 0xcbe4		# 2.356194の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8960
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
 	j	taylor_cos.2598
 bgtz_else.8960:
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
 	j	taylor_sin.2600
 bgtz_else.8959:
 	lui	$at, 0x3f49		# 0.785398の上位16bits
-	ori	$at, $at, 0xfdb		# 0.785398の下位16bits
+	lui	$0, 0xfdb		# 0.785398の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8961
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
@@ -1253,19 +1438,28 @@ bgtz_else.8961:
 	jr	$ra
 bgtz_else.8958:
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8962
 	lui	$at, 0x4016		# 2.356194の上位16bits
-	ori	$at, $at, 0xcbe4		# 2.356194の下位16bits
+	lui	$0, 0xcbe4		# 2.356194の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8963
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
@@ -1278,7 +1472,10 @@ bgtz_else.8958:
 	jr	$ra
 bgtz_else.8963:
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
@@ -1291,13 +1488,19 @@ bgtz_else.8963:
 	jr	$ra
 bgtz_else.8962:
 	lui	$at, 0x3f49		# 0.785398の上位16bits
-	ori	$at, $at, 0xfdb		# 0.785398の下位16bits
+	lui	$0, 0xfdb		# 0.785398の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8964
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
@@ -1306,7 +1509,10 @@ bgtz_else.8964:
 	j	taylor_cos.2598
 bgtz_else.8957:
 	lui	$at, 0x40c9		# 6.283185の上位16bits
-	ori	$at, $at, 0xfdb		# 6.283185の下位16bits
+	lui	$0, 0xfdb		# 6.283185の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
@@ -1316,41 +1522,63 @@ bgtz_else.8956:
 	j	cos.2602
 sin.2604:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8965
 	lui	$at, 0x40c9		# 6.283185の上位16bits
-	ori	$at, $at, 0xfdb		# 6.283185の下位16bits
+	lui	$0, 0xfdb		# 6.283185の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f2, $f3
 	blez	$at, bgtz_else.8966
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8967
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8968
 	lui	$at, 0x4016		# 2.356194の上位16bits
-	ori	$at, $at, 0xcbe4		# 2.356194の下位16bits
+	lui	$0, 0xcbe4		# 2.356194の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8969
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
@@ -1363,7 +1591,10 @@ sin.2604:
 	jr	$ra
 bgtz_else.8969:
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
@@ -1376,13 +1607,19 @@ bgtz_else.8969:
 	jr	$ra
 bgtz_else.8968:
 	lui	$at, 0x3f49		# 0.785398の上位16bits
-	ori	$at, $at, 0xfdb		# 0.785398の下位16bits
+	lui	$0, 0xfdb		# 0.785398の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8970
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
@@ -1403,39 +1640,57 @@ bgtz_else.8970:
 	jr	$ra
 bgtz_else.8967:
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8971
 	lui	$at, 0x4016		# 2.356194の上位16bits
-	ori	$at, $at, 0xcbe4		# 2.356194の下位16bits
+	lui	$0, 0xcbe4		# 2.356194の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8972
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
 	j	taylor_sin.2600
 bgtz_else.8972:
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
 	j	taylor_cos.2598
 bgtz_else.8971:
 	lui	$at, 0x3f49		# 0.785398の上位16bits
-	ori	$at, $at, 0xfdb		# 0.785398の下位16bits
+	lui	$0, 0xfdb		# 0.785398の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8973
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
@@ -1444,7 +1699,10 @@ bgtz_else.8973:
 	j	taylor_sin.2600
 bgtz_else.8966:
 	lui	$at, 0x40c9		# 6.283185の上位16bits
-	ori	$at, $at, 0xfdb		# 6.283185の下位16bits
+	lui	$0, 0xfdb		# 6.283185の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
@@ -1461,30 +1719,52 @@ bgtz_else.8965:
 taylor_atan.2606:
 	mul.s	$f3, $f2, $f2
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	lui	$at, 0x3eaa		# 0.333333の上位16bits
-	ori	$at, $at, 0xaaaa		# 0.333333の下位16bits
+	lui	$0, 0xaaaa		# 0.333333の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f5, 4($zero)
 	lui	$at, 0x3e4c		# 0.200000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.200000の下位16bits
+	lui	$0, 0xcccd		# 0.200000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f6, 4($zero)
 	lui	$at, 0x3e12		# 0.142857の上位16bits
-	ori	$at, $at, 0x4925		# 0.142857の下位16bits
+	lui	$0, 0x4925		# 0.142857の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f7, 4($zero)
 	lui	$at, 0x3de3		# 0.111111の上位16bits
-	ori	$at, $at, 0x8e38		# 0.111111の下位16bits
+	lui	$0, 0x8e38		# 0.111111の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f8, 4($zero)
 	lui	$at, 0x3db7		# 0.089764の上位16bits
-	ori	$at, $at, 0xd66e		# 0.089764の下位16bits
+	lui	$0, 0xd66e		# 0.089764の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f9, 4($zero)
 	lui	$at, 0x3d75		# 0.060035の上位16bits
-	ori	$at, $at, 0xe7c5		# 0.060035の下位16bits
+	lui	$0, 0xe7c5		# 0.060035の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f10, 4($zero)
 	mul.s	$f10, $f10, $f3
@@ -1503,26 +1783,44 @@ taylor_atan.2606:
 	jr	$ra
 atan.2608:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8974
 	lui	$at, 0x3ee0		# 0.437500の上位16bits
+	lui	$0, 0x0		# 0.437500の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8975
 	lui	$at, 0x4016		# 2.356194の上位16bits
-	ori	$at, $at, 0xcbe4		# 2.356194の下位16bits
+	lui	$0, 0xcbe4		# 2.356194の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	c.le.s	$at, $f3, $f2
 	blez	$at, bgtz_else.8976
 	lui	$at, 0x3fc9		# 1.570796の上位16bits
-	ori	$at, $at, 0xfdb		# 1.570796の下位16bits
+	lui	$0, 0xfdb		# 1.570796の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	inv.s	$f1, $f2
@@ -1538,14 +1836,25 @@ atan.2608:
 	jr	$ra
 bgtz_else.8976:
 	lui	$at, 0x3f49		# 0.785398の上位16bits
-	ori	$at, $at, 0xfdb		# 0.785398の下位16bits
+	lui	$0, 0xfdb		# 0.785398の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	sub.s	$f4, $f2, $f4
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f5, 4($zero)
 	add.s	$f2, $f2, $f5
@@ -1602,16 +1911,28 @@ sgn.2645:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.8980
 	lui	$at, 0xbf80		# -1.000000の上位16bits
+	lui	$0, 0x0		# -1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	jr	$ra
 beq_else.8980:
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	jr	$ra
 beq_else.8979:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	jr	$ra
@@ -1641,6 +1962,10 @@ vecfill.2658:
 	jr	$ra
 vecbzero.2661:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	j	vecfill.2658
@@ -1700,6 +2025,10 @@ vecunit_sgn.2671:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.8988
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 16($sp)
@@ -1708,6 +2037,10 @@ vecunit_sgn.2671:
 	j	beq_cont.8989
 beq_else.8988:
 	lui	$at, 0xbf80		# -1.000000の上位16bits
+	lui	$0, 0x0		# -1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 16($sp)
@@ -1717,6 +2050,10 @@ beq_cont.8989:
 	j	beq_cont.8987
 beq_else.8986:
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.8987:
@@ -1939,7 +2276,10 @@ r_bright.2768:
 	jr	$ra
 rad.2770:
 	lui	$at, 0x3c8e		# 0.017453の上位16bits
-	ori	$at, $at, 0xfa35		# 0.017453の下位16bits
+	lui	$0, 0xfa35		# 0.017453の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
@@ -2028,12 +2368,20 @@ read_screen_settings.2772:
 	lw.s	$f3, 24($sp)
 	mul.s	$f4, $f3, $f2
 	lui	$at, 0x4348		# 200.000000の上位16bits
+	lui	$0, 0x0		# 200.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f5, 4($zero)
 	mul.s	$f4, $f4, $f5
 	lw	$2, 12($sp)
 	sw.s	$f4, 0($2)
 	lui	$at, 0xc348		# -200.000000の上位16bits
+	lui	$0, 0x0		# -200.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	lw.s	$f5, 28($sp)
@@ -2042,6 +2390,10 @@ read_screen_settings.2772:
 	lw.s	$f4, 36($sp)
 	mul.s	$f6, $f3, $f4
 	lui	$at, 0x4348		# 200.000000の上位16bits
+	lui	$0, 0x0		# 200.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f7, 4($zero)
 	mul.s	$f6, $f6, $f7
@@ -2049,6 +2401,10 @@ read_screen_settings.2772:
 	lw	$3, 8($sp)
 	sw.s	$f4, 0($3)
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f6, 4($zero)
 	sw.s	$f6, 4($3)
@@ -2393,6 +2749,10 @@ rotate_quadratic_matrix.2776:
 	lw	$2, 0($sp)
 	sw.s	$f2, 8($2)
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f4, 40($sp)
@@ -2415,6 +2775,10 @@ rotate_quadratic_matrix.2776:
 	lw	$2, 4($sp)
 	sw.s	$f2, 0($2)
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f6, 48($sp)
@@ -2431,6 +2795,10 @@ rotate_quadratic_matrix.2776:
 	mul.s	$f2, $f2, $f7
 	sw.s	$f2, 4($2)
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	mul.s	$f5, $f5, $f6
@@ -2478,6 +2846,10 @@ beq_else.8999:
 	lw	$ra, 20($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 20($sp)
@@ -2511,6 +2883,10 @@ beq_else.8999:
 	sw.s	$f2, 8($2)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	or	$2, $zero, $3
@@ -2553,6 +2929,10 @@ beq_else.8999:
 	lw	$ra, 36($sp)
 	ori	$3, $zero, 2
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 32($sp)
@@ -2579,6 +2959,10 @@ beq_else.8999:
 	sw.s	$f2, 4($2)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	or	$2, $zero, $3
@@ -2611,6 +2995,10 @@ beq_else.8999:
 	sw.s	$f2, 8($2)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	or	$2, $zero, $3
@@ -2672,6 +3060,10 @@ beq_else.9002:
 beq_cont.9003:
 	ori	$5, $zero, 4
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$4, 48($sp)
@@ -2741,6 +3133,10 @@ beq_cont.9003:
 	j	beq_cont.9007
 beq_else.9006:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9007:
@@ -2775,6 +3171,10 @@ beq_cont.9007:
 	j	beq_cont.9009
 beq_else.9008:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9009:
@@ -2809,6 +3209,10 @@ beq_cont.9009:
 	j	beq_cont.9011
 beq_else.9010:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9011:
@@ -3589,6 +3993,10 @@ solver_second.2827:
 	ori	$at, $zero, 3
 	bne	$2, $at, beq_else.9045
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 32($sp)
@@ -4108,6 +4516,10 @@ solver_second_fast.2850:
 	ori	$at, $zero, 3
 	bne	$2, $at, beq_else.9075
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 32($sp)
@@ -4497,6 +4909,10 @@ beq_else.9088:
 setup_rect_table.2877:
 	ori	$4, $zero, 6
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$3, 0($sp)
@@ -4555,6 +4971,10 @@ setup_rect_table.2877:
 	lw	$2, 8($sp)
 	sw.s	$f2, 0($2)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$3, 4($sp)
@@ -4565,6 +4985,10 @@ setup_rect_table.2877:
 	j	beq_cont.9090
 beq_else.9089:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$2, 8($sp)
@@ -4617,6 +5041,10 @@ beq_cont.9090:
 	lw	$2, 8($sp)
 	sw.s	$f2, 8($2)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$3, 4($sp)
@@ -4627,6 +5055,10 @@ beq_cont.9090:
 	j	beq_cont.9092
 beq_else.9091:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$2, 8($sp)
@@ -4679,6 +5111,10 @@ beq_cont.9092:
 	lw	$2, 8($sp)
 	sw.s	$f2, 16($2)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$3, 4($sp)
@@ -4689,6 +5125,10 @@ beq_cont.9092:
 	j	beq_cont.9094
 beq_else.9093:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$2, 8($sp)
@@ -4698,6 +5138,10 @@ beq_cont.9094:
 setup_surface_table.2880:
 	ori	$4, $zero, 4
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$3, 0($sp)
@@ -4759,6 +5203,10 @@ setup_surface_table.2880:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.9095
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$2, 8($sp)
@@ -4766,6 +5214,10 @@ setup_surface_table.2880:
 	j	beq_cont.9096
 beq_else.9095:
 	lui	$at, 0xbf80		# -1.000000の上位16bits
+	lui	$0, 0x0		# -1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 32($sp)
@@ -4829,6 +5281,10 @@ beq_cont.9096:
 setup_second_table.2883:
 	ori	$4, $zero, 5
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$3, 0($sp)
@@ -5044,6 +5500,10 @@ beq_cont.9098:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.9099
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 12($sp)
@@ -5257,6 +5717,10 @@ bgtz_else.9110:
 	ori	$at, $zero, 3
 	bne	$2, $at, beq_else.9112
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
@@ -5453,6 +5917,10 @@ is_second_outside.2906:
 	ori	$at, $zero, 3
 	bne	$2, $at, beq_else.9122
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 4($sp)
@@ -5635,7 +6103,10 @@ tmp.9130:
 	j	beq_cont.9132
 beq_else.9131:
 	lui	$at, 0xbe4c		# -0.200000の上位16bits
-	ori	$at, $at, 0xcccd		# -0.200000の下位16bits
+	lui	$0, 0xcccd		# -0.200000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 44($sp)
@@ -5669,7 +6140,10 @@ beq_else.9134:
 	jr	$27
 beq_else.9133:
 	lui	$at, 0x3c23		# 0.010000の上位16bits
-	ori	$at, $at, 0xd70a		# 0.010000の下位16bits
+	lui	$0, 0xd70a		# 0.010000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 36($sp)
@@ -5800,7 +6274,10 @@ beq_else.9144:
 	lw	$2, 20($sp)
 	lw.s	$f2, 0($2)
 	lui	$at, 0xbdcc		# -0.100000の上位16bits
-	ori	$at, $at, 0xcccd		# -0.100000の下位16bits
+	lui	$0, 0xcccd		# -0.100000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 28($sp)
@@ -5934,6 +6411,10 @@ beq_else.9157:
 	lw	$3, 24($sp)
 	lw.s	$f3, 0($3)
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 52($sp)
@@ -5960,7 +6441,10 @@ beq_else.9160:
 	j	beq_cont.9163
 beq_else.9162:
 	lui	$at, 0x3c23		# 0.010000の上位16bits
-	ori	$at, $at, 0xd70a		# 0.010000の下位16bits
+	lui	$0, 0xd70a		# 0.010000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 56($sp)
@@ -6161,7 +6645,10 @@ judge_intersection.2943:
 	lw	$4, 8($30)
 	lw	$5, 4($30)
 	lui	$at, 0x4e6e		# 1000000000.000000の上位16bits
-	ori	$at, $at, 0x6b28		# 1000000000.000000の下位16bits
+	lui	$0, 0x6b28		# 1000000000.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw.s	$f2, 0($4)
@@ -6183,7 +6670,10 @@ tmp.9181:
 	lw	$2, 0($sp)
 	lw.s	$f3, 0($2)
 	lui	$at, 0xbdcc		# -0.100000の上位16bits
-	ori	$at, $at, 0xcccd		# -0.100000の下位16bits
+	lui	$0, 0xcccd		# -0.100000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw.s	$f3, 4($sp)
@@ -6198,7 +6688,10 @@ tmp.9181:
 	jr	$ra
 beq_else.9182:
 	lui	$at, 0x4cbe		# 100000000.000000の上位16bits
-	ori	$at, $at, 0xbc20		# 100000000.000000の下位16bits
+	lui	$0, 0xbc20		# 100000000.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw.s	$f2, 4($sp)
@@ -6282,6 +6775,10 @@ beq_else.9186:
 	lw	$3, 24($sp)
 	lw.s	$f3, 0($3)
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 60($sp)
@@ -6308,7 +6805,10 @@ beq_else.9189:
 	j	beq_cont.9192
 beq_else.9191:
 	lui	$at, 0x3c23		# 0.010000の上位16bits
-	ori	$at, $at, 0xd70a		# 0.010000の下位16bits
+	lui	$0, 0xd70a		# 0.010000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 64($sp)
@@ -6505,7 +7005,10 @@ judge_intersection_fast.2957:
 	lw	$4, 8($30)
 	lw	$5, 4($30)
 	lui	$at, 0x4e6e		# 1000000000.000000の上位16bits
-	ori	$at, $at, 0x6b28		# 1000000000.000000の下位16bits
+	lui	$0, 0x6b28		# 1000000000.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw.s	$f2, 0($4)
@@ -6527,7 +7030,10 @@ tmp.9210:
 	lw	$2, 0($sp)
 	lw.s	$f3, 0($2)
 	lui	$at, 0xbdcc		# -0.100000の上位16bits
-	ori	$at, $at, 0xcccd		# -0.100000の下位16bits
+	lui	$0, 0xcccd		# -0.100000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw.s	$f3, 4($sp)
@@ -6542,7 +7048,10 @@ tmp.9210:
 	jr	$ra
 beq_else.9211:
 	lui	$at, 0x4cbe		# 100000000.000000の上位16bits
-	ori	$at, $at, 0xbc20		# 100000000.000000の下位16bits
+	lui	$0, 0xbc20		# 100000000.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw.s	$f2, 4($sp)
@@ -6897,7 +7406,10 @@ utexture.2968:
 	lw.s	$f3, 16($sp)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x3d4c		# 0.050000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.050000の下位16bits
+	lui	$0, 0xcccd		# 0.050000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f3, $f2, $f3
@@ -6909,12 +7421,20 @@ utexture.2968:
 	addi	$sp, $sp, -32
 	lw	$ra, 28($sp)
 	lui	$at, 0x41a0		# 20.000000の上位16bits
+	lui	$0, 0x0		# 20.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
 	lw.s	$f3, 20($sp)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x4120		# 10.000000の上位16bits
+	lui	$0, 0x0		# 10.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 28($sp)
@@ -6936,7 +7456,10 @@ utexture.2968:
 	lw.s	$f3, 28($sp)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x3d4c		# 0.050000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.050000の下位16bits
+	lui	$0, 0xcccd		# 0.050000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f3, $f2, $f3
@@ -6948,12 +7471,20 @@ utexture.2968:
 	addi	$sp, $sp, -40
 	lw	$ra, 36($sp)
 	lui	$at, 0x41a0		# 20.000000の上位16bits
+	lui	$0, 0x0		# 20.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
 	lw.s	$f3, 32($sp)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x4120		# 10.000000の上位16bits
+	lui	$0, 0x0		# 10.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 36($sp)
@@ -6967,11 +7498,19 @@ utexture.2968:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.9221
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	j	beq_cont.9222
 beq_else.9221:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9222:
@@ -6980,11 +7519,19 @@ beq_else.9219:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.9223
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	j	beq_cont.9224
 beq_else.9223:
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9224:
@@ -6998,6 +7545,10 @@ beq_else.9218:
 	lw	$3, 0($sp)
 	lw.s	$f2, 4($3)
 	lui	$at, 0x3e80		# 0.250000の上位16bits
+	lui	$0, 0x0		# 0.250000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
@@ -7012,15 +7563,27 @@ beq_else.9218:
 	addi	$sp, $sp, -40
 	lw	$ra, 36($sp)
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f3, $f3, $f2
 	lw	$2, 4($sp)
 	sw.s	$f3, 0($2)
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	sub.s	$f2, $f4, $f2
@@ -7078,6 +7641,10 @@ beq_else.9226:
 	addi	$sp, $sp, -64
 	lw	$ra, 60($sp)
 	lui	$at, 0x4120		# 10.000000の上位16bits
+	lui	$0, 0x0		# 10.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	inv.s	$f1, $f3
@@ -7091,7 +7658,10 @@ beq_else.9226:
 	lw.s	$f3, 56($sp)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
@@ -7106,16 +7676,28 @@ beq_else.9226:
 	addi	$sp, $sp, -64
 	lw	$ra, 60($sp)
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f3, $f2, $f3
 	lw	$2, 4($sp)
 	sw.s	$f3, 4($2)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
@@ -7204,7 +7786,10 @@ beq_else.9228:
 	addi	$sp, $sp, -96
 	lw	$ra, 92($sp)
 	lui	$at, 0x38d1		# 0.000100の上位16bits
-	ori	$at, $at, 0xb717		# 0.000100の下位16bits
+	lui	$0, 0xb717		# 0.000100の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 92($sp)
@@ -7229,11 +7814,18 @@ beq_else.9228:
 	addi	$sp, $sp, -96
 	lw	$ra, 92($sp)
 	lui	$at, 0x41f0		# 30.000000の上位16bits
+	lui	$0, 0x0		# 30.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	inv.s	$f1, $f3
@@ -7241,6 +7833,10 @@ beq_else.9228:
 	j	beq_cont.9232
 beq_else.9231:
 	lui	$at, 0x4170		# 15.000000の上位16bits
+	lui	$0, 0x0		# 15.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9232:
@@ -7287,7 +7883,10 @@ beq_cont.9232:
 	addi	$sp, $sp, -120
 	lw	$ra, 116($sp)
 	lui	$at, 0x38d1		# 0.000100の上位16bits
-	ori	$at, $at, 0xb717		# 0.000100の下位16bits
+	lui	$0, 0xb717		# 0.000100の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 116($sp)
@@ -7312,11 +7911,18 @@ beq_cont.9232:
 	addi	$sp, $sp, -120
 	lw	$ra, 116($sp)
 	lui	$at, 0x41f0		# 30.000000の上位16bits
+	lui	$0, 0x0		# 30.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
 	lui	$at, 0x4049		# 3.141593の上位16bits
-	ori	$at, $at, 0xfdb		# 3.141593の下位16bits
+	lui	$0, 0xfdb		# 3.141593の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	inv.s	$f1, $f3
@@ -7324,6 +7930,10 @@ beq_cont.9232:
 	j	beq_cont.9234
 beq_else.9233:
 	lui	$at, 0x4170		# 15.000000の上位16bits
+	lui	$0, 0x0		# 15.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9234:
@@ -7336,10 +7946,17 @@ beq_cont.9234:
 	lw.s	$f3, 112($sp)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x3e19		# 0.150000の上位16bits
-	ori	$at, $at, 0x999a		# 0.150000の下位16bits
+	lui	$0, 0x999a		# 0.150000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lui	$at, 0x3f00		# 0.500000の上位16bits
+	lui	$0, 0x0		# 0.500000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	lw.s	$f5, 96($sp)
@@ -7355,6 +7972,10 @@ beq_cont.9234:
 	lw.s	$f3, 120($sp)
 	sub.s	$f2, $f3, $f2
 	lui	$at, 0x3f00		# 0.500000の上位16bits
+	lui	$0, 0x0		# 0.500000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw.s	$f4, 116($sp)
@@ -7380,15 +8001,26 @@ beq_cont.9234:
 	j	beq_cont.9236
 beq_else.9235:
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 beq_cont.9236:
 	lui	$at, 0x437f		# 255.000000の上位16bits
+	lui	$0, 0x0		# 255.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f3, $f2
 	lui	$at, 0x3e99		# 0.300000の上位16bits
-	ori	$at, $at, 0x999a		# 0.300000の下位16bits
+	lui	$0, 0x999a		# 0.300000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	inv.s	$f1, $f3
@@ -7833,6 +8465,10 @@ tmp.9264:
 	addi	$sp, $sp, -136
 	lw	$ra, 132($sp)
 	lui	$at, 0x3f00		# 0.500000の上位16bits
+	lui	$0, 0x0		# 0.500000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 132($sp)
@@ -7873,6 +8509,10 @@ tmp.9264:
 	add	$at, $3, $4
 	lw	$3, 0($at)
 	lui	$at, 0x3b80		# 0.003906の上位16bits
+	lui	$0, 0x0		# 0.003906の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 124($sp)
@@ -7910,6 +8550,10 @@ beq_else.9265:
 	sw	$2, 0($at)
 beq_cont.9266:
 	lui	$at, 0xc000		# -2.000000の上位16bits
+	lui	$0, 0x0		# -2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$2, 96($sp)
@@ -8020,7 +8664,10 @@ tmp.9272:
 	addi	$sp, $sp, -152
 	lw	$ra, 148($sp)
 	lui	$at, 0x3dcc		# 0.100000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.100000の下位16bits
+	lui	$0, 0xcccd		# 0.100000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 84($sp)
@@ -8049,6 +8696,10 @@ blez_cont.9276:
 	ori	$at, $zero, 2
 	bne	$3, $at, beq_else.9277
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$3, 116($sp)
@@ -8188,6 +8839,10 @@ tmp.9285:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.9287
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	j	beq_cont.9288
@@ -8249,6 +8904,10 @@ iter_trace_diffuse_rays.2989:
 	add	$at, $3, $4
 	lw	$3, 0($at)
 	lui	$at, 0x4316		# 150.000000の上位16bits
+	lui	$0, 0x0		# 150.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 24($sp)
@@ -8273,6 +8932,10 @@ beq_else.9291:
 	add	$at, $3, $4
 	lw	$3, 0($at)
 	lui	$at, 0xc316		# -150.000000の上位16bits
+	lui	$0, 0x0		# -150.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw.s	$f3, 24($sp)
@@ -9243,6 +9906,10 @@ pretrace_pixels.3043:
 	lw	$ra, 60($sp)
 	ori	$2, $zero, 0
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$3, 20($sp)
@@ -9251,6 +9918,10 @@ pretrace_pixels.3043:
 	add	$at, $4, $5
 	lw	$4, 0($at)
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw	$6, 44($sp)
@@ -9565,6 +10236,10 @@ tmp.9363:
 create_float5x3array.3066:
 	ori	$2, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$ra, 4($sp)
@@ -9581,6 +10256,10 @@ create_float5x3array.3066:
 	lw	$ra, 4($sp)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 0($sp)
@@ -9594,6 +10273,10 @@ create_float5x3array.3066:
 	sw	$2, 4($3)
 	ori	$2, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$ra, 4($sp)
@@ -9605,6 +10288,10 @@ create_float5x3array.3066:
 	sw	$2, 8($3)
 	ori	$2, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$ra, 4($sp)
@@ -9616,6 +10303,10 @@ create_float5x3array.3066:
 	sw	$2, 12($3)
 	ori	$2, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$ra, 4($sp)
@@ -9630,6 +10321,10 @@ create_float5x3array.3066:
 create_pixel.3068:
 	ori	$2, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$ra, 4($sp)
@@ -9773,7 +10468,10 @@ tan.3075:
 adjust_position.3077:
 	mul.s	$f2, $f2, $f2
 	lui	$at, 0x3dcc		# 0.100000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.100000の下位16bits
+	lui	$0, 0xcccd		# 0.100000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	add.s	$f2, $f2, $f4
@@ -9784,6 +10482,10 @@ adjust_position.3077:
 	addi	$sp, $sp, -8
 	lw	$ra, 4($sp)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	inv.s	$f1, $f2
@@ -9830,6 +10532,10 @@ calc_dirvec.3080:
 	lw.s	$f3, 20($sp)
 	add.s	$f2, $f3, $f2
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	add.s	$f2, $f2, $f3
@@ -9845,6 +10551,10 @@ calc_dirvec.3080:
 	inv.s	$f1, $f2
 	mul.s	$f4, $f4, $f1
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f5, 4($zero)
 	inv.s	$f1, $f2
@@ -10092,20 +10802,34 @@ calc_dirvecs.3088:
 	addi	$sp, $sp, -32
 	lw	$ra, 28($sp)
 	lui	$at, 0x3e4c		# 0.200000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.200000の下位16bits
+	lui	$0, 0xcccd		# 0.200000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
 	lui	$at, 0x3f66		# 0.900000の上位16bits
-	ori	$at, $at, 0x6666		# 0.900000の下位16bits
+	lui	$0, 0x6666		# 0.900000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f4, $f2, $f3
 	ori	$2, $zero, 0
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw.s	$f5, 8($sp)
@@ -10127,20 +10851,34 @@ tmp.9367:
 	addi	$sp, $sp, -32
 	lw	$ra, 28($sp)
 	lui	$at, 0x3e4c		# 0.200000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.200000の下位16bits
+	lui	$0, 0xcccd		# 0.200000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
 	lui	$at, 0x3dcc		# 0.100000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.100000の下位16bits
+	lui	$0, 0xcccd		# 0.100000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	add.s	$f4, $f2, $f3
 	ori	$2, $zero, 0
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw	$3, 12($sp)
@@ -10192,12 +10930,18 @@ calc_dirvec_rows.3093:
 	addi	$sp, $sp, -24
 	lw	$ra, 20($sp)
 	lui	$at, 0x3e4c		# 0.200000の上位16bits
-	ori	$at, $at, 0xcccd		# 0.200000の下位16bits
+	lui	$0, 0xcccd		# 0.200000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	mul.s	$f2, $f2, $f3
 	lui	$at, 0x3f66		# 0.900000の上位16bits
-	ori	$at, $at, 0x6666		# 0.900000の下位16bits
+	lui	$0, 0x6666		# 0.900000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sub.s	$f2, $f2, $f3
@@ -10237,6 +10981,10 @@ create_dirvec.3097:
 	lw	$2, 4($30)
 	ori	$3, $zero, 3
 	lui	$at, 0x0		# 0.000000の上位16bits
+	lui	$0, 0x0		# 0.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$2, 0($sp)
@@ -10501,6 +11249,10 @@ setup_rect_reflection.3118:
 	add	$2, $7, $2
 	lw	$7, 0($4)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$4, 0($sp)
@@ -10618,6 +11370,10 @@ setup_surface_reflection.3121:
 	addi	$2, $2, 1
 	lw	$7, 0($4)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	sw	$4, 0($sp)
@@ -10650,6 +11406,10 @@ setup_surface_reflection.3121:
 	addi	$sp, $sp, -40
 	lw	$ra, 36($sp)
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	lw	$2, 20($sp)
@@ -10668,6 +11428,10 @@ setup_surface_reflection.3121:
 	lw.s	$f4, 0($2)
 	sub.s	$f2, $f2, $f4
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	lw	$3, 20($sp)
@@ -10687,6 +11451,10 @@ setup_surface_reflection.3121:
 	lw.s	$f4, 4($2)
 	sub.s	$f2, $f2, $f4
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f4, 4($zero)
 	lw	$3, 20($sp)
@@ -10752,6 +11520,10 @@ setup_reflections.3124:
 	addi	$sp, $sp, -24
 	lw	$ra, 20($sp)
 	lui	$at, 0x3f80		# 1.000000の上位16bits
+	lui	$0, 0x0		# 1.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	sw	$ra, 20($sp)
@@ -10828,6 +11600,10 @@ rt.3126:
 	addi	$sp, $sp, -64
 	lw	$ra, 60($sp)
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	inv.s	$f1, $f3
@@ -10846,6 +11622,10 @@ rt.3126:
 	addi	$sp, $sp, -64
 	lw	$ra, 60($sp)
 	lui	$at, 0x4000		# 2.000000の上位16bits
+	lui	$0, 0x0		# 2.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f3, 4($zero)
 	inv.s	$f1, $f3
@@ -10858,6 +11638,10 @@ rt.3126:
 	lw	$3, 56($sp)
 	sw	$2, 4($3)
 	lui	$at, 0x4300		# 128.000000の上位16bits
+	lui	$0, 0x0		# 128.000000の下位16bits
+	srl	$0, $0, 16
+	or	$at, $at, $0
+	lui	$0, 0
 	sw	$at, 4($zero)
 	lw.s	$f2, 4($zero)
 	lw	$2, 48($sp)
@@ -11089,6 +11873,6 @@ min_caml_float_of_int:
 # min_caml_cos:		# libmincaml.mlを参照
 # min_caml_sin:		# libmincaml.mlを参照
 # min_caml_atan:		# libmincaml.mlを参照
-min_caml_print_char:
+min_caml_print_char:		# print_byte, raytracer専用?
 	out	$2
 	jr	$ra
