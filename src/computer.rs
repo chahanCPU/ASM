@@ -112,11 +112,12 @@ impl Computer {
             
             count += 1;
             */
-            //let ir = self.get_ir(self.pc >> 2);
 
+            /*
+            //debug/////////////////////////////////
             self.arg_ireg = [0; 32];
             self.arg_freg = [0; 32];
-            /*
+            
             if self.bpoints.contains(&(self.pc >> 2)) || flag {
                 flag = false;
                 self.print_stat();
@@ -223,6 +224,7 @@ impl Computer {
                 }
                 buf.clear();
             }
+            //debug/////////////////////////////////
 */
             
             if self.run_ir(&irmemory[self.pc >> 2]) {
