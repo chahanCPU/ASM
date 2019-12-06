@@ -91,8 +91,8 @@ fn asm(filename: String,in_filename: Option<&String>) {//アセンブラ&シミ�
     drop(writer);
     drop(writer2);
     
-    let mut cpu : Computer = Computer::new(irs, bpoints, filename, in_filename);
-    cpu.run();
+    let mut cpu : Computer = Computer::new( bpoints, filename, in_filename);
+    cpu.run(irs);
 }
 
 fn trim_space_comment(ir: &str) -> &str {

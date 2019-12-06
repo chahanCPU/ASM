@@ -125,7 +125,7 @@ blez_else.120:
     j   yloop.42
 min_caml_print_int:
     addi    $2, $2, 48
-    out $2
+    !out $2
     jr  $ra
 min_caml_print_newline:
     ori $2, $zero, 10

@@ -467,7 +467,7 @@ impl Instr {
             }
 
             "beq" => {
-                let (s, t, target) = parse2reg_PC(&ir, PC_map)?;
+                let (s, t, target) = parse2reg_label(&ir, PC_map)?;
                 Ok(Instr::BEQ {
                     s: s,
                     t: t,
@@ -476,42 +476,42 @@ impl Instr {
             }
 
             "bgez" => {
-                let (s, target) = parse1reg_PC(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, PC_map)?;
                 Ok(Instr::BGEZ {
                     s: s,
                     target: target,
                 })
             }
             "bgezal" => {
-                let (s, target) = parse1reg_PC(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, PC_map)?;
                 Ok(Instr::BGEZAL {
                     s: s,
                     target: target,
                 })
             }
             "bgtz" => {
-                let (s, target) = parse1reg_PC(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, PC_map)?;
                 Ok(Instr::BGTZ {
                     s: s,
                     target: target,
                 })
             }
             "blez" => {
-                let (s, target) = parse1reg_PC(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, PC_map)?;
                 Ok(Instr::BLEZ {
                     s: s,
                     target: target,
                 })
             }
             "bltz" => {
-                let (s, target) = parse1reg_PC(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, PC_map)?;
                 Ok(Instr::BLTZ {
                     s: s,
                     target: target,
                 })
             }
             "bltzal" => {
-                let (s, target) = parse1reg_PC(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, PC_map)?;
                 Ok(Instr::BLTZAL {
                     s: s,
                     target: target,
@@ -519,7 +519,7 @@ impl Instr {
             }
 
             "bne" => {
-                let (s, t, target) = parse2reg_PC(&ir, PC_map)?;
+                let (s, t, target) = parse2reg_label(&ir, PC_map)?;
                 Ok(Instr::BNE {
                     s: s,
                     t: t,
@@ -528,7 +528,7 @@ impl Instr {
             }
 
             "li" => {
-                let (t, target) = parse1reg_PC(&ir, PC_map)?;
+                let (t, target) = parse1reg_label(&ir, PC_map)?;
                 Ok(Instr::ORI {t: t, s: 0, im: (target << 2) as i32})
             }
             "j" => {
@@ -828,12 +828,12 @@ fn parse2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
         Err(String::from("too few arguments"))
     } else {
         let im = ir[2].parse().unwrap_or_else(|_| {
-            i32::from_str_radix(&(ir[2])[2..], 16).expect("invalid immmmediate value")
+            u16::from_str_radix(&(ir[2])[2..], 16).expect("invalid hex value(overflow?)") as i16
         }); //遅延評価に
         if im < -32768 || im > 32767 {
-            return Err(String::from("offset overflow\n"));
+            return Err(String::from("offset decimal overflow\n"));
         }
-        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, im))
+        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, im as i32))
     }
 }
 
@@ -842,15 +842,15 @@ fn parse1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
         Err(String::from("too few arguments"))
     } else {
         let im = ir[1].parse().unwrap_or_else(|_| {
-            i32::from_str_radix(&(ir[1])[2..], 16).expect("invalid immmmediate value")
-        });
+            u16::from_str_radix(&(ir[1])[2..], 16).expect("invalid hex value(overflow?)") as i16
+        }); //遅延評価に
         if im < -32768 || im > 32767 {
-            return Err(String::from("offset overflow\n"));
+            return Err(String::from("offset decimal overflow\n"));
         }
-        Ok((parse_reg(&ir[0])?, im))
+        Ok((parse_reg(&ir[0])?, im as i32))
     }
 }
-fn parse1reg_PC(
+fn parse1reg_label(
     ir: &Vec<&str>,
     PC_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize), String> {
@@ -863,7 +863,7 @@ fn parse1reg_PC(
         Ok((parse_reg(&ir[0])?, *addr))
     }
 }
-fn parse2reg_PC(
+fn parse2reg_label(
     ir: &Vec<&str>,
     PC_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize, usize), String> {

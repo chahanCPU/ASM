@@ -2,13 +2,12 @@
 //シミュレータの本体
 //462840900命令に25秒かかりました
 use super::instr::Instr;
-use ansi_term::Colour;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io;
-use std::io::{BufWriter, Write, BufReader, Read};
+use std::io::{BufWriter, Write};
 use std::mem;
-const MEM_SIZE: usize = 2000000; //バイト数はこの4倍。300000くらいまでならRustのスタックサイズで足りる
+const MEM_SIZE: usize = 2222222; //バイト数はこの4倍
 macro_rules! fg_green {
     ($text:expr) => {
         concat!("\x1b[32m", $text, "\x1b[39m")
@@ -24,6 +23,7 @@ macro_rules! fg_cyan {
         concat!("\x1b[36m", $text, "\x1b[39m")
     };
 }
+/*
 macro_rules! bg_red {
     ($text:expr) => {
         concat!("\x1b[41m", $text, "\x1b[49m")
@@ -46,13 +46,12 @@ macro_rules! color_bg {
         concat!("\u{001b}[", $color, "m", $text, "\u{001b}[49m")
     };
 }
-
+*/
 pub struct Computer {
     mem: [i32; MEM_SIZE],
     pc: usize,
     ireg: [i32; 32],
     freg: [f32; 32],
-    irmemory: Vec<Instr>,
     bpoints: HashSet<usize>,
     writer: BufWriter<File>,
     changed_reg: [bool; 32],
@@ -63,7 +62,7 @@ pub struct Computer {
     
 }
 impl Computer {
-    pub fn new(irs: Vec<Instr>, bpoints: HashSet<usize>, filename: String, in_filename: Option<&String>) -> Computer {
+    pub fn new( bpoints: HashSet<usize>, filename: String, in_filename: Option<&String>) -> Computer {
         let mut indata_8bit=Vec::new();
         match in_filename{
             Some(filepath) => {
@@ -86,7 +85,6 @@ impl Computer {
             freg: [0.0; 32],
             mem: [0; MEM_SIZE],
             pc: 0,
-            irmemory: irs,
             bpoints: bpoints,
             writer: writer,
             changed_reg: [false; 32],
@@ -99,23 +97,26 @@ impl Computer {
         c.ireg[29] = 48;//stack pointer
         c
     }
-    pub fn run(&mut self) {
+    pub fn run(&mut self, irmemory: Vec<Instr>) {
         let stdin = io::stdin();
         let mut buf = String::new();
         print!("********************RUN BEGIN\n");
         let mut count: usize = 0;
         let mut flag = false;
-        while self.pc >> 2 < self.irmemory.len() {
+        while self.pc >> 2 < irmemory.len() {
+            /*
             if count > 1000000000000 {
                 print!("mou keisan dekinai tsukareta...\n");
                 break;
             }
+            
             count += 1;
-            let ir = self.get_ir(self.pc >> 2);
+            */
+            //let ir = self.get_ir(self.pc >> 2);
 
             self.arg_ireg = [0; 32];
             self.arg_freg = [0; 32];
-            
+            /*
             if self.bpoints.contains(&(self.pc >> 2)) || flag {
                 flag = false;
                 self.print_stat();
@@ -222,9 +223,9 @@ impl Computer {
                 }
                 buf.clear();
             }
-
+*/
             
-            if self.run_ir(&ir) {
+            if self.run_ir(&irmemory[self.pc >> 2]) {
                 break;
             };
             //print!("sp:{} ", self.ireg[29]);
@@ -270,12 +271,13 @@ impl Computer {
         }
         
     }
+    /*
     fn get_ir(&self, addr: usize) -> Instr {
         self.irmemory
             .get(addr)
             .expect("irmemory out of range")
             .clone()
-    }
+    }*/
     fn run_ir(&mut self, ir: &Instr) -> bool {
         match ir {
             Instr::ADD { d, s, t } => {
