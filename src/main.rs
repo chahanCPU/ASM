@@ -11,29 +11,41 @@ use std::thread;
 use computer::Computer;
 use std::collections::HashSet;
 fn main() {
+    let mut args = env::args();
+    let _ = args.next().unwrap();
+    let mut arg1 = args.next().expect("no args!");
+    let has_debug = if arg1 == "/d" {
+        arg1 = args.next().expect("no input file!");
+        true
+    }else{
+        false
+    };
+    /*
     let arg_array:Vec<String> =  env::args().collect();
     if arg_array.len() < 2 {
         panic!("No arguments!")
     }else {
+        */
         // スレッド生成器の準備
     let builder = thread::Builder::new();
 
     // スタックサイズを指定してスレッドを生成する
     let th = builder.stack_size(10000000);
-
+    let arg2 = args.next();
     // 実行
+    println!("{}",has_debug);
     let handle = th.spawn(move || {
-        asm(arg_array[1].clone(),arg_array.get(2))
+        asm(arg1,arg2,has_debug)
     }).unwrap();
     let _ = handle.join();
     
         
-    }
+    
     
 
     
 }
-fn asm(filename: String,in_filename: Option<&String>) {//アセンブラ&シミュレータ
+fn asm(filename: String,in_filename: Option<String>, has_debug: bool) {//アセンブラ&シミュレータ
     let mut addr: usize = 0;
     let mut label_map = HashMap::new();//ラベルとアドレスの対応のためのハッシュマップ
     for result in BufReader::new(File::open(&filename).unwrap()).lines() {//まず各命令を読み込む前に
@@ -53,7 +65,7 @@ fn asm(filename: String,in_filename: Option<&String>) {//アセンブラ&シミ�
         writer2.write("10101010\n".as_bytes()).unwrap();
         writer.write("00aa".as_bytes()).unwrap();
     
-    let mut irs : Vec<Instr>=Vec::new();//命令
+    let mut irs : Vec<(Instr,usize)>=Vec::new();//命令
     let mut count:usize = 0;
     let mut bpoints : HashSet<usize>=HashSet::new();
     for (i, result) in BufReader::new(File::open(&filename).unwrap())
@@ -78,7 +90,7 @@ fn asm(filename: String,in_filename: Option<&String>) {//アセンブラ&シミ�
                 writer.write(&format!("{:0>2x}{:0>2x}{:0>2x}{:0>2x}",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
                 writer2.write(&format!("{:0>8b} {:0>8b} {:0>8b} {:0>8b}\n",bytes[0],bytes[1],bytes[2],bytes[3]).as_bytes()).unwrap();
                 println!("{:>3}:{}", count,ir);
-                irs.push(ir);
+                irs.push((ir,i));
             }
         }
         count += 1;
@@ -92,7 +104,11 @@ fn asm(filename: String,in_filename: Option<&String>) {//アセンブラ&シミ�
     drop(writer2);
     
     let mut cpu : Computer = Computer::new( bpoints, filename, in_filename);
-    cpu.run(irs);
+    if has_debug{
+        cpu.run_debug(irs);
+    }else{
+        cpu.run(irs);
+    }
 }
 
 fn trim_space_comment(ir: &str) -> &str {

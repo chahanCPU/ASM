@@ -1114,8 +1114,8 @@ min_caml_start:
 	sw	$16, 12($30)
 	sw	$7, 8($30)
 	sw	$3, 4($30)
-	ori	$2, $zero, 128
-	ori	$3, $zero, 128
+	ori	$2, $zero, 16
+	ori	$3, $zero, 16
 	sw	$ra, 148($sp)
 	lw	$27, 0($30)
 	addi	$sp, $sp, 152
@@ -11821,7 +11821,6 @@ min_caml_read_int:
 	sll	$2, $2, 8
 	in	$at
 	or	$2, $2, $at
-	jr	$ra
 min_caml_read_float:
 	ori	$at, $at, 0
 	in	$2

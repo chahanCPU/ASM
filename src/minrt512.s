@@ -1114,8 +1114,8 @@ min_caml_start:
 	sw	$16, 12($30)
 	sw	$7, 8($30)
 	sw	$3, 4($30)
-	ori	$2, $zero, 128
-	ori	$3, $zero, 128
+	ori	$2, $zero, 512
+	ori	$3, $zero, 512
 	sw	$ra, 148($sp)
 	lw	$27, 0($30)
 	addi	$sp, $sp, 152

@@ -22,18 +22,19 @@ fn make_indata(filename: String) {//アセンブラ&シミュレータ
     let u84data:Vec<[u8;4]>= std::fs::read_to_string(filename).unwrap().split_whitespace().map(|s| data_to_u8_4(s)).collect();
     println!("{:?}",u84data);
     for x in u84data {
-        writer.write(format!("{} {} {} {}\n",x[0],x[1],x[2],x[3]).as_bytes());
+        writer.write(format!("{:x} {:x} {:x} {:x}\n",x[0],x[1],x[2],x[3]).as_bytes());
     }
     drop(writer)
 }
 fn data_to_u8_4(data : &str) -> [u8; 4]{
-    unsafe{
+    let u = unsafe{
         if data.contains("."){
             let f:f32=  data.parse().expect("float parse failed");
-            std::mem::transmute::<f32, [u8; 4]>(f)
+            std::mem::transmute::<f32, u32>(f)
         }else{
             let i:i32=  data.parse().expect("int parse failed");
-            std::mem::transmute::<i32, [u8; 4]>(i)
+            i as u32
         }
-    }
+    };
+    [(u>>24) as u8,(u>>16) as u8,(u>>8) as u8,u as u8]
 }

@@ -62,7 +62,7 @@ pub struct Computer {
     
 }
 impl Computer {
-    pub fn new( bpoints: HashSet<usize>, filename: String, in_filename: Option<&String>) -> Computer {
+    pub fn new( bpoints: HashSet<usize>, filename: String, in_filename: Option<String>) -> Computer {
         let mut indata_8bit=Vec::new();
         match in_filename{
             Some(filepath) => {
@@ -78,7 +78,7 @@ impl Computer {
         println!("{:?}", in_data);
         */
         let writer =
-            BufWriter::new(File::create(format!("{}.res", filename)).expect("cannot create file")); //こっちにバイナリを出力（多分使わない）
+            BufWriter::new(File::create(format!("{}.ppm", filename)).expect("cannot create file")); //こっちにバイナリを出力（多分使わない）
             
         let mut c = Computer {
             ireg: [0; 32],
@@ -97,32 +97,36 @@ impl Computer {
         c.ireg[29] = 48;//stack pointer
         c
     }
-    pub fn run(&mut self, irmemory: Vec<Instr>) {
+    pub fn run(&mut self, irmemory: Vec<(Instr,usize)>) {
+        print!("********************RUN BEGIN\n");
+        while !self.run_ir(&irmemory[self.pc >> 2].0){};
+        println!("******RUN END******\npc:{}\n", self.pc);
+    }
+    
+    pub fn run_debug(&mut self, irmemory: Vec<(Instr,usize)>) {
         let stdin = io::stdin();
         let mut buf = String::new();
-        print!("********************RUN BEGIN\n");
+        print!("**************DEBUG RUN BEGIN\n");
         let mut count: usize = 0;
         let mut flag = false;
         while self.pc >> 2 < irmemory.len() {
-            /*
+            
             if count > 1000000000000 {
                 print!("mou keisan dekinai tsukareta...\n");
                 break;
             }
-            
             count += 1;
-            */
-
             
-            //debug/////////////////////////////////
+
+
             self.arg_ireg = [0; 32];
             self.arg_freg = [0; 32];
             
             if self.bpoints.contains(&(self.pc >> 2)) || flag {
                 flag = false;
                 self.print_stat();
-                let ir = irmemory[self.pc >> 2].clone();
-                println!("{}",ir);
+                let ir = irmemory[self.pc >> 2].0.clone();
+                println!("{},{},{}",ir,self.in_data[self.indata_count],self.indata_count);
                 match ir {
                     Instr::ADD { d, s, t }
                     | Instr::SUB { d, s, t }
@@ -177,7 +181,7 @@ impl Computer {
                         self.arg_ireg[s] = 1;
                     }
                     Instr::J { target } | Instr::JAL { target } | Instr::JAL { target } => {}
-                    Instr::JR { s } | Instr::OUT { s } => {
+                    Instr::JR { s } | Instr::OUT { s } | Instr::IN { s } => {
                         self.arg_ireg[s] = 2;
                     }
                     Instr::NOOP => {}
@@ -226,11 +230,10 @@ impl Computer {
                 }
                 buf.clear();
             }
-            //debug/////////////////////////////////
-
             
             
-            if self.run_ir(&irmemory[self.pc >> 2]) {
+            
+            if self.run_ir(&irmemory[self.pc >> 2].0) {
                 break;
             };
             //print!("sp:{} ", self.ireg[29]);
@@ -317,11 +320,13 @@ impl Computer {
             Instr::LW { t, s, off } => {
                 self.ireg[*t] = self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2];
                 self.pc += 4
+                
             }
             //Instr::SB { t, s, off } => getBytesI(40, *s, *t, to_16usize(*off)),
             Instr::SW { t, s, off } => {
                 self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2] = self.ireg[*t];
-                self.pc += 4
+                self.pc += 4;
+                //println!("{}, pc:{}",ir,self.pc)
             }
             Instr::AND { d, s, t } => {
                 self.ireg[*d] = self.ireg[*s] & self.ireg[*t];
@@ -447,6 +452,7 @@ impl Computer {
                 self.ireg[*s] = self.in_data[self.indata_count];
                 self.indata_count += 1;
                 self.pc += 4;
+                println!("in:{:x}",self.ireg[*s] as u8)
             }
             Instr::OUT { s } => {
                 //print!("!!!!!!!!OUT:{}\n", self.ireg[*s]);
@@ -455,6 +461,7 @@ impl Computer {
                     .write(&format!("{}", self.ireg[*s] as u8 as char).as_bytes())
                     .unwrap();
                 self.pc += 4;
+                //println!("out:{:x}",self.ireg[*s] as u8)
             }
             //float
             Instr::ADDf { fd, fs, ft } => {
