@@ -427,9 +427,13 @@ static void send_sld_data(void)
   fprintf(stderr, "sending SLD data:\n");
 //  startTime = GetTickCount();
   gettimeofday(&startTime, NULL);
-printf("afgadfasdfa\n");
+unsigned char bytes[4];
  for (int i = 0; i<MAX_N_WORDS;i++){
-printf("%8x\n",sld_words[i]);
+bytes[0] = sld_words[i].i >> 24 & 0xFF;
+bytes[1] = sld_words[i].i >> 16 & 0xFF;
+bytes[2] = sld_words[i].i >> 8 & 0xFF;
+bytes[3] = sld_words[i].i & 0xFF;
+printf("%x %x %x %x\n",bytes[0],bytes[1],bytes[2],bytes[3]);
 }//fi_union sld_words[MAX_N_WORDS];
   //printf("%c",(char*)sld_words, sld_n_words*sizeof(sld_words[0]));
   //com_write((char*)sld_words, sld_n_words*sizeof(sld_words[0]));
@@ -612,9 +616,7 @@ int main(int argc, char* argv[])
 
   app_settings as;
   parse_arguments(argc, argv, &as);
-printf("dfdf\n");
   //setup_comm(&as.cs);
-printf("dfdf\n");
   
   /* open the output PPM file */
   FILE* out = fopen(as.ppm_filename, "wb");
@@ -622,17 +624,14 @@ printf("dfdf\n");
     error("cannot open PPM output file %s\n", as.ppm_filename);
     exit(1);
   }
-printf("df32df\n");
 
   /* load SLD data */
   load_sld_file(as.sld_filename, as.sld_big_endian);
-  printf("df3df\n");
 
   /* wait for a 0xaa byte */
  // wait_for_0xaa();
 
   /* send the SLD data */
-printf("dfdf\n");
   send_sld_data();
 return 0;
   /* receive the PPM image */
