@@ -1,10 +1,13 @@
-TESTS = assembly/gcd.s sld/contest2.sld.in
+TESTS = assembly/minrt16.s sld/contest2.sld.in
 
 all: $(TESTS)
 	cargo build --release
 	cp target/release/asm .
 	cp target/release/disasm .
+	cp target/release/addpc .
 	cp target/release/sld2indata .
-	cargo run --bin asm --release $^
+#	cargo run --bin asm --release $^
+	cargo run --bin asm --release /d $^ #デバッグモード
+	
 clean:
 	cargo clean

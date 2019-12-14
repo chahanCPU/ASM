@@ -278,7 +278,7 @@ impl Instr {
             _ => [255, 255, 255, 255], //not implemented yet
         }
     }
-    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
+    pub fn from_s(ir: &str, PC_map: &HashMap<String, usize>) -> Result<Self, String> {
         //命令パーサー。文字列（アセンブリ）を読み込んで命令データに
         let mut ir = ir.split_whitespace();
         let mut opcode = ir.next().unwrap();
@@ -467,7 +467,7 @@ impl Instr {
             }
 
             "beq" => {
-                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                let (s, t, target) = parse2reg_PC(&ir, PC_map)?;
                 Ok(Instr::BEQ {
                     s: s,
                     t: t,
@@ -476,42 +476,42 @@ impl Instr {
             }
 
             "bgez" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BGEZ {
                     s: s,
                     target: target,
                 })
             }
             "bgezal" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BGEZAL {
                     s: s,
                     target: target,
                 })
             }
             "bgtz" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BGTZ {
                     s: s,
                     target: target,
                 })
             }
             "blez" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BLEZ {
                     s: s,
                     target: target,
                 })
             }
             "bltz" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BLTZ {
                     s: s,
                     target: target,
                 })
             }
             "bltzal" => {
-                let (s, target) = parse1reg_label(&ir, label_map)?;
+                let (s, target) = parse1reg_PC(&ir, PC_map)?;
                 Ok(Instr::BLTZAL {
                     s: s,
                     target: target,
@@ -519,7 +519,7 @@ impl Instr {
             }
 
             "bne" => {
-                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                let (s, t, target) = parse2reg_PC(&ir, PC_map)?;
                 Ok(Instr::BNE {
                     s: s,
                     t: t,
@@ -528,21 +528,21 @@ impl Instr {
             }
 
             "li" => {
-                let (t, target) = parse1reg_label(&ir, label_map)?;
-                Ok(Instr::XORI {t: t, s: 0, im: (target << 2) as i32})
+                let (t, target) = parse1reg_PC(&ir, PC_map)?;
+                Ok(Instr::ORI {t: t, s: 0, im: (target << 2) as i32})
             }
             "j" => {
-                let label_name = ir.get(0).ok_or("No label")?;
-                let addr = label_map
-                    .get(&(label_name.to_string() + ":"))
-                    .ok_or("Invalid label name")?;
+                let PC_name = ir.get(0).ok_or("No PC")?;
+                let addr = PC_map
+                    .get(&(PC_name.to_string() + ":"))
+                    .ok_or("Invalid PC name")?;
                 Ok(Instr::J { target: *addr })
             }
             "jal" => {
-                let label_name = ir.get(0).ok_or("No label")?;
-                let addr = label_map
-                    .get(&(label_name.to_string() + ":"))
-                    .ok_or("Invalid label name")?;
+                let PC_name = ir.get(0).ok_or("No PC")?;
+                let addr = PC_map
+                    .get(&(PC_name.to_string() + ":"))
+                    .ok_or("Invalid PC name")?;
                 Ok(Instr::JAL { target: *addr })
             }
             "jr" => {
@@ -828,12 +828,12 @@ fn parse2reg_i(ir: &Vec<&str>) -> Result<(usize, usize, i32), String> {
         Err(String::from("too few arguments"))
     } else {
         let im = ir[2].parse().unwrap_or_else(|_| {
-            u16::from_str_radix(&(ir[2])[2..], 16).expect("invalid hex value(overflow?)") as i16 as i32
+            i32::from_str_radix(&(ir[2])[2..], 16).expect("invalid immmmediate value")
         }); //遅延評価に
         if im < -32768 || im > 32767 {
-            return Err(String::from("offset decimal overflow\n"));
+            return Err(String::from("offset overflow\n"));
         }
-        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, im as i32))
+        Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, im))
     }
 }
 
@@ -842,37 +842,37 @@ fn parse1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
         Err(String::from("too few arguments"))
     } else {
         let im = ir[1].parse().unwrap_or_else(|_| {
-            u16::from_str_radix(&(ir[1])[2..], 16).expect("invalid hex value(overflow?)") as i16 as i32
-        }); //遅延評価に
+            i32::from_str_radix(&(ir[1])[2..], 16).expect("invalid immmmediate value")
+        });
         if im < -32768 || im > 32767 {
-            return Err(String::from("offset decimal overflow\n"));
+            return Err(String::from("offset overflow\n"));
         }
-        Ok((parse_reg(&ir[0])?, im as i32))
+        Ok((parse_reg(&ir[0])?, im))
     }
 }
-fn parse1reg_label(
+fn parse1reg_PC(
     ir: &Vec<&str>,
-    label_map: &HashMap<String, usize>,
+    PC_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
-        let addr = label_map
+        let addr = PC_map
             .get(&(ir[1].to_string() + ":"))
-            .ok_or("Invalid label name")?;
+            .ok_or("Invalid PC name")?;
         Ok((parse_reg(&ir[0])?, *addr))
     }
 }
-fn parse2reg_label(
+fn parse2reg_PC(
     ir: &Vec<&str>,
-    label_map: &HashMap<String, usize>,
+    PC_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize, usize), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
-        let addr = label_map
+        let addr = PC_map
             .get(&(ir[2].to_string() + ":"))
-            .ok_or("Invalid label name")?;
+            .ok_or("Invalid PC name")?;
         Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, *addr))
     }
 }
@@ -953,10 +953,10 @@ fn parse_reg(name: &str) -> Result<usize, String> {
         _ => {
             if name.starts_with("$f") {
                 let reg: usize = name[2..].parse().expect("invalid float register");
-                if reg > 31 {
+                if reg > 32 {
                     return Err(String::from("Invalid float register name(too big): ") + name);
                 };
-                Ok(reg + 32)
+                Ok(reg + 31)
             } else {
                 Err(String::from("Invalid register name: ") + name)
             }
