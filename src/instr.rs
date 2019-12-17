@@ -744,7 +744,7 @@ impl Instr {
             }
             "mv.s" => {
                 let (t, s) = parse2reg(&ir)?;
-                Ok(Instr::MVf { ft: t, fs: s})
+                Ok(Instr::MVf { ft: t -32, fs: s - 32})
             }
 
             "lw.s" => {
