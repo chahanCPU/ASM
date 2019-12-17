@@ -221,7 +221,7 @@ impl Computer {
                         self.arg_freg[ft] = 1;
                     }
 
-                    x @ _ => panic!("??"), //not implemented yet
+                    x @ _ => {}, //not implemented yet
                 }
                 self.print_reg();
                 stdin.read_line(&mut buf).ok();
@@ -354,6 +354,10 @@ impl Computer {
                 self.ireg[*t] = self.ireg[*s] ^ *im;
                 self.pc += 4;
             }
+            Instr::MV { t, s } => {
+                self.ireg[*t] = self.ireg[*s];
+                self.pc += 4;
+            }
             Instr::SLT { d, s, t } => {
                 if self.ireg[*s] < self.ireg[*t] {
                     self.ireg[*d] = 1;
@@ -372,6 +376,23 @@ impl Computer {
             }
             //Instr::SLTU { d, s, t } => getBytesR(0, *s, *t, *d, 0, 43),
             //Instr::SLTIU { t, s, im } => getBytesI(11, *s, *t, to_16usize(*im)),
+            Instr::SLEI { t, s, im } => {
+                if self.ireg[*s] <= *im {
+                    self.ireg[*t] = 1;
+                } else {
+                    self.ireg[*t] = 0;
+                }
+                self.pc += 4;
+            }
+            Instr::SGEI { t, s, im } => {
+                if self.ireg[*s] >= *im {
+                    self.ireg[*t] = 1;
+                } else {
+                    self.ireg[*t] = 0;
+                }
+                self.pc += 4;
+            }
+            
             Instr::SLL { d, t, h } => {
                 self.ireg[*d] = self.ireg[*t] << *h;
                 self.pc += 4;
@@ -394,6 +415,12 @@ impl Computer {
             }
             Instr::LUI { t, im } => {
                 self.ireg[*t] = im << 16;
+                self.pc += 4;
+            }
+            Instr::LLI { t, im } => {
+                unsafe{
+                *(&mut self.ireg[*t] as *mut i32 as *mut i16) = *im as i16;
+            }
                 self.pc += 4;
             }
             Instr::BEQ { s, t, target } => {
@@ -438,6 +465,20 @@ impl Computer {
                     self.pc += 4
                 }
             }
+            Instr::BLE { s, t, target } => {
+                if self.ireg[*s] <= self.ireg[*t] {
+                    self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                } else {
+                    self.pc += 4
+                }
+            }
+            Instr::BGE { s, t, target } => {
+                if self.ireg[*s] >= self.ireg[*t] {
+                    self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                } else {
+                    self.pc += 4
+                }
+            }
             Instr::J { target } => {
                 self.pc = (self.pc & 0xf0000000) | (*target << 2);
             }
@@ -464,6 +505,19 @@ impl Computer {
                     .unwrap();
                 self.pc += 4;
                 //println!("out:{:x}",self.ireg[*s] as u8)
+            }
+            Instr::OUTINT { s } => {
+                //print!("!!!!!!!!OUT:{}\n", self.ireg[*s]);
+                //print!("!!!!!!!!OUTFLOAT:{}\n", self.freg[*fs]);
+                self.writer
+                    .write(&format!("{}", self.ireg[*s]).as_bytes())
+                    .unwrap();
+                self.pc += 4;
+                //println!("out:{:x}",self.ireg[*s] as u8)
+            }
+            Instr::LA { t, target } => {
+                self.ireg[*t]  = (*target << 2) as i32;
+                //print!("{}", self.ireg[31]);
             }
             //float
             Instr::ADDf { fd, fs, ft } => {
@@ -517,10 +571,37 @@ impl Computer {
                 self.freg[*fd] = self.ireg[*s] as f32;
                 self.pc += 4;
             }
+            Instr::COS { fd, fs } => {
+                self.freg[*fd] = self.freg[*fs].cos();
+                self.pc += 4;
+            }
+            Instr::SIN { fd, fs } => {
+                self.freg[*fd] = self.freg[*fs].sin();
+                self.pc += 4;
+            }
+            Instr::TAN { fd, fs } => {
+                self.freg[*fd] = self.freg[*fs].tan();
+                self.pc += 4;
+            }
+            Instr::ATAN { fd, fs } => {
+                self.freg[*fd] = self.freg[*fs].atan();
+                self.pc += 4;
+            }
             Instr::LUIf { ft, im } => {
                 self.freg[*ft] = i2f(im << 16);
                 self.pc += 4;
             }
+            Instr::LLIf { ft, im } => {
+                unsafe{
+                    *(&mut self.freg[*ft] as *mut f32 as *mut i16) = *(im as *const i32 as *const i16);
+                }
+                self.pc += 4;
+            }
+            Instr::MVf { ft, fs } => {
+                self.freg[*ft] = self.freg[*fs];
+                self.pc += 4;
+            }
+            
             Instr::LWf { ft, s, off } => {
                 self.freg[*ft] = i2f(self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2]);
                 self.pc += 4
@@ -529,11 +610,13 @@ impl Computer {
                 self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2] = f2i(self.freg[*ft]);
                 self.pc += 4
             }
+            
             x @ _ => {
                 print!("{} not yet\n", x);
                 self.pc += 4;
                 return true;
             } //not implemented yet
+            
         }
         return false;
     }

@@ -31,6 +31,7 @@ pub enum Instr {
     ANDI { t: usize, s: usize, im: i32 },
     OR { d: usize, s: usize, t: usize },
     ORI { t: usize, s: usize, im: i32 },
+    MV { t: usize, s: usize}, /// 2nd
     XOR { d: usize, s: usize, t: usize },
     XORI { t: usize, s: usize, im: i32 },
 
@@ -38,12 +39,17 @@ pub enum Instr {
     SLTI { t: usize, s: usize, im: i32 },
     SLTU { d: usize, s: usize, t: usize },
     SLTIU { t: usize, s: usize, im: i32 },
+    
+    SLEI { t: usize, s: usize, im: i32 },
+    SGEI { t: usize, s: usize, im: i32 },
+    
     SLL { d: usize, t: usize, h: usize },
     SLLV { d: usize, t: usize, s: usize },
     SRL { d: usize, t: usize, h: usize },
     SRLV { d: usize, t: usize, s: usize },
     SRA { d: usize, t: usize, h: usize },
     LUI { t: usize, im: i32 },
+    LLI { t: usize, im: i32 },
     BEQ { s: usize, t: usize, target: usize },
     BGEZ { s: usize, target: usize },
     BGEZAL { s: usize, target: usize },
@@ -52,6 +58,8 @@ pub enum Instr {
     BLTZ { s: usize, target: usize },
     BLTZAL { s: usize, target: usize },
     BNE { s: usize, t: usize, target: usize },
+    BLE { s: usize, t: usize, target: usize },
+    BGE { s: usize, t: usize, target: usize },
     J { target: usize },
     JAL { target: usize },
     JR { s: usize },
@@ -59,6 +67,8 @@ pub enum Instr {
     EOF,
     IN { s: usize },
     OUT { s: usize },
+    OUTINT { s: usize },
+    LA { t: usize , target: usize},
     //float
     ADDf { fd: usize, fs: usize, ft: usize },
     SUBf { fd: usize, fs: usize, ft: usize },
@@ -72,7 +82,13 @@ pub enum Instr {
     LEf { d: usize, fs: usize, ft: usize },
     FTOI { d: usize, fs: usize },
     ITOF { fd: usize, s: usize },
+    COS { fd: usize, fs: usize },
+    SIN { fd: usize, fs: usize },
+    TAN { fd: usize, fs: usize },
+    ATAN { fd: usize, fs: usize },
     LUIf { ft: usize, im: i32 },
+    LLIf { ft: usize, im: i32 },
+    MVf { ft: usize, fs: usize },
     LWf { ft: usize, s: usize, off: i32 },
     SWf { ft: usize, s: usize, off: i32 },
 }
@@ -126,8 +142,8 @@ impl fmt::Display for Instr {
             Instr::OUT { s } => write!(f, "OUT ${}", *s),
             //float
             Instr::ADDf { fd, fs, ft } => write!(f, "ADDf(${} = ${}+${})", fd, fs, ft),
-            Instr::SUBf { fd, fs, ft } => write!(f, "SUBf(${} = ${}+${})", fd, fs, ft),
-            Instr::MULf { fd, fs, ft } => write!(f, "MULf(${} = ${}+${})", fd, fs, ft),
+            Instr::SUBf { fd, fs, ft } => write!(f, "SUBf(${} = ${}-${})", fd, fs, ft),
+            Instr::MULf { fd, fs, ft } => write!(f, "MULf(${} = ${}*${})", fd, fs, ft),
             Instr::INVf { fd, fs } => write!(f, "INVf(${} = 1/${})", fd, fs),
             Instr::ABSf { fd, fs } => write!(f, "ABSf(${} = |${}|)", fd, fs),
             Instr::NEGf { fd, fs } => write!(f, "NEGf(${} = -${})", fd, fs),
@@ -278,7 +294,7 @@ impl Instr {
             _ => [255, 255, 255, 255], //not implemented yet
         }
     }
-    pub fn from_s(ir: &str, PC_map: &HashMap<String, usize>) -> Result<Self, String> {
+    pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
         //命令パーサー。文字列（アセンブリ）を読み込んで命令データに
         let mut ir = ir.split_whitespace();
         let mut opcode = ir.next().unwrap();
@@ -396,6 +412,10 @@ impl Instr {
                 let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::XORI { t: t, s: s, im: im })
             }
+            "mv" => {
+                let (t, s) = parse2reg(&ir)?;
+                Ok(Instr::MV { t: t, s: s })
+            }
             "slt" => {
                 let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::SLT { d: d, s: s, t: t })
@@ -411,6 +431,14 @@ impl Instr {
             "sltiu" => {
                 let (t, s, im) = parse2reg_i(&ir)?;
                 Ok(Instr::SLTIU { t: t, s: s, im: im })
+            }
+            "slei" => {
+                let (t, s, im) = parse2reg_i(&ir)?;
+                Ok(Instr::SLEI { t: t, s: s, im: im })
+            }
+            "sgei" => {
+                let (t, s, im) = parse2reg_i(&ir)?;
+                Ok(Instr::SGEI { t: t, s: s, im: im })
             }
 
             "sll" => {
@@ -465,9 +493,13 @@ impl Instr {
                 let (t, im) = parse1reg_i(&ir)?;
                 Ok(Instr::LUI { t: t, im: im })
             }
+            "lli" => {
+                let (t, im) = parse1reg_i(&ir)?;
+                Ok(Instr::LLI { t: t, im: im })
+            }
 
             "beq" => {
-                let (s, t, target) = parse2reg_label(&ir, PC_map)?;
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
                 Ok(Instr::BEQ {
                     s: s,
                     t: t,
@@ -476,42 +508,42 @@ impl Instr {
             }
 
             "bgez" => {
-                let (s, target) = parse1reg_label(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGEZ {
                     s: s,
                     target: target,
                 })
             }
             "bgezal" => {
-                let (s, target) = parse1reg_label(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGEZAL {
                     s: s,
                     target: target,
                 })
             }
             "bgtz" => {
-                let (s, target) = parse1reg_label(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGTZ {
                     s: s,
                     target: target,
                 })
             }
             "blez" => {
-                let (s, target) = parse1reg_label(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BLEZ {
                     s: s,
                     target: target,
                 })
             }
             "bltz" => {
-                let (s, target) = parse1reg_label(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BLTZ {
                     s: s,
                     target: target,
                 })
             }
             "bltzal" => {
-                let (s, target) = parse1reg_label(&ir, PC_map)?;
+                let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BLTZAL {
                     s: s,
                     target: target,
@@ -519,8 +551,24 @@ impl Instr {
             }
 
             "bne" => {
-                let (s, t, target) = parse2reg_label(&ir, PC_map)?;
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
                 Ok(Instr::BNE {
+                    s: s,
+                    t: t,
+                    target: target,
+                })
+            }
+            "ble" => {
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                Ok(Instr::BLE {
+                    s: s,
+                    t: t,
+                    target: target,
+                })
+            }
+            "bge" => {
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                Ok(Instr::BGE {
                     s: s,
                     t: t,
                     target: target,
@@ -528,20 +576,24 @@ impl Instr {
             }
 
             "li" => {
-                let (t, target) = parse1reg_label(&ir, PC_map)?;
+                let (t, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::ORI {t: t, s: 0, im: (target << 2) as i32})
             }
+            "la" => {
+                let (t, target) = parse1reg_label(&ir, label_map)?;
+                Ok(Instr::LA {t: t, target: target})
+            }
             "j" => {
-                let PC_name = ir.get(0).ok_or("No PC")?;
-                let addr = PC_map
-                    .get(&(PC_name.to_string() + ":"))
+                let label_name = ir.get(0).ok_or("No PC")?;
+                let addr = label_map
+                    .get(&(label_name.to_string() + ":"))
                     .ok_or("Invalid PC name")?;
                 Ok(Instr::J { target: *addr })
             }
             "jal" => {
-                let PC_name = ir.get(0).ok_or("No PC")?;
-                let addr = PC_map
-                    .get(&(PC_name.to_string() + ":"))
+                let label_name = ir.get(0).ok_or("No PC")?;
+                let addr = label_map
+                    .get(&(label_name.to_string() + ":"))
                     .ok_or("Invalid PC name")?;
                 Ok(Instr::JAL { target: *addr })
             }
@@ -557,6 +609,11 @@ impl Instr {
                 let s = parse1reg(&ir)?;
                 //print!("ououou\n");
                 Ok(Instr::OUT { s: s })
+            }
+            "outint" => {
+                let s = parse1reg(&ir)?;
+                //print!("ououou\n");
+                Ok(Instr::OUTINT { s: s })
             }
             "in" => {
                 let s = parse1reg(&ir)?;
@@ -648,9 +705,46 @@ impl Instr {
                 let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::ITOF { fd: d - 32, s: s })
             }
+            "cos" => {
+                let (d, s) = parse2reg(&ir)?;
+                Ok(Instr::COS {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
+            }
+            "tan" => {
+                let (d, s) = parse2reg(&ir)?;
+                Ok(Instr::TAN {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
+            }
+            "sin" => {
+                let (d, s) = parse2reg(&ir)?;
+                Ok(Instr::SIN {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
+            }
+            "atan" => {
+                let (d, s) = parse2reg(&ir)?;
+                Ok(Instr::ATAN {
+                    fd: d - 32,
+                    fs: s - 32,
+                })
+            }
+            
             "lui.s" => {
                 let (t, im) = parse1reg_i(&ir)?;
                 Ok(Instr::LUIf { ft: t - 32, im: im })
+            }
+            "lli.s" => {
+                let (t, im) = parse1reg_i(&ir)?;
+                Ok(Instr::LLIf { ft: t - 32, im: im })
+            }
+            "mv.s" => {
+                let (t, s) = parse2reg(&ir)?;
+                Ok(Instr::MVf { ft: t, fs: s})
             }
 
             "lw.s" => {
@@ -852,12 +946,12 @@ fn parse1reg_i(ir: &Vec<&str>) -> Result<(usize, i32), String> {
 }
 fn parse1reg_label(
     ir: &Vec<&str>,
-    PC_map: &HashMap<String, usize>,
+    label_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize), String> {
     if ir.len() < 2 {
         Err(String::from("too few arguments"))
     } else {
-        let addr = PC_map
+        let addr = label_map
             .get(&(ir[1].to_string() + ":"))
             .ok_or("Invalid PC name")?;
         Ok((parse_reg(&ir[0])?, *addr))
@@ -865,12 +959,12 @@ fn parse1reg_label(
 }
 fn parse2reg_label(
     ir: &Vec<&str>,
-    PC_map: &HashMap<String, usize>,
+    label_map: &HashMap<String, usize>,
 ) -> Result<(usize, usize, usize), String> {
     if ir.len() < 3 {
         Err(String::from("too few arguments"))
     } else {
-        let addr = PC_map
+        let addr = label_map
             .get(&(ir[2].to_string() + ":"))
             .ok_or("Invalid PC name")?;
         Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, *addr))
