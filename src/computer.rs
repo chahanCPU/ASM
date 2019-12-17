@@ -518,6 +518,7 @@ impl Computer {
             Instr::LA { t, target } => {
                 self.ireg[*t]  = (*target << 2) as i32;
                 //print!("{}", self.ireg[31]);
+                self.pc += 4;
             }
             //float
             Instr::ADDf { fd, fs, ft } => {
