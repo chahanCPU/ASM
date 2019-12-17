@@ -1,3 +1,4 @@
+
 min_caml_start:
 	ori	$2, $zero, 1
 	ori	$3, $zero, 0
@@ -4549,7 +4550,7 @@ beq_cont.9076:
 	ori	$at, $zero, 0
 	bne	$2, $at, beq_else.9077
 	ori	$2, $zero, 0
-	!jr	$ra
+	jr	$ra
 beq_else.9077:
 	lw	$2, 8($sp)
 	sw	$ra, 44($sp)

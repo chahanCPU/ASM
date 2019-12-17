@@ -73,13 +73,6 @@ fn asm(filename: String,in_filename: Option<String>, has_debug: bool) {//アセ�
         .enumerate()
     {
         let s = result.unwrap();
-        if s.starts_with("#!"){
-            match s[2..].parse::<usize>(){
-                Err(_) => println!("line {}: invalid breakpoint",i),
-                Ok(i) => {bpoints.insert(i>>2);},
-            }
-        }
-        
         let mut l = trim_space_comment(&s);
         if l.ends_with(":") || l == "" {
             continue;
@@ -110,9 +103,9 @@ fn asm(filename: String,in_filename: Option<String>, has_debug: bool) {//アセ�
     drop(writer);
     drop(writer2);
     
-    let mut cpu : Computer = Computer::new( bpoints, &filename, in_filename);
+    let mut cpu : Computer = Computer::new( bpoints, filename, in_filename);
     if has_debug{
-        cpu.run_debug(irs,filename);
+        cpu.run_debug(irs);
     }else{
         cpu.run(irs);
     }

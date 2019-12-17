@@ -16,9 +16,6 @@ path = "src/disasm.rs"
 [[bin]]
 name = "sld2indata"
 path = "src/sld2indata.rs"
-[[bin]]
-name = "addpc"
-path = "src/addpc.rs"
 
 [[bin]]
 name = "asm"
