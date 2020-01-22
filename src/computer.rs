@@ -2,7 +2,7 @@
 //シミュレータの本体
 //462840900命令に25秒かかりました
 use super::instr::Instr;
-use std::collections::HashSet;
+use std::collections::{HashSet, HashMap};
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
@@ -62,7 +62,7 @@ pub struct Computer {
     
 }
 impl Computer {
-    pub fn new( bpoints: HashSet<usize>, filename: String, in_filename: Option<String>) -> Computer {
+    pub fn new( bpoints: HashSet<usize>, filename: &str, in_filename: Option<String>) -> Computer {
         let mut indata_8bit=Vec::new();
         match in_filename{
             Some(filepath) => {
@@ -105,12 +105,17 @@ impl Computer {
         println!("******RUN END******\npc:{}\ncount:{}", self.pc, count);
     }
     
-    pub fn run_debug(&mut self, irmemory: Vec<(Instr,usize)>) {
+    pub fn run_debug(&mut self, irmemory: Vec<(Instr,usize)>,filename: String) {
         let stdin = io::stdin();
         let mut buf = String::new();
+        //let c : &str = &buf;
+        //let d = c[2..3];       
         print!("**************DEBUG RUN BEGIN\n");
         let mut count: usize = 0;
+        let mut stop_count:usize = 0;
         let mut flag = false;
+        let mut run_pc_map = vec![0; irmemory.len()];
+
         while self.pc >> 2 < irmemory.len() {
             
             if count > 1000000000000 {
@@ -124,12 +129,12 @@ impl Computer {
             self.arg_ireg = [0; 32];
             self.arg_freg = [0; 32];
             
-            if self.bpoints.contains(&(self.pc >> 2)) || flag {
+            if self.bpoints.contains(&(self.pc >> 2)) || flag || count == stop_count{
                 flag = false;
                 self.print_stat();
                 let ir = irmemory[self.pc >> 2].0.clone();
-                println!("{}",ir);
-                match ir {
+                println!("{},{},{}",ir,self.in_data[self.indata_count],self.indata_count);
+                match ir { //レジスタ表示用の部分 クソコード
                     Instr::ADD { d, s, t }
                     | Instr::SUB { d, s, t }
                     | Instr::MULT { d, s, t }
@@ -225,22 +230,33 @@ impl Computer {
                 }
                 self.print_reg();
                 stdin.read_line(&mut buf).ok();
-                match buf.as_str() {
-                    "q\n" => break,
-                    "\n" => flag = true,
-                    _ => {}
+                let cmd:Vec<&str> = buf.split_whitespace().collect();
+                match cmd.get(0) {
+                    None => flag = true,
+                    Some(&"q") => break,
+                    Some(&"c")  => match cmd.get(1){
+                        None => println!("no argument"),
+                        Some(x) => stop_count = count+x.parse().unwrap_or(1)
+                    }
+                    _ => {},
                 }
                 buf.clear();
             }
             
             
-            
+            run_pc_map[self.pc >> 2] += 1;
             if self.run_ir(&irmemory[self.pc >> 2].0) {
                 break;
             };
+            
             //print!("sp:{} ", self.ireg[29]);
         }
         println!("******RUN END******\npc:{}\ncount:{}", self.pc, count);
+        let mut file =
+            File::create(format!("{}.debug",filename)).expect("cannot create file"); //こっちにバイナリを出力（多分使わない）
+        for i in 0..irmemory.len(){
+            writeln!(file,"{} {}", i<<2, run_pc_map[i]);
+        }
     }
     fn print_stat(&self) {
         println!("pc:{:<10}", self.pc);
@@ -392,7 +408,6 @@ impl Computer {
                 }
                 self.pc += 4;
             }
-            
             Instr::SLL { d, t, h } => {
                 self.ireg[*d] = self.ireg[*t] << *h;
                 self.pc += 4;
@@ -519,7 +534,9 @@ impl Computer {
                 self.ireg[*t]  = (*target << 2) as i32;
                 //print!("{}", self.ireg[31]);
                 self.pc += 4;
+                
             }
+
             //float
             Instr::ADDf { fd, fs, ft } => {
                 self.freg[*fd] = self.freg[*fs] + self.freg[*ft];
@@ -602,7 +619,6 @@ impl Computer {
                 self.freg[*ft] = self.freg[*fs];
                 self.pc += 4;
             }
-            
             Instr::LWf { ft, s, off } => {
                 self.freg[*ft] = i2f(self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2]);
                 self.pc += 4
@@ -611,13 +627,11 @@ impl Computer {
                 self.mem[to_u(self.ireg[*s] + *off) - 1 >> 2] = f2i(self.freg[*ft]);
                 self.pc += 4
             }
-            
             x @ _ => {
                 print!("{} not yet\n", x);
                 self.pc += 4;
                 return true;
             } //not implemented yet
-            
         }
         return false;
     }

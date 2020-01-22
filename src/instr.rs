@@ -11,7 +11,7 @@ macro_rules! BITMASK(
 #[derive(Clone)]
 pub enum Instr {
     //命令の定義。enum(列挙体)
-    ADD { d: usize, s: usize, t: usize },
+   ADD { d: usize, s: usize, t: usize },
     ADDI { t: usize, s: usize, im: i32 },
     ADDU { d: usize, s: usize, t: usize },
     ADDIU { t: usize, s: usize, im: i32 },
@@ -744,7 +744,7 @@ impl Instr {
             }
             "mv.s" => {
                 let (t, s) = parse2reg(&ir)?;
-                Ok(Instr::MVf { ft: t -32, fs: s - 32})
+                Ok(Instr::MVf { ft: t - 32, fs: s - 32})
             }
 
             "lw.s" => {
@@ -953,7 +953,7 @@ fn parse1reg_label(
     } else {
         let addr = label_map
             .get(&(ir[1].to_string() + ":"))
-            .ok_or("Invalid PC name")?;
+            .ok_or("Invalid label name")?;
         Ok((parse_reg(&ir[0])?, *addr))
     }
 }
@@ -966,7 +966,7 @@ fn parse2reg_label(
     } else {
         let addr = label_map
             .get(&(ir[2].to_string() + ":"))
-            .ok_or("Invalid PC name")?;
+            .ok_or("Invalid label name")?;
         Ok((parse_reg(&ir[0])?, parse_reg(&ir[1])?, *addr))
     }
 }
