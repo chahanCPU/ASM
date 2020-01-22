@@ -133,7 +133,7 @@ impl Computer {
                 flag = false;
                 self.print_stat();
                 let ir = irmemory[self.pc >> 2].0.clone();
-                println!("{},{},{}",ir,self.in_data[self.indata_count],self.indata_count);
+                println!("{}",ir);
                 match ir { //レジスタ表示用の部分 クソコード
                     Instr::ADD { d, s, t }
                     | Instr::SUB { d, s, t }
