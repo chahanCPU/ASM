@@ -214,6 +214,11 @@ impl Computer {
                         self.arg_freg[fs] = 2;
                         self.arg_freg[ft] = 3;
                     }
+                    Instr::BEQf { fs, ft, target } 
+                    | Instr::BLEf { fs, ft, target } => {
+                        self.arg_freg[fs] = 1;
+                        self.arg_freg[ft] = 2;
+                    }
                     Instr::FTOI { d, fs } => {
                         self.arg_ireg[d] = 1;
                         self.arg_freg[fs] = 2;
@@ -580,6 +585,20 @@ impl Computer {
                 let cond = self.freg[*fs] <= self.freg[*ft];
                 self.ireg[*d] = cond as i32;
                 self.pc += 4;
+            }
+            Instr::BEQf { fs, ft, target } => {
+                if self.freg[*fs] == self.freg[*ft] {
+                    self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                } else {
+                    self.pc += 4
+                }
+            }
+            Instr::BLEf { fs, ft, target } => {
+                if self.freg[*fs] <= self.freg[*ft] {
+                    self.pc = (self.pc & 0xf0000000) | (*target << 2);
+                } else {
+                    self.pc += 4
+                }
             }
             Instr::FTOI { d, fs } => {
                 self.ireg[*d] = self.freg[*fs] as i32;

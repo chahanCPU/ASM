@@ -80,6 +80,8 @@ pub enum Instr {
     EQf { d: usize, fs: usize, ft: usize },
     LTf { d: usize, fs: usize, ft: usize },
     LEf { d: usize, fs: usize, ft: usize },
+    BEQf { fs: usize, ft: usize, target: usize },
+    BLEf { fs: usize, ft: usize, target: usize },
     FTOI { d: usize, fs: usize },
     ITOF { fd: usize, s: usize },
     COS { fd: usize, fs: usize },
@@ -151,6 +153,8 @@ impl fmt::Display for Instr {
             Instr::EQf { d, fs, ft } => write!(f, "EQf(${} = ${} == ${}?)", d, fs, ft),
             Instr::LTf { d, fs, ft } => write!(f, "LTf(${} = ${} < ${}?)", d, fs, ft),
             Instr::LEf { d, fs, ft } => write!(f, "LEf(${} = ${} <= ${}?)", d, fs, ft),
+            Instr::BEQf { fs, ft, target } => write!(f, "BEQf(${} == ${}? ->jump {})", fs, ft, target),
+            Instr::BLEf { fs, ft, target } => write!(f, "BLEf(${} == ${}? ->jump {})", fs, ft, target),
             Instr::FTOI { d, fs } => write!(f, "FTOI(${} <= ${})", d, fs),
             Instr::ITOF { fd, s } => write!(f, "ITOF(${} <= ${})", fd, s),
             Instr::LUIf { ft, im } => write!(f, "LUIf(${} = {}<<16?)", ft, im),
@@ -219,6 +223,8 @@ impl Instr {
             Instr::EQf { d, fs, ft } => format!("    eq.s ${}, $f{}, $f{}",d,fs,ft),
             Instr::LTf { d, fs, ft } => format!("    lt.s ${}, $f{}, $f{}",d,fs,ft),
             Instr::LEf { d, fs, ft } => format!("    le.s ${}, $f{}, $f{}",d,fs,ft),
+            Instr::BEQf { fs, ft, target } => format!("    beq.s ${}, ${}, PC{}",fs,ft,target<<2),
+            Instr::BLEf { fs, ft, target } => format!("    ble.s ${}, ${}, PC{}",fs,ft,target<<2),
             Instr::FTOI { d, fs } => format!("    ftoi ${}, $f{}",d,fs),
             Instr::ITOF { fd, s } => format!("    ftoi $f{}, ${}",fd,s),
             Instr::LUIf { ft, im } => format!("    lui.s $f{}, {}",ft,im),
@@ -285,6 +291,7 @@ impl Instr {
             Instr::EQf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110010),
             Instr::LTf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110100),
             Instr::LEf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110110),
+            // BEQf, BLEf
             Instr::FTOI { d, fs } => get_bytes_r(17, 16, 0, *fs, *d, 8),
             Instr::ITOF { fd, s } => get_bytes_r(17, 16, 0, *s, *fd, 9),
             Instr::LUIf { ft, im } => get_bytes_i(31, 0, *ft, to_16usize(*im)), //0はDont care
@@ -695,6 +702,22 @@ impl Instr {
                     d: d,
                     fs: s - 32,
                     ft: t - 32,
+                })
+            }
+            "beq.s" => {
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                Ok(Instr::BEQf {
+                    fs: s - 32,
+                    ft: t - 32,
+                    target: target,
+                })
+            }
+            "ble.s" => {
+                let (s, t, target) = parse2reg_label(&ir, label_map)?;
+                Ok(Instr::BLEf {
+                    fs: s - 32,
+                    ft: t - 32,
+                    target: target,
                 })
             }
             "ftoi" => {
