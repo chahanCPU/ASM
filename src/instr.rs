@@ -293,7 +293,8 @@ impl Instr {
             Instr::EQf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110010),
             Instr::LTf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110100),
             Instr::LEf { d, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *d, 0b110110),
-            // BEQf, BLEf
+            Instr::BEQf { fs, ft, target } => get_bytes_i(0b010100, *fs, *ft, *target),
+            Instr::BLEf { fs, ft, target } => get_bytes_i(0b010110, *fs, *ft, *target),
             Instr::FTOI { d, fs } => get_bytes_r(17, 16, 0, *fs, *d, 8),
             Instr::ITOF { fd, s } => get_bytes_r(17, 16, 0, *s, *fd, 9),
             Instr::LUIf { ft, im } => get_bytes_i(31, 0, *ft, to_16usize(*im)), //0はDont care
