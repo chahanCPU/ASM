@@ -2,11 +2,14 @@
 //シミュレータの本体
 //462840900命令に25秒かかりました
 use super::instr::Instr;
+use super::fpu::sqrtFPU;
+//use crate::a::af;
 use std::collections::{HashSet, HashMap};
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
 use std::mem;
+
 const MEM_SIZE: usize = 2222222; //バイト数はこの4倍
 macro_rules! fg_green {
     ($text:expr) => {
@@ -551,7 +554,7 @@ impl Computer {
                 self.pc += 4;
             }
             Instr::INVf { fd, fs } => {
-                self.freg[*fd] = 1.0 / self.freg[*fs];
+                self.freg[*fd] = 1.0 / self.freg[*fs];//FPU
                 self.pc += 4;
             }
             Instr::ABSf { fd, fs } => {
@@ -563,7 +566,7 @@ impl Computer {
                 self.pc += 4;
             }
             Instr::SQRTf { fd, fs } => {
-                self.freg[*fd] = self.freg[*fs].sqrt();
+                self.freg[*fd] = sqrtFPU(self.freg[*fs]);
                 self.pc += 4;
             }
             Instr::EQf { d, fs, ft } => {

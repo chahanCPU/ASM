@@ -7,6 +7,7 @@ use std::io::{BufRead, BufReader, BufWriter, Write};
 mod instr;
 use instr::Instr;
 mod computer;
+mod fpu;//これがないとcomputer使えない
 fn main() {
     let mut args = env::args();
     let _ = args.next().unwrap();

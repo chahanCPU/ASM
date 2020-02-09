@@ -7,6 +7,7 @@ use std::io::{BufRead, BufReader, BufWriter, Write};
 mod instr;
 use instr::Instr;
 mod computer;
+mod fpu;
 use computer::Computer;
 use std::collections::HashSet;
 fn main() {

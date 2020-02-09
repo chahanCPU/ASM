@@ -5,6 +5,7 @@ use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 mod instr;
+mod fpu;
 use instr::Instr;
 mod computer;
 use computer::Computer;

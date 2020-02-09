@@ -10,3 +10,4 @@ min_caml_start:
     ftoi $5, $f5
     outint $5
     noop
+    

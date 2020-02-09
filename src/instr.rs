@@ -162,6 +162,7 @@ impl fmt::Display for Instr {
 }
 
 impl Instr {
+
     pub fn to_str(&self) -> String{
         match self {
             Instr::ADD { d, s, t } => format!("    add ${}, ${}, ${}",d,s,t),
@@ -227,6 +228,7 @@ impl Instr {
             _ => format!("    !!!unsupported_instr!!!!"),
         }
     }
+    
     pub fn getbytes(&self) -> [u8; 4] {
         //命令をバイト列に変換 （[u8; 4]は8ビット整数が4つ（＝4バイト＝32bit）入った配列のこと）
         match self {
@@ -766,6 +768,7 @@ impl Instr {
             x => Err(format!("no such opcode: {}", x)),
         }
     }
+    
     pub fn disassemble(encoded_instruction: u32) -> Result<(Instr,Option<usize>), String> {
         if encoded_instruction == 62 {
             return Ok((Instr::NOOP, None));
