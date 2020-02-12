@@ -2,16 +2,17 @@
 //パースなどめんどくさい役目を押し付けられてコードは長いが、あまり読む必要はないはず
 use std::collections::HashMap;
 use std::fmt;
+use std::mem::discriminant;
 macro_rules! BITMASK(
     ($n:expr) => (
         ((1 << $n) - 1)
     );
 );
 
-#[derive(Clone)]
+#[derive(Copy,Clone,Hash)]
 pub enum Instr {
     //命令の定義。enum(列挙体)
-   ADD { d: usize, s: usize, t: usize },
+    ADD { d: usize, s: usize, t: usize },
     ADDI { t: usize, s: usize, im: i32 },
     ADDU { d: usize, s: usize, t: usize },
     ADDIU { t: usize, s: usize, im: i32 },
@@ -25,8 +26,8 @@ pub enum Instr {
     LW { t: usize, s: usize, off: i32 },
     SB { t: usize, s: usize, off: i32 },
     SW { t: usize, s: usize, off: i32 },
-    MFHI { d: usize },
-    MFLO { d: usize },
+    //MFHI { d: usize },
+    //MFLO { d: usize },
     AND { d: usize, s: usize, t: usize },
     ANDI { t: usize, s: usize, im: i32 },
     OR { d: usize, s: usize, t: usize },
@@ -52,11 +53,11 @@ pub enum Instr {
     LLI { t: usize, im: i32 },
     BEQ { s: usize, t: usize, target: usize },
     BGEZ { s: usize, target: usize },
-    BGEZAL { s: usize, target: usize },
+    //BGEZAL { s: usize, target: usize },
     BGTZ { s: usize, target: usize },
     BLEZ { s: usize, target: usize },
     BLTZ { s: usize, target: usize },
-    BLTZAL { s: usize, target: usize },
+    //BLTZAL { s: usize, target: usize },
     BNE { s: usize, t: usize, target: usize },
     BLE { s: usize, t: usize, target: usize },
     BGE { s: usize, t: usize, target: usize },
@@ -84,17 +85,106 @@ pub enum Instr {
     BLEf { fs: usize, ft: usize, target: usize },
     FTOI { d: usize, fs: usize },
     ITOF { fd: usize, s: usize },
-    COS { fd: usize, fs: usize },
-    SIN { fd: usize, fs: usize },
-    TAN { fd: usize, fs: usize },
-    ATAN { fd: usize, fs: usize },
+    //COS { fd: usize, fs: usize },
+    //SIN { fd: usize, fs: usize },
+    //TAN { fd: usize, fs: usize },
+    //ATAN { fd: usize, fs: usize },
     LUIf { ft: usize, im: i32 },
     LLIf { ft: usize, im: i32 },
     MVf { ft: usize, fs: usize },
     LWf { ft: usize, s: usize, off: i32 },
     SWf { ft: usize, s: usize, off: i32 },
 }
+#[derive(Copy,Clone,Hash,Eq,PartialEq,Debug)]
+pub enum InstrType{
+    ADD,
+    ADDI,
+    ADDU ,
+    ADDIU ,
+    SUB,
+    SUBU ,
+    MULT,
+    MULTU,
+    DIV,
+    DIVU,
+    LB,
+    LW,
+    SB,
+    SW,
+    MFHI,
+    MFLO,
+    AND,
+    ANDI,
+    OR,
+    ORI,
+    MV , /// 2nd
+    XOR ,
+    XORI,
+    SLT,
+    SLTI,
+    SLTU ,
+    SLTIU,
+    SLEI,
+    SGEI ,
+    SLL,
+    SLLV ,
+    SRL,
+    SRLV,
+    SRA,
+    LUI,
+    LLI,
+    BEQ,
+    BGEZ,
+    BGEZAL,
+    BGTZ,
+    BLEZ,
+    BLTZ ,
+    BLTZAL ,
+    BNE,
+    BLE,
+    BGE,
+    J ,
+    JAL ,
+    JR,
+    NOOP,
+    EOF,
+    IN,
+    OUT,
+    OUTINT ,
+    LA ,
+    //float
+    ADDf,
+    SUBf,
+    MULf,
+    INVf,
+    ABSf,
+    NEGf,
+    SQRTf ,
+    EQf ,
+    LTf,
+    LEf ,
+    BEQf ,
+    BLEf,
+    FTOI,
+    ITOF ,
+    COS ,
+    SIN,
+    TAN,
+    ATAN ,
+    LUIf,
+    LLIf ,
+    MVf,
+    LWf,
+    SWf,
 
+    UNKNOWN,
+}
+impl PartialEq for Instr {
+    fn eq(&self, other: &Self) -> bool {
+        discriminant(self) == discriminant(other)
+    }
+}
+impl Eq for Instr {}
 impl fmt::Display for Instr {
     //命令をprint!命令でテキストデータとして出力できるようにした（あまり気にする必要なし）
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -304,6 +394,88 @@ impl Instr {
             _ => [255, 255, 255, 255], //not implemented yet
         }
     }
+    pub fn to_type(&self) -> InstrType {
+        //命令をバイト列に変換 （[u8; 4]は8ビット整数が4つ（＝4バイト＝32bit）入った配列のこと）
+        match self {
+            Instr::ADD { .. } => InstrType::ADD,
+            Instr::ADDI { .. } => InstrType::ADDI,
+            Instr::ADDU { .. } => InstrType::ADDU,
+            Instr::ADDIU { .. } => InstrType::ADDIU,
+            Instr::SUB { .. } => InstrType::SUB,
+            Instr::SUBU { .. } => InstrType::SUBU,
+            Instr::MULT { .. } => InstrType::MULT,
+            Instr::MULTU { .. } =>InstrType::MULTU,
+            Instr::DIV { .. } =>InstrType::DIV,
+            Instr::DIVU { .. } => InstrType::DIVU,
+            Instr::LB { .. } => InstrType::LB,
+            Instr::LW { .. } => InstrType::LW,
+            Instr::SB { .. } => InstrType::SB,
+            Instr::SW { .. } =>InstrType::SW,
+            Instr::MV { .. } =>InstrType::MV,
+            Instr::AND { .. } => InstrType::AND,
+            Instr::ANDI { .. } =>InstrType::ANDI,
+            Instr::OR { .. } => InstrType::OR,
+            Instr::ORI { .. } =>InstrType::ORI,
+            Instr::XOR { .. } => InstrType::XOR,
+            Instr::XORI { .. } => InstrType::XORI,
+            Instr::SLT { .. } => InstrType::SLT,
+            Instr::SLTI { .. } => InstrType::SLTI,
+            Instr::SLTU { .. } => InstrType::SLTU,
+            Instr::SLTIU { .. } => InstrType::SLTIU,
+            Instr::SLEI { .. } => InstrType::SLEI,
+            Instr::SGEI { .. } => InstrType::SGEI,
+            Instr::SLL { .. } => InstrType::SLL,
+            Instr::SLLV { .. } => InstrType::SLLV,
+            Instr::SRL { .. } => InstrType::SRL,
+            Instr::SRLV { .. } =>InstrType::SRLV,
+            Instr::SRA { .. } => InstrType::SRA,
+            Instr::LUI { .. } => InstrType::LUI,
+            Instr::LLI { .. } => InstrType::LLI,
+            Instr::BEQ { .. } =>InstrType::BEQ,
+            Instr::BGEZ { .. } => InstrType::BGEZ,
+            Instr::BGTZ { .. } => InstrType::BGTZ,
+            Instr::BLEZ { .. } =>InstrType::BLEZ,
+            Instr::BLTZ { .. } => InstrType::BLTZ,
+            Instr::BNE { .. } =>InstrType::BNE,
+            Instr::BLE { .. } =>InstrType::BLE,
+            Instr::BGE { .. } =>InstrType::BGE,
+            /////
+            Instr::J { .. } => InstrType::J,
+            Instr::JAL { .. } => InstrType::JAL,
+            Instr::JR { .. } => InstrType::JR,
+            Instr::NOOP => InstrType::NOOP,
+            Instr::EOF => InstrType::EOF,
+            Instr::IN { .. } =>InstrType::IN,
+            Instr::OUT { .. } =>InstrType::OUT,
+            Instr::OUTINT { .. } =>InstrType::OUTINT,
+            Instr::LA { .. } =>InstrType::LA,
+            //float
+            Instr::ADDf { .. } =>InstrType::ADDf,
+            Instr::SUBf { .. } =>InstrType::SUBf,
+            Instr::MULf { .. } => InstrType::MULf,
+            Instr::INVf { .. } => InstrType::INVf,
+            Instr::ABSf { .. } =>InstrType::ABSf,
+            Instr::NEGf { .. } =>InstrType::NEGf,
+            Instr::SQRTf { .. } => InstrType::SQRTf,
+            Instr::EQf { .. } => InstrType::EQf,
+            Instr::LTf { .. } => InstrType::LTf,
+            Instr::LEf { .. } => InstrType::LEf,
+            Instr::BEQf { .. } => InstrType::BEQf,
+            Instr::BLEf { .. } => InstrType::BLEf,
+            Instr::FTOI { .. } => InstrType::FTOI,
+            Instr::ITOF { .. } => InstrType::ITOF,
+            Instr::LUIf { .. } => InstrType::LUIf,
+            Instr::LLIf { .. } => InstrType::LLIf,
+            Instr::MVf { .. } => InstrType::MVf,
+            
+            Instr::LWf { .. } => InstrType::LWf,
+            Instr::SWf { .. } => InstrType::SWf,
+
+
+            //_ => InstrType::UNKNOWN,
+        }
+    }
+    
     pub fn from_s(ir: &str, label_map: &HashMap<String, usize>) -> Result<Self, String> {
         //命令パーサー。文字列（アセンブリ）を読み込んで命令データに
         let mut ir = ir.split_whitespace();
@@ -388,7 +560,7 @@ impl Instr {
                     off: off,
                 })
             }
-
+            /*
             "mfhi" => {
                 let d = parse1reg(&ir)?;
                 Ok(Instr::MFHI { d: d })
@@ -397,7 +569,7 @@ impl Instr {
                 let d = parse1reg(&ir)?;
                 Ok(Instr::MFLO { d: d })
             }
-
+            */
             "and" => {
                 let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::AND { d: d, s: s, t: t })
@@ -524,6 +696,7 @@ impl Instr {
                     target: target,
                 })
             }
+            /*
             "bgezal" => {
                 let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGEZAL {
@@ -531,6 +704,7 @@ impl Instr {
                     target: target,
                 })
             }
+            */
             "bgtz" => {
                 let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BGTZ {
@@ -552,6 +726,7 @@ impl Instr {
                     target: target,
                 })
             }
+            /*
             "bltzal" => {
                 let (s, target) = parse1reg_label(&ir, label_map)?;
                 Ok(Instr::BLTZAL {
@@ -559,7 +734,7 @@ impl Instr {
                     target: target,
                 })
             }
-
+            */
             "bne" => {
                 let (s, t, target) = parse2reg_label(&ir, label_map)?;
                 Ok(Instr::BNE {
@@ -731,6 +906,7 @@ impl Instr {
                 let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::ITOF { fd: d - 32, s: s })
             }
+            /*
             "cos" => {
                 let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::COS {
@@ -759,7 +935,7 @@ impl Instr {
                     fs: s - 32,
                 })
             }
-            
+            */
             "lui.s" => {
                 let (t, im) = parse1reg_i(&ir)?;
                 Ok(Instr::LUIf { ft: t - 32, im: im })

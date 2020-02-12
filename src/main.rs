@@ -31,7 +31,7 @@ fn main() {
     let builder = thread::Builder::new();
 
     // スタックサイズを指定してスレッドを生成する
-    let th = builder.stack_size(10000000);
+    let th = builder.stack_size(100000000);
     let arg2 = args.next();
     // 実行
     println!("{}",has_debug);
@@ -110,7 +110,10 @@ fn asm(filename: String,in_filename: Option<String>, has_debug: bool) {//アセ�
                 
     drop(writer);
     drop(writer2);
+
+    let ha:HashMap<Instr,isize> = HashMap::new();
     
+    println!("***writing complete");
     let mut cpu : Computer = Computer::new( bpoints, &filename, in_filename);
     if has_debug{
         cpu.run_debug(irs,filename);

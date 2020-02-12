@@ -2,14 +2,16 @@
 //シミュレータの本体
 //462840900命令に25秒かかりました
 use super::instr::Instr;
-use super::fpu::sqrtFPU;
+use super::instr::InstrType;
+
+use super::fpu::sqrt_fpu;
 //use crate::a::af;
 use std::collections::{HashSet, HashMap};
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
 use std::mem;
-
+use std::mem::discriminant;
 const MEM_SIZE: usize = 2222222; //バイト数はこの4倍
 macro_rules! fg_green {
     ($text:expr) => {
@@ -56,13 +58,13 @@ pub struct Computer {
     ireg: [i32; 32],
     freg: [f32; 32],
     bpoints: HashSet<usize>,
+    ir_count: HashMap<InstrType,isize>, //命令実行数カウント
     writer: BufWriter<File>,
     changed_reg: [bool; 32],
     arg_ireg: [isize; 32],
     arg_freg: [isize; 32],
     in_data: Vec<i32>,
     indata_count: usize,
-    
 }
 impl Computer {
     pub fn new( bpoints: HashSet<usize>, filename: &str, in_filename: Option<String>) -> Computer {
@@ -82,7 +84,6 @@ impl Computer {
         */
         let writer =
             BufWriter::new(File::create(format!("{}.ppm", filename)).expect("cannot create file")); //こっちにバイナリを出力（多分使わない）
-            
         let mut c = Computer {
             ireg: [0; 32],
             freg: [0.0; 32],
@@ -95,6 +96,7 @@ impl Computer {
             arg_freg: [0; 32],
             in_data: indata_8bit,
             indata_count: 0,
+            ir_count: HashMap::new(),
         };
         c.ireg[28] = 2000000;//stack pointer バイト数
         c.ireg[29] = 48;//stack pointer
@@ -253,13 +255,20 @@ impl Computer {
             
             
             run_pc_map[self.pc >> 2] += 1;
-            if self.run_ir(&irmemory[self.pc >> 2].0) {
+            let ir = irmemory[self.pc >> 2].0;
+            if self.run_ir(&ir) {
                 break;
             };
-            
+            let count = self.ir_count.entry(ir.to_type()).or_insert(0);
+            *count += 1;
+        
             //print!("sp:{} ", self.ireg[29]);
         }
         println!("******RUN END******\npc:{}\ncount:{}", self.pc, count);
+        
+        for (key, val) in self.ir_count.iter() {
+            println!("key: {:?} val: {}", key, val);
+        }
         let mut file =
             File::create(format!("{}.debug",filename)).expect("cannot create file"); //こっちにバイナリを出力（多分使わない）
         for i in 0..irmemory.len(){
@@ -571,7 +580,7 @@ impl Computer {
                 self.pc += 4;
             }
             Instr::SQRTf { fd, fs } => {
-                self.freg[*fd] = sqrtFPU(self.freg[*fs]);
+                self.freg[*fd] = sqrt_fpu(self.freg[*fs]);
                 self.pc += 4;
             }
             Instr::EQf { d, fs, ft } => {
@@ -611,6 +620,7 @@ impl Computer {
                 self.freg[*fd] = self.ireg[*s] as f32;
                 self.pc += 4;
             }
+            /*
             Instr::COS { fd, fs } => {
                 self.freg[*fd] = self.freg[*fs].cos();
                 self.pc += 4;
@@ -627,6 +637,7 @@ impl Computer {
                 self.freg[*fd] = self.freg[*fs].atan();
                 self.pc += 4;
             }
+            */
             Instr::LUIf { ft, im } => {
                 self.freg[*ft] = i2f(im << 16);
                 self.pc += 4;

@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 # ansi_term = "0.12"
-
+enum-map = "0.6.2"
 
 [[bin]]
 name = "asm"
@@ -22,3 +22,9 @@ path = "src/main.rs"
 # [[bin]]
 # name = "addpc"
 # path = "src/addpc.rs"
+[[bin]]
+name = "fputest"
+path = "src/fputest.rs"
+#[[bin]]
+#name = "test"
+#path = "src/test.rs"

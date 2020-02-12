@@ -5,6 +5,12 @@ min_caml_start:
     lui.s $f5, 0x4049
     lli.s $f5, 0x0fda
     addi $4,$0, -113
+    addi $9,$0, -113
+    addi $9,$0, -113
+    addi $9,$0, -113
+    addi $9,$0, -113
+    addi $9,$0, -113
+    addi $9,$0, -113
     itof $f1, $4
     mul.s $f5, $f1, $f5
     ftoi $5, $f5
