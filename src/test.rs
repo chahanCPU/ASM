@@ -5,13 +5,13 @@ use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 mod instr;
-mod fpu;
+//mod fpu;
 use instr::Instr;
 use instr::InstrType;
 
-mod computer;
+//mod computer;
 use std::thread;
-use computer::Computer;
+//use computer::Computer;
 use std::collections::HashSet;
 
 pub struct Temp {
@@ -30,4 +30,8 @@ fn main() {
     a.ir_count.insert(3,4);
     let x = a.ir_count.get(&3).unwrap_or(&0);
     println!("{}",x);
+    let y:u32 = 3;
+    let m:u32 = 1-y;
+    println!("{}",m);
+    
 }

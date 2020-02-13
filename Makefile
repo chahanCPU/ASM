@@ -1,4 +1,5 @@
-TESTS = assembly/test.s sld/contest2.sld.in
+#TESTS = assembly/test.s sld/contest2.sld.in
+TESTS = assembly/minrt.s sld/contest2.sld.in
 
 all: $(TESTS)
 	cargo build --release
@@ -7,8 +8,8 @@ all: $(TESTS)
 	cp target/release/addpc .
 	cp target/release/fputest .
 	cp target/release/sld2indata .
-#	cargo run --bin asm --release $^
-	cargo run --bin asm --release /d $^ #デバッグモード
+	cargo run --bin asm --release $^
+#	cargo run --bin asm --release /d $^ #デバッグモード
 	
 clean:
 	cargo clean

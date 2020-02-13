@@ -267,7 +267,7 @@ impl Computer {
         println!("******RUN END******\npc:{}\ncount:{}", self.pc, count);
         
         for (key, val) in self.ir_count.iter() {
-            println!("key: {:?} val: {}", key, val);
+            println!("val: {:>12} key: {:?}", val, key);
         }
         let mut file =
             File::create(format!("{}.debug",filename)).expect("cannot create file"); //こっちにバイナリを出力（多分使わない）
