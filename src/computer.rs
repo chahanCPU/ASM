@@ -4,7 +4,7 @@
 use super::instr::Instr;
 use super::instr::InstrType;
 
-use super::fpu::sqrt_fpu;
+use super::fpu;
 //use crate::a::af;
 use std::collections::{HashSet, HashMap};
 use std::fs::File;
@@ -564,11 +564,12 @@ impl Computer {
                 self.pc += 4;
             }
             Instr::MULf { fd, fs, ft } => {
-                self.freg[*fd] = self.freg[*fs] * self.freg[*ft];
+                //self.freg[*fd] = self.freg[*fs] * self.freg[*ft];
+                self.freg[*fd] = fpu::mul_fpu(self.freg[*fs], self.freg[*ft]) ;
                 self.pc += 4;
             }
             Instr::INVf { fd, fs } => {
-                self.freg[*fd] = 1.0 / self.freg[*fs];//FPU
+                self.freg[*fd] = fpu::inv_fpu(self.freg[*fs]);//FPU
                 self.pc += 4;
             }
             Instr::ABSf { fd, fs } => {
@@ -580,7 +581,7 @@ impl Computer {
                 self.pc += 4;
             }
             Instr::SQRTf { fd, fs } => {
-                self.freg[*fd] = sqrt_fpu(self.freg[*fs]);
+                self.freg[*fd] = fpu::sqrt_fpu(self.freg[*fs]);
                 self.pc += 4;
             }
             Instr::EQf { d, fs, ft } => {

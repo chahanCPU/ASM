@@ -26,6 +26,7 @@ impl Temp {
 }
 
 fn main() {
+    println!("{}",0x5555u32 as u8);
     let mut a = Temp::new();
     a.ir_count.insert(3,4);
     let x = a.ir_count.get(&3).unwrap_or(&0);
