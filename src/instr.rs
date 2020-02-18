@@ -444,67 +444,67 @@ impl Instr {
             "add.s" => {
                 let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::ADDf {
-                    fd: d - 32,
-                    fs: s - 32,
-                    ft: t - 32,
+                    fd: d - 64,
+                    fs: s - 64,
+                    ft: t - 64,
                 })
             }
             "sub.s" => {
                 let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::SUBf {
-                    fd: d - 32,
-                    fs: s - 32,
-                    ft: t - 32,
+                    fd: d - 64,
+                    fs: s - 64,
+                    ft: t - 64,
                 })
             }
             "mul.s" => {
                 let (d, s, t) = parse3reg(&ir)?;
                 Ok(Instr::MULf {
-                    fd: d - 32,
-                    fs: s - 32,
-                    ft: t - 32,
+                    fd: d - 64,
+                    fs: s - 64,
+                    ft: t - 64,
                 })
             }
             "inv.s" => {
                 let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::INVf {
-                    fd: d - 32,
-                    fs: s - 32,
+                    fd: d - 64,
+                    fs: s - 64,
                 })
             }
             "abs.s" => {
                 let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::ABSf {
-                    fd: d - 32,
-                    fs: s - 32,
+                    fd: d - 64,
+                    fs: s - 64,
                 })
             }
             "neg.s" => {
                 let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::NEGf {
-                    fd: d - 32,
-                    fs: s - 32,
+                    fd: d - 64,
+                    fs: s - 64,
                 })
             }
             "sqrt.s" => {
                 let (d, s) = parse2reg(&ir)?;
                 Ok(Instr::SQRTf {
-                    fd: d - 32,
-                    fs: s - 32,
+                    fd: d - 64,
+                    fs: s - 64,
                 })
             }
             "ftoi" => {
                 let (d, s) = parse2reg(&ir)?;
-                Ok(Instr::FTOI { d: d, fs: s - 32 })
+                Ok(Instr::FTOI { d: d, fs: s - 64 })
             }
             "itof" => {
                 let (d, s) = parse2reg(&ir)?;
-                Ok(Instr::ITOF { fd: d - 32, s: s })
+                Ok(Instr::ITOF { fd: d - 64, s: s })
             }
             "lw.s" => {
                 let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::LWf {
-                    ft: t - 32,
+                    ft: t - 64,
                     s: s,
                     off: off,
                 })
@@ -512,7 +512,7 @@ impl Instr {
             "sw.s" => {
                 let (t, s, off) = parsereg_offsreg(&ir)?;
                 Ok(Instr::SWf {
-                    ft: t - 32,
+                    ft: t - 64,
                     s: s,
                     off: off,
                 })
@@ -520,30 +520,30 @@ impl Instr {
             "beq.s" => {
                 let (s, t, target) = parse2reg_label(&ir, label_map)?;
                 Ok(Instr::BEQf {
-                    fs: s - 32,
-                    ft: t - 32,
+                    fs: s - 64,
+                    ft: t - 64,
                     target: target,
                 })
             }
             "ble.s" => {
                 let (s, t, target) = parse2reg_label(&ir, label_map)?;
                 Ok(Instr::BLEf {
-                    fs: s - 32,
-                    ft: t - 32,
+                    fs: s - 64,
+                    ft: t - 64,
                     target: target,
                 })
             }
             "lui.s" => {
                 let (t, im) = parse1reg_i(&ir)?;
-                Ok(Instr::LUIf { ft: t - 32, im: im })
+                Ok(Instr::LUIf { ft: t - 64, im: im })
             }
             "lli.s" => {
                 let (t, im) = parse1reg_i(&ir)?;
-                Ok(Instr::LLIf { ft: t - 32, im: im })
+                Ok(Instr::LLIf { ft: t - 64, im: im })
             }
             "mv.s" => {
                 let (t, s) = parse2reg(&ir)?;
-                Ok(Instr::MVf { ft: t - 32, fs: s - 32})
+                Ok(Instr::MVf { ft: t - 64, fs: s - 64})
             }
             //error
             x => Err(format!("no such opcode: {}", x)),
@@ -767,50 +767,78 @@ fn parse_reg(name: &str) -> Result<usize, String> {
     //レジスタ名の取得
     match name {
         "$0" | "$zero" => Ok(0),
-        "$1" | "$at" => Ok(1),
+        "$1" => Ok(1),
+        "$2" => Ok(2),
+        "$3" => Ok(3),
+        "$4" => Ok(4),
+        "$5" => Ok(5),
+        "$6" => Ok(6),
+        "$7" => Ok(7),
+        "$8" => Ok(8),
+        "$9" => Ok(9),
 
-        "$2" | "$v0" => Ok(2),
-        "$3" | "$v1" => Ok(3),
+        "$10" => Ok(10),
+        "$11" => Ok(11),
+        "$12" => Ok(12),
+        "$13" => Ok(13),
+        "$14" => Ok(14),
+        "$15" => Ok(15),
+        "$16" => Ok(16),
+        "$17" => Ok(17),
+        "$18" => Ok(18),
+        "$19" => Ok(19),
+        "$20" => Ok(20),
+        "$21" => Ok(21),
+        "$22" => Ok(22),
+        "$23" => Ok(23),
+        "$24" => Ok(24),
+        "$25" => Ok(25),
+        "$26" => Ok(26),
+        "$27" => Ok(27),
+        "$28" => Ok(28),
+        "$29" => Ok(29),
+        "$30" => Ok(30),
+        "$31" => Ok(31),
+        "$32" => Ok(32),
+        "$33" => Ok(33),
+        "$34" => Ok(34),
+        "$35" => Ok(35),
+        "$36" => Ok(36),
+        "$37" => Ok(37),
+        "$38" => Ok(38),
+        "$39" => Ok(39),
+        "$40" => Ok(40),
+        "$41" => Ok(41),
+        "$42" => Ok(42),
+        "$43" => Ok(43),
+        "$44" => Ok(44),
+        "$45" => Ok(45),
+        "$46" => Ok(46),
+        "$47" => Ok(47),
+        "$48" => Ok(48),
+        "$49" => Ok(49),
+        "$50" => Ok(50),
+        "$51" => Ok(51),
+        "$52" => Ok(52),
+        "$53" => Ok(53),
+        "$54" => Ok(54),
+        "$55" => Ok(55),
+        "$56" => Ok(56),
+        "$57" => Ok(57),
+        "$58" => Ok(58),
+        "$59" => Ok(59),
+        "$60" => Ok(60),
 
-        "$4" | "$a0" => Ok(4),
-        "$5" | "$a1" => Ok(5),
-        "$6" | "$a2" => Ok(6),
-        "$7" | "$a3" => Ok(7),
-
-        "$8" | "$t0" => Ok(8),
-        "$9" | "$t1" => Ok(9),
-        "$10" | "$t2" => Ok(10),
-        "$11" | "$t3" => Ok(11),
-        "$12" | "$t4" => Ok(12),
-        "$13" | "$t5" => Ok(13),
-        "$14" | "$t6" => Ok(14),
-        "$15" | "$t7" => Ok(15),
-
-        "$16" | "$s0" => Ok(16),
-        "$17" | "$s1" => Ok(17),
-        "$18" | "$s2" => Ok(18),
-        "$19" | "$s3" => Ok(19),
-        "$20" | "$s4" => Ok(20),
-        "$21" | "$s5" => Ok(21),
-        "$22" | "$s6" => Ok(22),
-        "$23" | "$s7" => Ok(23),
-
-        "$24" | "$t8" => Ok(24),
-        "$25" | "$t9" => Ok(25),
-
-        "$26" | "$k0" => Ok(26),
-        "$27" | "$k1" => Ok(27),
-        "$28" | "$gp" => Ok(28),
-        "$29" | "$sp" => Ok(29),
-        "$30" | "$fp" => Ok(30),
-        "$31" | "$ra" => Ok(31),
+        "$61" | "$gp" => Ok(61),
+        "$62" | "$sp" => Ok(62),
+        "$63" | "$ra" => Ok(63),
         _ => {
             if name.starts_with("$f") {
                 let reg: usize = name[2..].parse().expect("invalid float register");
-                if reg > 31 {
+                if reg > 63 {
                     return Err(String::from("Invalid float register name(too big): ") + name);
                 };
-                Ok(reg + 32)
+                Ok(reg + 64)
             } else {
                 Err(String::from("Invalid register name: ") + name)
             }

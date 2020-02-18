@@ -55,14 +55,14 @@ macro_rules! color_bg {
 pub struct Computer {
     mem: [i32; MEM_SIZE],
     pc: usize,
-    ireg: [i32; 32],
-    freg: [f32; 32],
+    ireg: [i32; 64],
+    freg: [f32; 64],
     bpoints: HashSet<usize>,
     ir_count: HashMap<InstrType,isize>, //命令実行数カウント
     writer: BufWriter<File>,
-    changed_reg: [bool; 32],
-    arg_ireg: [isize; 32],
-    arg_freg: [isize; 32],
+    changed_reg: [bool; 64],
+    arg_ireg: [isize; 64],
+    arg_freg: [isize; 64],
     in_data: Vec<i32>,
     indata_count: usize,
 }
@@ -85,21 +85,21 @@ impl Computer {
         let writer =
             BufWriter::new(File::create(format!("{}.ppm", filename)).expect("cannot create file")); //こっちにバイナリを出力（多分使わない）
         let mut c = Computer {
-            ireg: [0; 32],
-            freg: [0.0; 32],
+            ireg: [0; 64],
+            freg: [0.0; 64],
             mem: [0; MEM_SIZE],
             pc: 0,
             bpoints: bpoints,
             writer: writer,
-            changed_reg: [false; 32],
-            arg_ireg: [0; 32],
-            arg_freg: [0; 32],
+            changed_reg: [false; 64],
+            arg_ireg: [0; 64],
+            arg_freg: [0; 64],
             in_data: indata_8bit,
             indata_count: 0,
             ir_count: HashMap::new(),
         };
-        c.ireg[28] = 2000000;//stack pointer バイト数
-        c.ireg[29] = 48;//stack pointer
+        c.ireg[61] = 2000000;//stack pointer バイト数
+        c.ireg[62] = 48;//stack pointer
         c
     }
     pub fn run(&mut self, irmemory: Vec<(Instr,usize)>) {
@@ -131,8 +131,8 @@ impl Computer {
             
 
 
-            self.arg_ireg = [0; 32];
-            self.arg_freg = [0; 32];
+            self.arg_ireg = [0; 64];
+            self.arg_freg = [0; 64];
             
             if self.bpoints.contains(&(self.pc >> 2)) || flag || count == stop_count{
                 flag = false;
@@ -365,9 +365,9 @@ impl Computer {
                 self.pc = (self.pc & 0xf0000000) | (*target << 2);
             }
             Instr::JAL { target } => {
-                self.ireg[31] = (self.pc + 4) as i32;
+                self.ireg[63] = (self.pc + 4) as i32;
                 self.pc = (self.pc & 0xf0000000) | (*target << 2);
-                //print!("{}", self.ireg[31]);
+                //print!("{}", self.ireg[63]);
             }
             Instr::JR { s } => {
                 self.pc = to_u(self.ireg[*s]);
@@ -400,7 +400,7 @@ impl Computer {
             }
             Instr::LA { t, target } => {
                 self.ireg[*t] = (*target << 2) as i32;
-                //print!("{}", self.ireg[31]);
+                //print!("{}", self.ireg[63]);
                 self.pc += 4;   
             }
             Instr::LI { t, im } => {
