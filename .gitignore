@@ -1,2 +1,6 @@
 /target
 **/*.rs.bk
+/asm
+/disasm
+/addpc
+/sld2indata
