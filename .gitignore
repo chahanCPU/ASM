@@ -1,2 +1,7 @@
 /target
 **/*.rs.bk
+/Cargo.lock
+/asm
+/disasm
+/addpc
+/sld2indata
