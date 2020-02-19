@@ -16,6 +16,7 @@ no_debug: $(TEST)
 
 debug: $(TEST)    # デバックモード
 	make init
+	./addpc $<
 	cargo run --bin asm --release /d $^
 
 clean:

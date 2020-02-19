@@ -168,7 +168,10 @@ impl Computer {
                         self.arg_ireg[s] = 1;
                         self.arg_ireg[t] = 2;
                     }
-                    Instr::J { target } | Instr::JAL { target } => {}
+                    Instr::J { target } => {}
+                    Instr::JAL { target } => {
+                        self.arg_ireg[63] = 1;
+                    }
                     Instr::JR { s } | Instr::IN { s } | Instr::OUT { s } | Instr::OUTINT { s } => {
                         self.arg_ireg[s] = 1;
                     }
@@ -253,7 +256,7 @@ impl Computer {
     }
 
     fn print_reg(&self) {
-        for i in 0..4 {
+        for i in 0..8 {
             for j in 0..8 {
                 let ind = i * 8 + j;
                 //if self.changed_reg[ind] {print!("\x1b[41m")}
@@ -269,7 +272,7 @@ impl Computer {
             }
             println!("")
         }
-        for i in 0..4 {
+        for i in 0..8 {
             for j in 0..8 {
                 let ind = i * 8 + j;
                 //if self.changed_reg[ind] {print!("\x1b[41m")}

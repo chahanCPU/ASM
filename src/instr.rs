@@ -9,6 +9,8 @@ macro_rules! BITMASK(
     );
 );
 
+// 注) LLIは未対応だが、シミュレータ上には残してある
+
 #[derive(Copy,Clone,Hash)]
 pub enum Instr {
     //命令の定義。enum(列挙体)
@@ -122,35 +124,35 @@ impl fmt::Display for Instr {
             Instr::SRA { d, t, h } => write!(f, "SRA(${} = ${}>>{}?)", d, t, h),
             Instr::LUI { t, im } => write!(f, "LUI(${} = {}<<16)", t, im),
             Instr::LLI { t, im } => write!(f, "LLI(${} += {})", t, im),
-            Instr::BEQ { s, t, target } => write!(f, "BEQ(${} == ${}? -> jump {})", s, t, target),
-            Instr::BLE { s, t, target } => write!(f, "BLE(${} <= ${}? -> jump {})", s, t, target),
-            Instr::J { target } => write!(f, "J to {}", target),
-            Instr::JAL { target } => write!(f, "J and L to {}", target),
+            Instr::BEQ { s, t, target } => write!(f, "BEQ(${} == ${}? -> jump {})", s, t, target<<2),
+            Instr::BLE { s, t, target } => write!(f, "BLE(${} <= ${}? -> jump {})", s, t, target<<2),
+            Instr::J { target } => write!(f, "J to {}", target<<2),
+            Instr::JAL { target } => write!(f, "J and L to {}", target<<2),
             Instr::JR { s } => write!(f, "J to reg ${}", *s),
             Instr::NOOP => write!(f, "NOOP"),
             Instr::EOF => write!(f, "EOF"),
             Instr::IN { s } => write!(f, "IN ${}", *s),
             Instr::OUT { s } => write!(f, "OUT ${}", *s),
             Instr::OUTINT { s } => write!(f, "OUTINT ${}", *s),
-            Instr::LA { t, target } => write!(f, "LA(${} = ${})", t, target),
+            Instr::LA { t, target } => write!(f, "LA(${} = {})", t, target<<2),
             Instr::LI { t, im } => write!(f, "LI(${} = {})", t, im),
             //float
-            Instr::ADDf { fd, fs, ft } => write!(f, "ADDf(${} = ${}+${})", fd, fs, ft),
-            Instr::SUBf { fd, fs, ft } => write!(f, "SUBf(${} = ${}-${})", fd, fs, ft),
-            Instr::MULf { fd, fs, ft } => write!(f, "MULf(${} = ${}*${})", fd, fs, ft),
-            Instr::INVf { fd, fs } => write!(f, "INVf(${} = 1/${})", fd, fs),
-            Instr::ABSf { fd, fs } => write!(f, "ABSf(${} = |${}|)", fd, fs),
-            Instr::NEGf { fd, fs } => write!(f, "NEGf(${} = -${})", fd, fs),
-            Instr::SQRTf { fd, fs } => write!(f, "SQRTf(${} = sqrt ${})", fd, fs),
-            Instr::FTOI { d, fs } => write!(f, "FTOI(${} <= ${})", d, fs),
-            Instr::ITOF { fd, s } => write!(f, "ITOF(${} <= ${})", fd, s),
-            Instr::LWf { ft, s, off } => write!(f, "LWf(${} <- {}(${}))", ft, off, s),
-            Instr::SWf { ft, s, off } => write!(f, "SWf(${} <- {}(${}))", ft, off, s),
-            Instr::BEQf { fs, ft, target } => write!(f, "BEQf(${} == ${}? ->jump {})", fs, ft, target),
-            Instr::BLEf { fs, ft, target } => write!(f, "BLEf(${} <= ${}? ->jump {})", fs, ft, target),
-            Instr::LUIf { ft, im } => write!(f, "LUIf(${} = {}<<16)", ft, im),
-            Instr::LLIf { ft, im } => write!(f, "LLIf(${} += {})", ft, im),
-            Instr::MVf { ft, fs } => write!(f, "MVf(${} = ${})", ft, fs),
+            Instr::ADDf { fd, fs, ft } => write!(f, "ADDf($f{} = $f{}+$f{})", fd, fs, ft),
+            Instr::SUBf { fd, fs, ft } => write!(f, "SUBf($f{} = $f{}-$f{})", fd, fs, ft),
+            Instr::MULf { fd, fs, ft } => write!(f, "MULf($f{} = $f{}*$f{})", fd, fs, ft),
+            Instr::INVf { fd, fs } => write!(f, "INVf($f{} = 1/$f{})", fd, fs),
+            Instr::ABSf { fd, fs } => write!(f, "ABSf($f{} = |$f{}|)", fd, fs),
+            Instr::NEGf { fd, fs } => write!(f, "NEGf($f{} = -$f{})", fd, fs),
+            Instr::SQRTf { fd, fs } => write!(f, "SQRTf($f{} = sqrt $f{})", fd, fs),
+            Instr::FTOI { d, fs } => write!(f, "FTOI(${} <= $f{})", d, fs),
+            Instr::ITOF { fd, s } => write!(f, "ITOF($f{} <= ${})", fd, s),
+            Instr::LWf { ft, s, off } => write!(f, "LWf($f{} <- {}(${}))", ft, off, s),
+            Instr::SWf { ft, s, off } => write!(f, "SWf($f{} -> {}(${}))", ft, off, s),
+            Instr::BEQf { fs, ft, target } => write!(f, "BEQf($f{} == $f{}? ->jump {})", fs, ft, target<<2),
+            Instr::BLEf { fs, ft, target } => write!(f, "BLEf($f{} <= $f{}? ->jump {})", fs, ft, target<<2),
+            Instr::LUIf { ft, im } => write!(f, "LUIf($f{} = {}<<16)", ft, im),
+            Instr::LLIf { ft, im } => write!(f, "LLIf($f{} += {})", ft, im),
+            Instr::MVf { ft, fs } => write!(f, "MVf($f{} = $f{})", ft, fs),
             //error
             _ => write!(f, "({}, {})", "test", "format"),
         }
@@ -210,40 +212,48 @@ impl Instr {
     pub fn getbytes(&self) -> [u8; 4] {
         //命令をバイト列に変換 （[u8; 4]は8ビット整数が4つ（＝4バイト＝32bit）入った配列のこと）
         match self {
-            Instr::ADD { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 32),
-            Instr::ADDI { t, s, im } => get_bytes_i(8, *s, *t, to_16usize(*im)),
-            Instr::SUB { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 34),
-            Instr::MULT { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 24),
-            Instr::DIV { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 26),
-            Instr::LW { t, s, off } => get_bytes_i(35, *s, *t, to_16usize(*off)),
-            Instr::SW { t, s, off } => get_bytes_i(43, *s, *t, to_16usize(*off)),
-            Instr::SLL { d, t, h } => get_bytes_r(0, 0, *t, *d, *h, 0), //31はDont care
-            Instr::SRA { d, t, h } => get_bytes_r(0, 0, *t, *d, *h, 3), //31はDont care
-            Instr::LUI { t, im } => get_bytes_i(15, 0, *t, to_16usize(*im)), //31はDont care
+            Instr::ADD { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 0),
+            Instr::ADDI { t, s, im } => get_bytes_i(1, *s, *t, to_16usize(*im)),
+            Instr::SUB { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 1),
+            Instr::MULT { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 2),
+            Instr::DIV { d, s, t } => get_bytes_r(0, *s, *t, *d, 0, 3),
+            Instr::LW { t, s, off } => get_bytes_i(2, *s, *t, to_16usize(*off)),
+            Instr::SW { t, s, off } => get_bytes_i(3, *s, *t, to_16usize(*off)),
+            Instr::MV { t, s } => get_bytes_r(0, *s, *t, 0, 0, 7),
+            Instr::SLL { d, t, h } => get_bytes_r(0, 0, *t, *d, *h, 4), 
+            Instr::SRA { d, t, h } => get_bytes_r(0, 0, *t, *d, *h, 5), 
+            Instr::LUI { t, im } => get_bytes_i(6, 0, *t, to_16usize(*im)), 
+            // Instr::LLI { t, im } 
             Instr::BEQ { s, t, target } => get_bytes_i(4, *s, *t, *target),
-            Instr::J { target } => get_bytes_j(2, *target),
-            Instr::JAL { target } => get_bytes_j(3, *target),
-            Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 8),
-            Instr::NOOP => get_bytes_r(0, 0, 0, 0, 0, 62),
-            Instr::EOF => get_bytes_r(0, 0, 0, 0, 0, 63),
-            Instr::IN { s } => get_bytes_r(62, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
-            Instr::OUT { s } => get_bytes_r(63, *s, 31, 0, 31, 63), //Don't careも適当に埋めてる
-            // float
-            Instr::ADDf { fd, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *fd, 0),
-            Instr::SUBf { fd, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *fd, 1),
-            Instr::MULf { fd, fs, ft } => get_bytes_r(17, 16, *ft, *fs, *fd, 2),
-            Instr::INVf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 3),
-            Instr::ABSf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 5),
-            Instr::NEGf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 7),
-            Instr::SQRTf { fd, fs } => get_bytes_r(17, 16, 0, *fs, *fd, 4),
-            Instr::FTOI { d, fs } => get_bytes_r(17, 16, 0, *fs, *d, 8),
-            Instr::ITOF { fd, s } => get_bytes_r(17, 16, 0, *s, *fd, 9),
-            Instr::LWf { ft, s, off } => get_bytes_i(0b110001, *s, *ft, to_16usize(*off)),
-            Instr::SWf { ft, s, off } => get_bytes_i(0b111001, *s, *ft, to_16usize(*off)),
-            Instr::BEQf { fs, ft, target } => get_bytes_i(0b010100, *fs, *ft, *target),
-            Instr::BLEf { fs, ft, target } => get_bytes_i(0b010110, *fs, *ft, *target),
-            Instr::LUIf { ft, im } => get_bytes_i(31, 0, *ft, to_16usize(*im)), //0はDont care
-            // error
+            Instr::BLE { s, t, target } => get_bytes_i(5, *s, *t, *target),
+            Instr::J { target } => get_bytes_i(9, 0, 0, *target),
+            Instr::JAL { target } => get_bytes_i(10, 0, 0, *target),
+            Instr::JR { s } => get_bytes_r(0, *s, 0, 0, 0, 12),
+            Instr::NOOP => get_bytes_r(0, 0, 0, 0, 0, 14),
+            Instr::EOF => get_bytes_r(0, 0, 0, 0, 0, 15),
+            Instr::IN { s } => get_bytes_r(0, *s, 0, 0, 0, 8), 
+            Instr::OUT { s } => get_bytes_r(0, *s, 0, 0, 0, 9), 
+            Instr::OUTINT { s } => get_bytes_r(0, *s, 0, 0, 0, 10), 
+            Instr::LA { t, target } => get_bytes_i(11, 0, *t, *target),
+            Instr::LI { t, im } => get_bytes_i(7, 0, *t, to_16usize(*im)),
+            //float
+            Instr::ADDf { fd, fs, ft } => get_bytes_r(8, *fs, *ft, *fd, 0, 0),
+            Instr::SUBf { fd, fs, ft } => get_bytes_r(8, *fs, *ft, *fd, 0, 1),
+            Instr::MULf { fd, fs, ft } => get_bytes_r(8, *fs, *ft, *fd, 0, 2),
+            Instr::INVf { fd, fs } => get_bytes_r(8, *fs, 0, *fd, 0, 3),
+            Instr::ABSf { fd, fs } => get_bytes_r(8, *fs, 0, *fd, 0, 5),
+            Instr::NEGf { fd, fs } => get_bytes_r(8, *fs, 0, *fd, 0, 7),
+            Instr::SQRTf { fd, fs } => get_bytes_r(8, *fs, 0, *fd, 0, 4),
+            Instr::FTOI { d, fs } => get_bytes_r(8, *fs, 0, *d, 0, 8),
+            Instr::ITOF { fd, s } => get_bytes_r(8, *s, 0, *fd, 0, 9),
+            Instr::LWf { ft, s, off } => get_bytes_i(14, *s, *ft, to_16usize(*off)),
+            Instr::SWf { ft, s, off } => get_bytes_i(15, *s, *ft, to_16usize(*off)),
+            Instr::BEQf { fs, ft, target } => get_bytes_i(12, *fs, *ft, *target),
+            Instr::BLEf { fs, ft, target } => get_bytes_i(13, *fs, *ft, *target),
+            Instr::LUIf { ft, im } => get_bytes_i(6, 32, *ft, to_16usize(*im)),
+            Instr::LLIf { ft, im } => get_bytes_i(7, 32, *ft, to_16usize(*im)),
+            Instr::MVf { ft, fs } => get_bytes_r(8, *fs, *ft, 0, 0, 15),
+            //error
             _ => [255, 255, 255, 255], //not implemented yet
         }
     }
@@ -558,70 +568,70 @@ impl Instr {
             return Ok((Instr::EOF, None));
         }
         
-        let op = (encoded_instruction >> 26) as usize;
-        let op_upper = (op >> 3) & BITMASK!(3);
-        let op_lower = op & BITMASK!(3);
-    
-        let rs = ((encoded_instruction >> 21) & BITMASK!(5)) as usize;
-    
-        let rt = ((encoded_instruction >> 16) & BITMASK!(5)) as usize;
-        let rt_upper = rt >> 3;
-        let rt_lower = rt & BITMASK!(3);
-    
-        let rd = ((encoded_instruction >> 11) & BITMASK!(5)) as usize;
-        let sa = ((encoded_instruction >> 6) & BITMASK!(5)) as usize;
-    
-        let funct = (encoded_instruction & BITMASK!(6)) as usize;
-        let funct_upper = (funct >> 3) & BITMASK!(3);
-        let funct_lower = funct & BITMASK!(3);
-    
+        let op = (encoded_instruction >> 28) as usize;
+        let rs = ((encoded_instruction >> 22) & BITMASK!(6)) as usize;
+        let rt = ((encoded_instruction >> 16) & BITMASK!(6)) as usize;
+        let rd = ((encoded_instruction >> 10) & BITMASK!(6)) as usize;
+        let sa = ((encoded_instruction >> 5) & BITMASK!(5)) as usize;
+        let funct = (encoded_instruction & BITMASK!(4)) as usize;
         let imm: i32 = (encoded_instruction & BITMASK!(16)) as i32;
+        let li_bit = ((encoded_instruction >> 27) & BITMASK!(1)) as usize;
         print!("{:2}\n",encoded_instruction);
-        // Tricky business: two's complement 26-bit
-        let mut target: usize = (encoded_instruction & BITMASK!(26)) as usize;
+
         return match op {
-            2 => Ok((Instr::J{target: target},Some(target))),
-            3 => Ok((Instr::JAL{target: target},Some(target))),
-            4 => Ok((Instr::BEQ{t:rt, s:rs, target: imm as usize},Some(imm as usize))),
-            8 => Ok((Instr::ADDI{t:rt, s:rs, im: imm},None)),
-            15 => Ok((Instr::LUI{t:rt, im: imm},None)),
-            0 => Ok((match funct {
-                0  => Instr::SLL{d: rd, h: sa, t: rt},
-                3  => Instr::SRA{d: rd, h: sa, t: rt},
-                8  => Instr::JR{s: rs},
-                24 => Instr::MULT{d: rd, s: rs, t: rt},
-                26 => Instr::DIV{d: rd, s: rs, t: rt},
-                32 => Instr::ADD{d: rd, s: rs, t: rt},
-                34 => Instr::SUB{d: rd, s: rs, t: rt},
+            0  => Ok((match funct {
+                0  => Instr::ADD{d: rd, s: rs, t: rt},
+                1  => Instr::SUB{d: rd, s: rs, t: rt},
+                2  => Instr::MULT{d: rd, s: rs, t: rt},
+                3  => Instr::DIV{d: rd, s: rs, t: rt},
+                4  => Instr::SLL{d: rd, t: rt, h: sa},
+                5  => Instr::SRA{d: rd, t: rt, h: sa},
+                7  => Instr::MV{t: rt, s: rs},
+                8  => Instr::IN{s: rs},
+                9  => Instr::OUT{s: rs},
+                10 => Instr::OUTINT{s: rs},
+                12 => Instr::JR{s: rs},
                 _ => panic!(format!("unknown instr bit: {:b}",encoded_instruction))
             },None)),
-            17 => Ok((match rs {
-                _ => match funct{//なぜ？
-                    0  => Instr::ADDf{fd: sa, fs: rd, ft: rt},
-                    1  => Instr::SUBf{fd: sa, fs: rd, ft: rt},
-                    2  => Instr::MULf{fd: sa, fs: rd, ft: rt},
-                    3  => Instr::INVf{fd: sa, fs: rd},//本来はdiv?
-                    5  => Instr::ABSf{fd: sa, fs: rd},//本来はdiv?
-                    7  => Instr::NEGf{fd: sa, fs: rd},//本来はdiv?
-                    4  => Instr::SQRTf{fd: sa, fs: rd},//本来はdiv?
-                    8  => Instr::FTOI{d: sa, fs: rd},
-                    9  => Instr::ITOF{fd: sa, s: rd},
-                    _ => panic!(format!("unknown fpu instr: {:b}",encoded_instruction))
-                }
-                _ => panic!(format!("unknown fpu instr rs: {:b}",encoded_instruction))
+            1  => Ok((Instr::ADDI{t:rt, s:rs, im: imm},None)),
+            2  => Ok((Instr::LW{t: rt, s: rs, off: imm},None)),
+            3  => Ok((Instr::SW{t: rt, s: rs, off: imm},None)),
+            4  => Ok((Instr::BEQ{s:rs, t:rt, target: imm as usize},Some(imm as usize))),
+            5  => Ok((Instr::BLE{s:rs, t:rt, target: imm as usize},Some(imm as usize))),
+            6  => Ok((match li_bit {
+                0  => Instr::LUI{t: rt, im: imm},
+                1  => Instr::LUIf{ft: rt, im: imm},
+                _  => panic!(format!("unknown instr bit: {:b}",encoded_instruction))
             },None)),
-            31 => Ok((Instr::LUIf{ft: rt, im: imm},None)),
-            35 => Ok((Instr::LW{t: rt, s: rs, off: imm},None)),
-            43 => Ok((Instr::SW{t: rt, s: rs, off: imm},None)),
-            49 => Ok((Instr::LWf{ft: rt, s: rs, off: imm},None)),
-            57 => Ok((Instr::SWf{ft: rt, s: rs, off: imm},None)),
-            62 => Ok((Instr::IN{s: rs},None)),
-            63 => Ok((Instr::OUT{s: rs},None)),
-            
+            7  => Ok((match li_bit {
+                0  => Instr::LI{t: rt, im: imm},
+                1  => Instr::LLIf{ft: rt, im: imm},
+                _  => panic!(format!("unknown instr bit: {:b}",encoded_instruction))
+            },None)),
+            8  => Ok((match funct {
+                0  => Instr::ADDf{fd: rd, fs: rs, ft: rt},
+                1  => Instr::SUBf{fd: rd, fs: rs, ft: rt},
+                2  => Instr::MULf{fd: rd, fs: rs, ft: rt},
+                3  => Instr::INVf{fd: rd, fs: rs},
+                4  => Instr::SQRTf{fd: rd, fs: rs},
+                5  => Instr::ABSf{fd: rd, fs: rs},
+                7  => Instr::NEGf{fd: rd, fs: rs},
+                8  => Instr::FTOI{d: rd, fs: rs},
+                9  => Instr::ITOF{fd: rd, s: rs},
+                15 => Instr::MVf{ft: rt, fs: rs},
+                _ => panic!(format!("unknown fpu instr bit: {:b}",encoded_instruction))
+            },None)),
+            9  => Ok((Instr::J{target: imm as usize},Some(imm as usize))),
+            10 => Ok((Instr::JAL{target: imm as usize},Some(imm as usize))),
+            11 => Ok((Instr::LA{t: rt, target: imm as usize},Some(imm as usize))),
+            12 => Ok((Instr::BEQf{fs: rs, ft: rt, target: imm as usize},Some(imm as usize))),
+            13 => Ok((Instr::BLEf{fs: rs, ft: rt, target: imm as usize},Some(imm as usize))),
+            14 => Ok((Instr::LWf{ft: rt, s: rs, off: imm},None)),
+            15 => Ok((Instr::SWf{ft: rt, s: rs, off: imm},None)),
+            // Instr::LLI { t, im } 
             _ => panic!(format!("unknown instr: {:b},opcode:{}",encoded_instruction,op))
         }
     }
-    
 }
 ///////////////////////////////////////////////
 
@@ -646,21 +656,17 @@ fn to_16usize(im: i32) -> usize {
 //R,I,J型の命令それぞれに対してバイト列への整形
 fn get_bytes_r(opc: usize, rs: usize, rt: usize, rd: usize, shamt: usize, funct: usize) -> [u8; 4] {
     //type R
-    let ir32 = (opc << 26) + (rs << 21) + (rt << 16) + (rd << 11) + (shamt << 6) + funct;
+    let ir32 = (opc << 28) + (rs << 22) + (rt << 16) + (rd << 10) + (shamt << 5) + funct;
     to_u8(ir32)
 }
 
 fn get_bytes_i(opc: usize, rs: usize, rt: usize, imm: usize) -> [u8; 4] {
     //type R
     //print!("{} {} {} {}", opc, rs, rt, imm);
-    let ir32 = (opc << 26) + (rs << 21) + (rt << 16) + imm;
+    let ir32 = (opc << 28) + (rs << 22) + (rt << 16) + imm;
     to_u8(ir32)
 }
-fn get_bytes_j(opc: usize, addr: usize) -> [u8; 4] {
-    //type R
-    let ir32 = (opc << 26) + addr;
-    to_u8(ir32)
-}
+
 //命令タイプごとのパーサー
 fn parse3reg(ir: &Vec<&str>) -> Result<(usize, usize, usize), String> {
     if ir.len() < 3 {
