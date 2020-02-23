@@ -40,7 +40,7 @@ fn addpc(filename: String) {//アセンブラ&シミュレータ
             buf += "\n";
             continue;
         }else{
-            buf += &format!(" # {}\n",count<<2);
+            buf += &format!("\t# {}\n",count<<2);
         }
         count += 1;
     }
