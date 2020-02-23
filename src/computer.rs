@@ -98,8 +98,8 @@ impl Computer {
             indata_count: 0,
             ir_count: HashMap::new(),
         };
-        c.ireg[61] = 2000000;//stack pointer バイト数
-        c.ireg[62] = 48;//stack pointer
+        c.ireg[61] = 32; // heap pointerの初期値
+        c.ireg[62] = 1000000; // stack pointerの初期値
         c
     }
     pub fn run(&mut self, irmemory: Vec<(Instr,usize)>) {
@@ -381,7 +381,7 @@ impl Computer {
                 self.ireg[*s] = self.in_data[self.indata_count];
                 self.indata_count += 1;
                 self.pc += 4;
-                println!("in:{:x}",self.ireg[*s] as u8)
+                // println!("in:{:x}",self.ireg[*s] as u8)
             }
             Instr::OUT { s } => {
                 //print!("!!!!!!!!OUT:{}\n", self.ireg[*s]);
