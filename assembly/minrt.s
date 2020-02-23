@@ -1272,8 +1272,7 @@ min_caml_start:
 	j	ble_cont.28999
 ble_then.28998:
 	sll	$9, $8, 2
-	addi	$9, $9, 80
-	lw	$9, 0($9)
+	lw	$9, 80($9)
 	lw	$10, 8($9)
 	beq	$10, $2, beq_then.29000
 	j	beq_cont.29001
@@ -1306,13 +1305,11 @@ beq_then.29008:
 	lw.s	$f3, 0($12)
 	mul.s	$f2, $f2, $f3
 	lw.s	$f3, 348($0)
-	addi	$12, $11, 4
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 4($11)
 	mul.s	$f3, $f3, $f4
 	add.s	$f2, $f2, $f3
 	lw.s	$f3, 352($0)
-	addi	$11, $11, 8
-	lw.s	$f4, 0($11)
+	lw.s	$f4, 8($11)
 	mul.s	$f3, $f3, $f4
 	add.s	$f2, $f2, $f3
 	lui.s	$f3, 0x4000	# 2.000000の上位16ビット
@@ -1324,16 +1321,14 @@ beq_then.29008:
 	sub.s	$f3, $f3, $f4
 	lui.s	$f4, 0x4000	# 2.000000の上位16ビット
 	lw	$11, 16($9)
-	addi	$11, $11, 4
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 4($11)
 	mul.s	$f4, $f4, $f5
 	mul.s	$f4, $f4, $f2
 	lw.s	$f5, 348($0)
 	sub.s	$f4, $f4, $f5
 	lui.s	$f5, 0x4000	# 2.000000の上位16ビット
 	lw	$9, 16($9)
-	addi	$9, $9, 8
-	lw.s	$f6, 0($9)
+	lw.s	$f6, 8($9)
 	mul.s	$f5, $f5, $f6
 	mul.s	$f2, $f5, $f2
 	lw.s	$f5, 352($0)
@@ -2154,12 +2149,10 @@ beq_cont.29036:
 	mv	$12, $10
 	lw.s	$f1, 0($12)
 	mul.s	$f1, $f1, $f1
-	addi	$12, $10, 4
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 4($10)
 	mul.s	$f2, $f2, $f2
 	add.s	$f1, $f1, $f2
-	addi	$12, $10, 8
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 8($10)
 	mul.s	$f2, $f2, $f2
 	add.s	$f1, $f1, $f2
 	sqrt.s	$f1, $f1
@@ -2186,13 +2179,11 @@ beq_cont.29040:
 	mul.s	$f2, $f2, $f1
 	mv	$9, $10
 	sw.s	$f2, 0($9)
-	addi	$9, $10, 4
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 4($10)
 	mul.s	$f2, $f2, $f1
 	addi	$9, $10, 4
 	sw.s	$f2, 0($9)
-	addi	$9, $10, 8
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 8($10)
 	mul.s	$f1, $f2, $f1
 	addi	$9, $10, 8
 	sw.s	$f1, 0($9)
@@ -2240,8 +2231,7 @@ beq_cont.29050:
 beq_cont.29046:
 	mv	$9, $10
 	sw.s	$f1, 0($9)
-	addi	$9, $10, 4
-	lw.s	$f1, 0($9)
+	lw.s	$f1, 4($10)
 	beq.s	$f1, $f0, beq.s_then.29055
 	li	$9, 0
 	j	beq.s_cont.29056
@@ -2281,8 +2271,7 @@ beq_cont.29062:
 beq_cont.29058:
 	addi	$9, $10, 4
 	sw.s	$f1, 0($9)
-	addi	$9, $10, 8
-	lw.s	$f1, 0($9)
+	lw.s	$f1, 8($10)
 	beq.s	$f1, $f0, beq.s_then.29067
 	li	$9, 0
 	j	beq.s_cont.29068
@@ -2342,8 +2331,7 @@ beq_cont.29032:
 	addi	$sp, $sp, -80
 	lw	$ra, 76($sp)
 	lw	$8, 64($sp)
-	addi	$9, $8, 4
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 4($8)
 	sw.s	$f1, 76($sp)
 	mv.s	$f1, $f2
 	sw	$ra, 80($sp)
@@ -2352,8 +2340,7 @@ beq_cont.29032:
 	addi	$sp, $sp, -84
 	lw	$ra, 80($sp)
 	lw	$8, 64($sp)
-	addi	$9, $8, 4
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 4($8)
 	sw.s	$f1, 80($sp)
 	mv.s	$f1, $f2
 	sw	$ra, 84($sp)
@@ -2362,8 +2349,7 @@ beq_cont.29032:
 	addi	$sp, $sp, -88
 	lw	$ra, 84($sp)
 	lw	$8, 64($sp)
-	addi	$9, $8, 8
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 8($8)
 	sw.s	$f1, 84($sp)
 	mv.s	$f1, $f2
 	sw	$ra, 88($sp)
@@ -2372,8 +2358,7 @@ beq_cont.29032:
 	addi	$sp, $sp, -92
 	lw	$ra, 88($sp)
 	lw	$8, 64($sp)
-	addi	$9, $8, 8
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 8($8)
 	sw.s	$f1, 88($sp)
 	mv.s	$f1, $f2
 	sw	$ra, 92($sp)
@@ -2410,10 +2395,8 @@ beq_cont.29032:
 	lw	$8, 24($sp)
 	mv	$9, $8
 	lw.s	$f6, 0($9)
-	addi	$9, $8, 4
-	lw.s	$f8, 0($9)
-	addi	$9, $8, 8
-	lw.s	$f12, 0($9)
+	lw.s	$f8, 4($8)
+	lw.s	$f12, 8($8)
 	mul.s	$f13, $f4, $f4
 	mul.s	$f13, $f6, $f13
 	mul.s	$f14, $f10, $f10
@@ -2603,8 +2586,7 @@ iter_setup_dirvec_constants..7162:
 	jr	$ra
 ble_then.29088:
 	sll	$10, $9, 2
-	addi	$10, $10, 80
-	lw	$10, 0($10)
+	lw	$10, 80($10)
 	lw	$11, 4($8)
 	lw	$12, 0($8)
 	lw	$13, 4($10)
@@ -2629,10 +2611,8 @@ ble_then.29088:
 	lw	$9, 16($sp)
 	mv	$10, $9
 	lw.s	$f1, 0($10)
-	addi	$10, $9, 4
-	lw.s	$f2, 0($10)
-	addi	$10, $9, 8
-	lw.s	$f3, 0($10)
+	lw.s	$f2, 4($9)
+	lw.s	$f3, 8($9)
 	mul.s	$f4, $f1, $f1
 	lw	$10, 12($sp)
 	lw	$11, 16($10)
@@ -2640,14 +2620,12 @@ ble_then.29088:
 	mul.s	$f4, $f4, $f5
 	mul.s	$f5, $f2, $f2
 	lw	$11, 16($10)
-	addi	$11, $11, 4
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 4($11)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	mul.s	$f5, $f3, $f3
 	lw	$11, 16($10)
-	addi	$11, $11, 8
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 8($11)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	lw	$11, 12($10)
@@ -2659,14 +2637,12 @@ ble_then.29088:
 	add.s	$f4, $f4, $f5
 	mul.s	$f3, $f3, $f1
 	lw	$11, 36($10)
-	addi	$11, $11, 4
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 4($11)
 	mul.s	$f3, $f3, $f5
 	add.s	$f3, $f4, $f3
 	mul.s	$f1, $f1, $f2
 	lw	$11, 36($10)
-	addi	$11, $11, 8
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 8($11)
 	mul.s	$f1, $f1, $f2
 	add.s	$f1, $f3, $f1
 	j	beq_cont.29095
@@ -2679,35 +2655,27 @@ beq_cont.29095:
 	lw.s	$f3, 0($11)
 	mul.s	$f2, $f2, $f3
 	neg.s	$f2, $f2
-	addi	$11, $9, 4
-	lw.s	$f3, 0($11)
+	lw.s	$f3, 4($9)
 	lw	$11, 16($10)
-	addi	$11, $11, 4
-	lw.s	$f4, 0($11)
+	lw.s	$f4, 4($11)
 	mul.s	$f3, $f3, $f4
 	neg.s	$f3, $f3
-	addi	$11, $9, 8
-	lw.s	$f4, 0($11)
+	lw.s	$f4, 8($9)
 	lw	$11, 16($10)
-	addi	$11, $11, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($11)
 	mul.s	$f4, $f4, $f5
 	neg.s	$f4, $f4
 	mv	$11, $8
 	sw.s	$f1, 0($11)
 	lw	$11, 12($10)
 	beq	$11, $0, beq_then.29096
-	addi	$11, $9, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($9)
 	lw	$11, 36($10)
-	addi	$11, $11, 4
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 4($11)
 	mul.s	$f5, $f5, $f6
-	addi	$11, $9, 4
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 4($9)
 	lw	$11, 36($10)
-	addi	$11, $11, 8
-	lw.s	$f7, 0($11)
+	lw.s	$f7, 8($11)
 	mul.s	$f6, $f6, $f7
 	add.s	$f5, $f5, $f6
 	lui.s	$f6, 0x3f00	# 0.500000の上位16ビット
@@ -2715,16 +2683,14 @@ beq_cont.29095:
 	sub.s	$f2, $f2, $f5
 	addi	$11, $8, 4
 	sw.s	$f2, 0($11)
-	addi	$11, $9, 8
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 8($9)
 	lw	$11, 36($10)
 	lw.s	$f5, 0($11)
 	mul.s	$f2, $f2, $f5
 	mv	$11, $9
 	lw.s	$f5, 0($11)
 	lw	$11, 36($10)
-	addi	$11, $11, 8
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 8($11)
 	mul.s	$f5, $f5, $f6
 	add.s	$f2, $f2, $f5
 	lui.s	$f5, 0x3f00	# 0.500000の上位16ビット
@@ -2732,15 +2698,13 @@ beq_cont.29095:
 	sub.s	$f2, $f3, $f2
 	addi	$11, $8, 8
 	sw.s	$f2, 0($11)
-	addi	$11, $9, 4
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 4($9)
 	lw	$11, 36($10)
 	lw.s	$f3, 0($11)
 	mul.s	$f2, $f2, $f3
 	lw.s	$f3, 0($9)
 	lw	$9, 36($10)
-	addi	$9, $9, 4
-	lw.s	$f5, 0($9)
+	lw.s	$f5, 4($9)
 	mul.s	$f3, $f3, $f5
 	add.s	$f2, $f2, $f3
 	lui.s	$f3, 0x3f00	# 0.500000の上位16ビット
@@ -2805,18 +2769,14 @@ beq_then.29092:
 	lw	$11, 16($10)
 	lw.s	$f2, 0($11)
 	mul.s	$f1, $f1, $f2
-	addi	$11, $9, 4
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 4($9)
 	lw	$11, 16($10)
-	addi	$11, $11, 4
-	lw.s	$f3, 0($11)
+	lw.s	$f3, 4($11)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
-	addi	$9, $9, 8
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 8($9)
 	lw	$9, 16($10)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	ble.s	$f1, $f0, ble.s_then.29104
@@ -2838,16 +2798,14 @@ ble.s_cont.29105:
 	addi	$9, $8, 4
 	sw.s	$f2, 0($9)
 	lw	$9, 16($10)
-	addi	$9, $9, 4
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 4($9)
 	inv.s	$f3, $f1
 	mul.s	$f2, $f2, $f3
 	neg.s	$f2, $f2
 	addi	$9, $8, 8
 	sw.s	$f2, 0($9)
 	lw	$9, 16($10)
-	addi	$9, $9, 8
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 8($9)
 	inv.s	$f1, $f1
 	mul.s	$f1, $f2, $f1
 	neg.s	$f1, $f1
@@ -2926,8 +2884,7 @@ beq_cont.29117:
 	addi	$11, $8, 4
 	sw.s	$f1, 0($11)
 beq_cont.29111:
-	addi	$10, $9, 4
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 4($9)
 	beq.s	$f1, $f0, beq.s_then.29118
 	li	$10, 0
 	j	beq.s_cont.29119
@@ -2941,8 +2898,7 @@ beq.s_cont.29119:
 beq_then.29120:
 	lw	$10, 12($sp)
 	lw	$11, 24($10)
-	addi	$12, $9, 4
-	lw.s	$f1, 0($12)
+	lw.s	$f1, 4($9)
 	ble.s	$f0, $f1, ble.s_then.29122
 	li	$12, 1
 	j	ble.s_cont.29123
@@ -2956,8 +2912,7 @@ beq_then.29124:
 	li	$11, 0
 beq_cont.29125:
 	lw	$12, 16($10)
-	addi	$12, $12, 4
-	lw.s	$f1, 0($12)
+	lw.s	$f1, 4($12)
 	beq	$11, $0, beq_then.29126
 	j	beq_cont.29127
 beq_then.29126:
@@ -2965,14 +2920,12 @@ beq_then.29126:
 beq_cont.29127:
 	addi	$11, $8, 8
 	sw.s	$f1, 0($11)
-	addi	$11, $9, 4
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 4($9)
 	inv.s	$f1, $f1
 	addi	$11, $8, 12
 	sw.s	$f1, 0($11)
 beq_cont.29121:
-	addi	$10, $9, 8
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 8($9)
 	beq.s	$f1, $f0, beq.s_then.29128
 	li	$10, 0
 	j	beq.s_cont.29129
@@ -2986,8 +2939,7 @@ beq.s_cont.29129:
 beq_then.29130:
 	lw	$10, 12($sp)
 	lw	$11, 24($10)
-	addi	$12, $9, 8
-	lw.s	$f1, 0($12)
+	lw.s	$f1, 8($9)
 	ble.s	$f0, $f1, ble.s_then.29132
 	li	$12, 1
 	j	ble.s_cont.29133
@@ -3001,8 +2953,7 @@ beq_then.29134:
 	li	$11, 0
 beq_cont.29135:
 	lw	$10, 16($10)
-	addi	$10, $10, 8
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 8($10)
 	beq	$11, $0, beq_then.29136
 	j	beq_cont.29137
 beq_then.29136:
@@ -3010,8 +2961,7 @@ beq_then.29136:
 beq_cont.29137:
 	addi	$10, $8, 16
 	sw.s	$f1, 0($10)
-	addi	$9, $9, 8
-	lw.s	$f1, 0($9)
+	lw.s	$f1, 8($9)
 	inv.s	$f1, $f1
 	addi	$9, $8, 20
 	sw.s	$f1, 0($9)
@@ -3030,8 +2980,7 @@ setup_startp_constants..7167:
 	jr	$ra
 ble_then.29138:
 	sll	$10, $9, 2
-	addi	$10, $10, 80
-	lw	$10, 0($10)
+	lw	$10, 80($10)
 	lw	$11, 40($10)
 	lw	$12, 4($10)
 	mv	$13, $8
@@ -3041,19 +2990,15 @@ ble_then.29138:
 	sub.s	$f1, $f1, $f2
 	mv	$13, $11
 	sw.s	$f1, 0($13)
-	addi	$13, $8, 4
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 4($8)
 	lw	$13, 20($10)
-	addi	$13, $13, 4
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 4($13)
 	sub.s	$f1, $f1, $f2
 	addi	$13, $11, 4
 	sw.s	$f1, 0($13)
-	addi	$13, $8, 8
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 8($8)
 	lw	$13, 20($10)
-	addi	$13, $13, 8
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 8($13)
 	sub.s	$f1, $f1, $f2
 	addi	$13, $11, 8
 	sw.s	$f1, 0($13)
@@ -3061,24 +3006,20 @@ ble_then.29138:
 	ble	$12, $2, ble_then.29142
 	mv	$13, $11
 	lw.s	$f1, 0($13)
-	addi	$13, $11, 4
-	lw.s	$f2, 0($13)
-	addi	$13, $11, 8
-	lw.s	$f3, 0($13)
+	lw.s	$f2, 4($11)
+	lw.s	$f3, 8($11)
 	mul.s	$f4, $f1, $f1
 	lw	$13, 16($10)
 	lw.s	$f5, 0($13)
 	mul.s	$f4, $f4, $f5
 	mul.s	$f5, $f2, $f2
 	lw	$13, 16($10)
-	addi	$13, $13, 4
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 4($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	mul.s	$f5, $f3, $f3
 	lw	$13, 16($10)
-	addi	$13, $13, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 8($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	lw	$13, 12($10)
@@ -3090,14 +3031,12 @@ ble_then.29138:
 	add.s	$f4, $f4, $f5
 	mul.s	$f3, $f3, $f1
 	lw	$13, 36($10)
-	addi	$13, $13, 4
-	lw.s	$f5, 0($13)
+	lw.s	$f5, 4($13)
 	mul.s	$f3, $f3, $f5
 	add.s	$f3, $f4, $f3
 	mul.s	$f1, $f1, $f2
 	lw	$10, 36($10)
-	addi	$10, $10, 8
-	lw.s	$f2, 0($10)
+	lw.s	$f2, 8($10)
 	mul.s	$f1, $f1, $f2
 	add.s	$f1, $f3, $f1
 	j	beq_cont.29145
@@ -3120,19 +3059,15 @@ beq_then.29140:
 	lw	$10, 16($10)
 	mv	$12, $11
 	lw.s	$f1, 0($12)
-	addi	$12, $11, 4
-	lw.s	$f2, 0($12)
-	addi	$12, $11, 8
-	lw.s	$f3, 0($12)
+	lw.s	$f2, 4($11)
+	lw.s	$f3, 8($11)
 	mv	$12, $10
 	lw.s	$f4, 0($12)
 	mul.s	$f1, $f4, $f1
-	addi	$12, $10, 4
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 4($10)
 	mul.s	$f2, $f4, $f2
 	add.s	$f1, $f1, $f2
-	addi	$10, $10, 8
-	lw.s	$f2, 0($10)
+	lw.s	$f2, 8($10)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	addi	$10, $11, 12
@@ -3146,18 +3081,15 @@ check_all_inside..7192:
 	lw	$10, 0($10)
 	beq	$10, $7, beq_then.29148
 	sll	$10, $10, 2
-	addi	$10, $10, 80
-	lw	$10, 0($10)
+	lw	$10, 80($10)
 	lw	$11, 20($10)
 	lw.s	$f4, 0($11)
 	sub.s	$f4, $f1, $f4
 	lw	$11, 20($10)
-	addi	$11, $11, 4
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 4($11)
 	sub.s	$f5, $f2, $f5
 	lw	$11, 20($10)
-	addi	$11, $11, 8
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 8($11)
 	sub.s	$f6, $f3, $f6
 	lw	$11, 4($10)
 	beq	$11, $1, beq_then.29149
@@ -3168,14 +3100,12 @@ check_all_inside..7192:
 	mul.s	$f7, $f7, $f8
 	mul.s	$f8, $f5, $f5
 	lw	$11, 16($10)
-	addi	$11, $11, 4
-	lw.s	$f9, 0($11)
+	lw.s	$f9, 4($11)
 	mul.s	$f8, $f8, $f9
 	add.s	$f7, $f7, $f8
 	mul.s	$f8, $f6, $f6
 	lw	$11, 16($10)
-	addi	$11, $11, 8
-	lw.s	$f9, 0($11)
+	lw.s	$f9, 8($11)
 	mul.s	$f8, $f8, $f9
 	add.s	$f7, $f7, $f8
 	lw	$11, 12($10)
@@ -3187,14 +3117,12 @@ check_all_inside..7192:
 	add.s	$f7, $f7, $f8
 	mul.s	$f6, $f6, $f4
 	lw	$11, 36($10)
-	addi	$11, $11, 4
-	lw.s	$f8, 0($11)
+	lw.s	$f8, 4($11)
 	mul.s	$f6, $f6, $f8
 	add.s	$f6, $f7, $f6
 	mul.s	$f4, $f4, $f5
 	lw	$11, 36($10)
-	addi	$11, $11, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($11)
 	mul.s	$f4, $f4, $f5
 	add.s	$f4, $f6, $f4
 	j	beq_cont.29154
@@ -3233,12 +3161,10 @@ beq_then.29151:
 	mv	$12, $11
 	lw.s	$f7, 0($12)
 	mul.s	$f4, $f7, $f4
-	addi	$12, $11, 4
-	lw.s	$f7, 0($12)
+	lw.s	$f7, 4($11)
 	mul.s	$f5, $f7, $f5
 	add.s	$f4, $f4, $f5
-	addi	$11, $11, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($11)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	lw	$10, 24($10)
@@ -3275,8 +3201,7 @@ ble.s_cont.29170:
 	beq	$11, $0, beq_then.29171
 	abs.s	$f4, $f5
 	lw	$11, 16($10)
-	addi	$11, $11, 4
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 4($11)
 	ble.s	$f5, $f4, ble.s_then.29173
 	li	$11, 1
 	j	ble.s_cont.29174
@@ -3286,8 +3211,7 @@ ble.s_cont.29174:
 	beq	$11, $0, beq_then.29175
 	abs.s	$f4, $f6
 	lw	$11, 16($10)
-	addi	$11, $11, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($11)
 	ble.s	$f5, $f4, ble.s_then.29177
 	li	$11, 1
 	j	ble.s_cont.29178
@@ -3333,21 +3257,18 @@ shadow_check_and_group..7198:
 	add	$10, $9, $10
 	lw	$10, 0($10)
 	sll	$11, $10, 2
-	addi	$11, $11, 80
-	lw	$11, 0($11)
+	lw	$11, 80($11)
 	lw.s	$f1, 584($0)
 	lw	$12, 20($11)
 	lw.s	$f2, 0($12)
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 588($0)
 	lw	$12, 20($11)
-	addi	$12, $12, 4
-	lw.s	$f3, 0($12)
+	lw.s	$f3, 4($12)
 	sub.s	$f2, $f2, $f3
 	lw.s	$f3, 592($0)
 	lw	$12, 20($11)
-	addi	$12, $12, 8
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 8($12)
 	sub.s	$f3, $f3, $f4
 	lw	$12, 1024($0)
 	sll	$13, $10, 2
@@ -3368,15 +3289,12 @@ beq.s_cont.29190:
 	li	$11, 0
 	j	beq_cont.29192
 beq_then.29191:
-	addi	$13, $12, 4
-	lw.s	$f5, 0($13)
+	lw.s	$f5, 4($12)
 	mul.s	$f5, $f5, $f1
-	addi	$13, $12, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 8($12)
 	mul.s	$f6, $f6, $f2
 	add.s	$f5, $f5, $f6
-	addi	$13, $12, 12
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 12($12)
 	mul.s	$f6, $f6, $f3
 	add.s	$f5, $f5, $f6
 	mul.s	$f6, $f1, $f1
@@ -3385,14 +3303,12 @@ beq_then.29191:
 	mul.s	$f6, $f6, $f7
 	mul.s	$f7, $f2, $f2
 	lw	$13, 16($11)
-	addi	$13, $13, 4
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 4($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	mul.s	$f7, $f3, $f3
 	lw	$13, 16($11)
-	addi	$13, $13, 8
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 8($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	lw	$13, 12($11)
@@ -3404,14 +3320,12 @@ beq_then.29191:
 	add.s	$f6, $f6, $f7
 	mul.s	$f3, $f3, $f1
 	lw	$13, 36($11)
-	addi	$13, $13, 4
-	lw.s	$f7, 0($13)
+	lw.s	$f7, 4($13)
 	mul.s	$f3, $f3, $f7
 	add.s	$f3, $f6, $f3
 	mul.s	$f1, $f1, $f2
 	lw	$13, 36($11)
-	addi	$13, $13, 8
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 8($13)
 	mul.s	$f1, $f1, $f2
 	add.s	$f1, $f3, $f1
 	j	beq_cont.29194
@@ -3439,16 +3353,14 @@ ble.s_cont.29198:
 	beq	$11, $0, beq_then.29201
 	sqrt.s	$f1, $f1
 	add.s	$f1, $f5, $f1
-	addi	$11, $12, 16
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 16($12)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 	j	beq_cont.29202
 beq_then.29201:
 	sqrt.s	$f1, $f1
 	sub.s	$f1, $f5, $f1
-	addi	$11, $12, 16
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 16($12)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 beq_cont.29202:
@@ -3469,15 +3381,12 @@ ble.s_then.29203:
 	li	$11, 0
 ble.s_cont.29204:
 	beq	$11, $0, beq_then.29205
-	addi	$11, $12, 4
-	lw.s	$f4, 0($11)
+	lw.s	$f4, 4($12)
 	mul.s	$f1, $f4, $f1
-	addi	$11, $12, 8
-	lw.s	$f4, 0($11)
+	lw.s	$f4, 8($12)
 	mul.s	$f2, $f4, $f2
 	add.s	$f1, $f1, $f2
-	addi	$11, $12, 12
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 12($12)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
@@ -3493,17 +3402,14 @@ beq_then.29185:
 	mv	$14, $12
 	lw.s	$f4, 0($14)
 	sub.s	$f4, $f4, $f1
-	addi	$14, $12, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($12)
 	mul.s	$f4, $f4, $f5
-	addi	$14, $13, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($13)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f2
 	abs.s	$f5, $f5
 	lw	$14, 16($11)
-	addi	$14, $14, 4
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 4($14)
 	ble.s	$f6, $f5, ble.s_then.29207
 	li	$14, 1
 	j	ble.s_cont.29208
@@ -3511,14 +3417,12 @@ ble.s_then.29207:
 	li	$14, 0
 ble.s_cont.29208:
 	beq	$14, $0, beq_then.29209
-	addi	$14, $13, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($13)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$14, 16($11)
-	addi	$14, $14, 8
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 8($14)
 	ble.s	$f6, $f5, ble.s_then.29211
 	li	$14, 1
 	j	ble.s_cont.29212
@@ -3526,8 +3430,7 @@ ble.s_then.29211:
 	li	$14, 0
 ble.s_cont.29212:
 	beq	$14, $0, beq_then.29213
-	addi	$14, $12, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($12)
 	beq.s	$f5, $f0, beq.s_then.29215
 	li	$14, 0
 	j	beq.s_cont.29216
@@ -3553,11 +3456,9 @@ beq_cont.29210:
 	li	$11, 1
 	j	beq_cont.29220
 beq_then.29219:
-	addi	$14, $12, 8
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 8($12)
 	sub.s	$f4, $f4, $f2
-	addi	$14, $12, 12
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 12($12)
 	mul.s	$f4, $f4, $f5
 	mv	$14, $13
 	lw.s	$f5, 0($14)
@@ -3573,14 +3474,12 @@ ble.s_then.29221:
 	li	$14, 0
 ble.s_cont.29222:
 	beq	$14, $0, beq_then.29223
-	addi	$14, $13, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($13)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$14, 16($11)
-	addi	$14, $14, 8
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 8($14)
 	ble.s	$f6, $f5, ble.s_then.29225
 	li	$14, 1
 	j	ble.s_cont.29226
@@ -3588,8 +3487,7 @@ ble.s_then.29225:
 	li	$14, 0
 ble.s_cont.29226:
 	beq	$14, $0, beq_then.29227
-	addi	$14, $12, 12
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 12($12)
 	beq.s	$f5, $f0, beq.s_then.29229
 	li	$14, 0
 	j	beq.s_cont.29230
@@ -3615,11 +3513,9 @@ beq_cont.29224:
 	li	$11, 2
 	j	beq_cont.29234
 beq_then.29233:
-	addi	$14, $12, 16
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 16($12)
 	sub.s	$f3, $f4, $f3
-	addi	$14, $12, 20
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 20($12)
 	mul.s	$f3, $f3, $f4
 	mv	$14, $13
 	lw.s	$f4, 0($14)
@@ -3635,14 +3531,12 @@ ble.s_then.29235:
 	li	$14, 0
 ble.s_cont.29236:
 	beq	$14, $0, beq_then.29237
-	addi	$13, $13, 4
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 4($13)
 	mul.s	$f1, $f3, $f1
 	add.s	$f1, $f1, $f2
 	abs.s	$f1, $f1
 	lw	$11, 16($11)
-	addi	$11, $11, 4
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 4($11)
 	ble.s	$f2, $f1, ble.s_then.29239
 	li	$11, 1
 	j	ble.s_cont.29240
@@ -3650,8 +3544,7 @@ ble.s_then.29239:
 	li	$11, 0
 ble.s_cont.29240:
 	beq	$11, $0, beq_then.29241
-	addi	$11, $12, 20
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 20($12)
 	beq.s	$f1, $f0, beq.s_then.29243
 	li	$11, 0
 	j	beq.s_cont.29244
@@ -3735,8 +3628,7 @@ beq_then.29254:
 	j	shadow_check_and_group..7198
 beq_then.29253:
 	sll	$10, $10, 2
-	addi	$10, $10, 80
-	lw	$10, 0($10)
+	lw	$10, 80($10)
 	lw	$10, 24($10)
 	beq	$10, $0, beq_then.29255
 	addi	$8, $8, 1
@@ -3753,8 +3645,7 @@ shadow_check_one_or_group..7201:
 	lw	$10, 0($10)
 	beq	$10, $7, beq_then.29256
 	sll	$10, $10, 2
-	addi	$10, $10, 364
-	lw	$10, 0($10)
+	lw	$10, 364($10)
 	li	$11, 0
 	sw	$9, 0($sp)
 	sw	$8, 4($sp)
@@ -3789,21 +3680,18 @@ shadow_check_one_or_matrix..7204:
 	sw	$8, 8($sp)
 	beq	$11, $12, beq_then.29259
 	sll	$12, $11, 2
-	addi	$12, $12, 80
-	lw	$12, 0($12)
+	lw	$12, 80($12)
 	lw.s	$f1, 584($0)
 	lw	$13, 20($12)
 	lw.s	$f2, 0($13)
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 588($0)
 	lw	$13, 20($12)
-	addi	$13, $13, 4
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 4($13)
 	sub.s	$f2, $f2, $f3
 	lw.s	$f3, 592($0)
 	lw	$13, 20($12)
-	addi	$13, $13, 8
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 8($13)
 	sub.s	$f3, $f3, $f4
 	lw	$13, 1024($0)
 	sll	$11, $11, 2
@@ -3824,15 +3712,12 @@ beq.s_cont.29266:
 	li	$11, 0
 	j	beq_cont.29268
 beq_then.29267:
-	addi	$13, $11, 4
-	lw.s	$f5, 0($13)
+	lw.s	$f5, 4($11)
 	mul.s	$f5, $f5, $f1
-	addi	$13, $11, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 8($11)
 	mul.s	$f6, $f6, $f2
 	add.s	$f5, $f5, $f6
-	addi	$13, $11, 12
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 12($11)
 	mul.s	$f6, $f6, $f3
 	add.s	$f5, $f5, $f6
 	mul.s	$f6, $f1, $f1
@@ -3841,14 +3726,12 @@ beq_then.29267:
 	mul.s	$f6, $f6, $f7
 	mul.s	$f7, $f2, $f2
 	lw	$13, 16($12)
-	addi	$13, $13, 4
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 4($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	mul.s	$f7, $f3, $f3
 	lw	$13, 16($12)
-	addi	$13, $13, 8
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 8($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	lw	$13, 12($12)
@@ -3860,14 +3743,12 @@ beq_then.29267:
 	add.s	$f6, $f6, $f7
 	mul.s	$f3, $f3, $f1
 	lw	$13, 36($12)
-	addi	$13, $13, 4
-	lw.s	$f7, 0($13)
+	lw.s	$f7, 4($13)
 	mul.s	$f3, $f3, $f7
 	add.s	$f3, $f6, $f3
 	mul.s	$f1, $f1, $f2
 	lw	$13, 36($12)
-	addi	$13, $13, 8
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 8($13)
 	mul.s	$f1, $f1, $f2
 	add.s	$f1, $f3, $f1
 	j	beq_cont.29270
@@ -3895,16 +3776,14 @@ ble.s_cont.29274:
 	beq	$12, $0, beq_then.29277
 	sqrt.s	$f1, $f1
 	add.s	$f1, $f5, $f1
-	addi	$11, $11, 16
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 16($11)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 	j	beq_cont.29278
 beq_then.29277:
 	sqrt.s	$f1, $f1
 	sub.s	$f1, $f5, $f1
-	addi	$11, $11, 16
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 16($11)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 beq_cont.29278:
@@ -3925,15 +3804,12 @@ ble.s_then.29279:
 	li	$12, 0
 ble.s_cont.29280:
 	beq	$12, $0, beq_then.29281
-	addi	$12, $11, 4
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 4($11)
 	mul.s	$f1, $f4, $f1
-	addi	$12, $11, 8
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 8($11)
 	mul.s	$f2, $f4, $f2
 	add.s	$f1, $f1, $f2
-	addi	$11, $11, 12
-	lw.s	$f2, 0($11)
+	lw.s	$f2, 12($11)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
@@ -3949,17 +3825,14 @@ beq_then.29261:
 	mv	$14, $11
 	lw.s	$f4, 0($14)
 	sub.s	$f4, $f4, $f1
-	addi	$14, $11, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($11)
 	mul.s	$f4, $f4, $f5
-	addi	$14, $13, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($13)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f2
 	abs.s	$f5, $f5
 	lw	$14, 16($12)
-	addi	$14, $14, 4
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 4($14)
 	ble.s	$f6, $f5, ble.s_then.29283
 	li	$14, 1
 	j	ble.s_cont.29284
@@ -3967,14 +3840,12 @@ ble.s_then.29283:
 	li	$14, 0
 ble.s_cont.29284:
 	beq	$14, $0, beq_then.29285
-	addi	$14, $13, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($13)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$14, 16($12)
-	addi	$14, $14, 8
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 8($14)
 	ble.s	$f6, $f5, ble.s_then.29287
 	li	$14, 1
 	j	ble.s_cont.29288
@@ -3982,8 +3853,7 @@ ble.s_then.29287:
 	li	$14, 0
 ble.s_cont.29288:
 	beq	$14, $0, beq_then.29289
-	addi	$14, $11, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($11)
 	beq.s	$f5, $f0, beq.s_then.29291
 	li	$14, 0
 	j	beq.s_cont.29292
@@ -4009,11 +3879,9 @@ beq_cont.29286:
 	li	$11, 1
 	j	beq_cont.29296
 beq_then.29295:
-	addi	$14, $11, 8
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 8($11)
 	sub.s	$f4, $f4, $f2
-	addi	$14, $11, 12
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 12($11)
 	mul.s	$f4, $f4, $f5
 	mv	$14, $13
 	lw.s	$f5, 0($14)
@@ -4029,14 +3897,12 @@ ble.s_then.29297:
 	li	$14, 0
 ble.s_cont.29298:
 	beq	$14, $0, beq_then.29299
-	addi	$14, $13, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($13)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$14, 16($12)
-	addi	$14, $14, 8
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 8($14)
 	ble.s	$f6, $f5, ble.s_then.29301
 	li	$14, 1
 	j	ble.s_cont.29302
@@ -4044,8 +3910,7 @@ ble.s_then.29301:
 	li	$14, 0
 ble.s_cont.29302:
 	beq	$14, $0, beq_then.29303
-	addi	$14, $11, 12
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 12($11)
 	beq.s	$f5, $f0, beq.s_then.29305
 	li	$14, 0
 	j	beq.s_cont.29306
@@ -4071,11 +3936,9 @@ beq_cont.29300:
 	li	$11, 2
 	j	beq_cont.29310
 beq_then.29309:
-	addi	$14, $11, 16
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 16($11)
 	sub.s	$f3, $f4, $f3
-	addi	$14, $11, 20
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 20($11)
 	mul.s	$f3, $f3, $f4
 	mv	$14, $13
 	lw.s	$f4, 0($14)
@@ -4091,14 +3954,12 @@ ble.s_then.29311:
 	li	$14, 0
 ble.s_cont.29312:
 	beq	$14, $0, beq_then.29313
-	addi	$13, $13, 4
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 4($13)
 	mul.s	$f1, $f3, $f1
 	add.s	$f1, $f1, $f2
 	abs.s	$f1, $f1
 	lw	$12, 16($12)
-	addi	$12, $12, 4
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 4($12)
 	ble.s	$f2, $f1, ble.s_then.29315
 	li	$12, 1
 	j	ble.s_cont.29316
@@ -4106,8 +3967,7 @@ ble.s_then.29315:
 	li	$12, 0
 ble.s_cont.29316:
 	beq	$12, $0, beq_then.29317
-	addi	$11, $11, 20
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 20($11)
 	beq.s	$f1, $f0, beq.s_then.29319
 	li	$11, 0
 	j	beq.s_cont.29320
@@ -4205,45 +4065,38 @@ solve_each_element..7207:
 	lw	$11, 0($11)
 	beq	$11, $7, beq_then.29335
 	sll	$12, $11, 2
-	addi	$12, $12, 80
-	lw	$12, 0($12)
+	lw	$12, 80($12)
 	lw.s	$f1, 668($0)
 	lw	$13, 20($12)
 	lw.s	$f2, 0($13)
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 672($0)
 	lw	$13, 20($12)
-	addi	$13, $13, 4
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 4($13)
 	sub.s	$f2, $f2, $f3
 	lw.s	$f3, 676($0)
 	lw	$13, 20($12)
-	addi	$13, $13, 8
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 8($13)
 	sub.s	$f3, $f3, $f4
 	lw	$13, 4($12)
 	beq	$13, $1, beq_then.29336
 	beq	$13, $2, beq_then.29338
 	mv	$13, $10
 	lw.s	$f4, 0($13)
-	addi	$13, $10, 4
-	lw.s	$f5, 0($13)
-	addi	$13, $10, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f5, 4($10)
+	lw.s	$f6, 8($10)
 	mul.s	$f7, $f4, $f4
 	lw	$13, 16($12)
 	lw.s	$f8, 0($13)
 	mul.s	$f7, $f7, $f8
 	mul.s	$f8, $f5, $f5
 	lw	$13, 16($12)
-	addi	$13, $13, 4
-	lw.s	$f9, 0($13)
+	lw.s	$f9, 4($13)
 	mul.s	$f8, $f8, $f9
 	add.s	$f7, $f7, $f8
 	mul.s	$f8, $f6, $f6
 	lw	$13, 16($12)
-	addi	$13, $13, 8
-	lw.s	$f9, 0($13)
+	lw.s	$f9, 8($13)
 	mul.s	$f8, $f8, $f9
 	add.s	$f7, $f7, $f8
 	lw	$13, 12($12)
@@ -4255,14 +4108,12 @@ solve_each_element..7207:
 	add.s	$f7, $f7, $f8
 	mul.s	$f6, $f6, $f4
 	lw	$13, 36($12)
-	addi	$13, $13, 4
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 4($13)
 	mul.s	$f6, $f6, $f8
 	add.s	$f6, $f7, $f6
 	mul.s	$f4, $f4, $f5
 	lw	$13, 36($12)
-	addi	$13, $13, 8
-	lw.s	$f5, 0($13)
+	lw.s	$f5, 8($13)
 	mul.s	$f4, $f4, $f5
 	add.s	$f4, $f6, $f4
 	j	beq_cont.29341
@@ -4281,24 +4132,20 @@ beq.s_cont.29343:
 beq_then.29344:
 	mv	$13, $10
 	lw.s	$f5, 0($13)
-	addi	$13, $10, 4
-	lw.s	$f6, 0($13)
-	addi	$13, $10, 8
-	lw.s	$f7, 0($13)
+	lw.s	$f6, 4($10)
+	lw.s	$f7, 8($10)
 	mul.s	$f8, $f5, $f1
 	lw	$13, 16($12)
 	lw.s	$f9, 0($13)
 	mul.s	$f8, $f8, $f9
 	mul.s	$f9, $f6, $f2
 	lw	$13, 16($12)
-	addi	$13, $13, 4
-	lw.s	$f10, 0($13)
+	lw.s	$f10, 4($13)
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	mul.s	$f9, $f7, $f3
 	lw	$13, 16($12)
-	addi	$13, $13, 8
-	lw.s	$f10, 0($13)
+	lw.s	$f10, 8($13)
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	lw	$13, 12($12)
@@ -4313,16 +4160,14 @@ beq_then.29344:
 	mul.s	$f7, $f7, $f1
 	add.s	$f7, $f10, $f7
 	lw	$13, 36($12)
-	addi	$13, $13, 4
-	lw.s	$f10, 0($13)
+	lw.s	$f10, 4($13)
 	mul.s	$f7, $f7, $f10
 	add.s	$f7, $f9, $f7
 	mul.s	$f5, $f5, $f2
 	mul.s	$f6, $f6, $f1
 	add.s	$f5, $f5, $f6
 	lw	$13, 36($12)
-	addi	$13, $13, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 8($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
 	lui.s	$f6, 0x3f00	# 0.500000の上位16ビット
@@ -4338,14 +4183,12 @@ beq_cont.29347:
 	mul.s	$f6, $f6, $f7
 	mul.s	$f7, $f2, $f2
 	lw	$13, 16($12)
-	addi	$13, $13, 4
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 4($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	mul.s	$f7, $f3, $f3
 	lw	$13, 16($12)
-	addi	$13, $13, 8
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 8($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	lw	$13, 12($12)
@@ -4357,14 +4200,12 @@ beq_cont.29347:
 	add.s	$f6, $f6, $f7
 	mul.s	$f3, $f3, $f1
 	lw	$13, 36($12)
-	addi	$13, $13, 4
-	lw.s	$f7, 0($13)
+	lw.s	$f7, 4($13)
 	mul.s	$f3, $f3, $f7
 	add.s	$f3, $f6, $f3
 	mul.s	$f1, $f1, $f2
 	lw	$13, 36($12)
-	addi	$13, $13, 8
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 8($13)
 	mul.s	$f1, $f1, $f2
 	add.s	$f1, $f3, $f1
 	j	beq_cont.29349
@@ -4413,16 +4254,12 @@ beq_then.29338:
 	mv	$13, $12
 	lw.s	$f5, 0($13)
 	mul.s	$f4, $f4, $f5
-	addi	$13, $10, 4
-	lw.s	$f5, 0($13)
-	addi	$13, $12, 4
-	lw.s	$f6, 0($13)
+	lw.s	$f5, 4($10)
+	lw.s	$f6, 4($12)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
-	addi	$13, $10, 8
-	lw.s	$f5, 0($13)
-	addi	$13, $12, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f5, 8($10)
+	lw.s	$f6, 8($12)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	ble.s	$f4, $f0, ble.s_then.29358
@@ -4435,12 +4272,10 @@ ble.s_cont.29359:
 	mv	$13, $12
 	lw.s	$f5, 0($13)
 	mul.s	$f1, $f5, $f1
-	addi	$13, $12, 4
-	lw.s	$f5, 0($13)
+	lw.s	$f5, 4($12)
 	mul.s	$f2, $f5, $f2
 	add.s	$f1, $f1, $f2
-	addi	$12, $12, 8
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 8($12)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	neg.s	$f1, $f1
@@ -4495,13 +4330,11 @@ beq_cont.29371:
 	lw.s	$f5, 0($14)
 	inv.s	$f5, $f5
 	mul.s	$f4, $f4, $f5
-	addi	$14, $10, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($10)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f2
 	abs.s	$f5, $f5
-	addi	$14, $13, 4
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 4($13)
 	ble.s	$f6, $f5, ble.s_then.29372
 	li	$14, 1
 	j	ble.s_cont.29373
@@ -4509,13 +4342,11 @@ ble.s_then.29372:
 	li	$14, 0
 ble.s_cont.29373:
 	beq	$14, $0, beq_then.29374
-	addi	$14, $10, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($10)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
-	addi	$13, $13, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 8($13)
 	ble.s	$f6, $f5, ble.s_then.29376
 	li	$13, 1
 	j	ble.s_cont.29377
@@ -4538,8 +4369,7 @@ beq_cont.29365:
 	li	$12, 1
 	j	beq_cont.29381
 beq_then.29380:
-	addi	$13, $10, 4
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 4($10)
 	beq.s	$f4, $f0, beq.s_then.29382
 	li	$13, 0
 	j	beq.s_cont.29383
@@ -4552,8 +4382,7 @@ beq.s_cont.29383:
 beq_then.29384:
 	lw	$13, 16($12)
 	lw	$14, 24($12)
-	addi	$15, $10, 4
-	lw.s	$f4, 0($15)
+	lw.s	$f4, 4($10)
 	ble.s	$f0, $f4, ble.s_then.29386
 	li	$15, 1
 	j	ble.s_cont.29387
@@ -4566,25 +4395,21 @@ ble.s_cont.29387:
 beq_then.29388:
 	li	$14, 0
 beq_cont.29389:
-	addi	$15, $13, 4
-	lw.s	$f4, 0($15)
+	lw.s	$f4, 4($13)
 	beq	$14, $0, beq_then.29390
 	j	beq_cont.29391
 beq_then.29390:
 	neg.s	$f4, $f4
 beq_cont.29391:
 	sub.s	$f4, $f4, $f2
-	addi	$14, $10, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($10)
 	inv.s	$f5, $f5
 	mul.s	$f4, $f4, $f5
-	addi	$14, $10, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($10)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
-	addi	$14, $13, 8
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 8($13)
 	ble.s	$f6, $f5, ble.s_then.29392
 	li	$14, 1
 	j	ble.s_cont.29393
@@ -4620,8 +4445,7 @@ beq_cont.29385:
 	li	$12, 2
 	j	beq_cont.29401
 beq_then.29400:
-	addi	$13, $10, 8
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 8($10)
 	beq.s	$f4, $f0, beq.s_then.29402
 	li	$13, 0
 	j	beq.s_cont.29403
@@ -4634,8 +4458,7 @@ beq.s_cont.29403:
 beq_then.29404:
 	lw	$13, 16($12)
 	lw	$12, 24($12)
-	addi	$14, $10, 8
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 8($10)
 	ble.s	$f0, $f4, ble.s_then.29406
 	li	$14, 1
 	j	ble.s_cont.29407
@@ -4648,16 +4471,14 @@ ble.s_cont.29407:
 beq_then.29408:
 	li	$12, 0
 beq_cont.29409:
-	addi	$14, $13, 8
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 8($13)
 	beq	$12, $0, beq_then.29410
 	j	beq_cont.29411
 beq_then.29410:
 	neg.s	$f4, $f4
 beq_cont.29411:
 	sub.s	$f3, $f4, $f3
-	addi	$12, $10, 8
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 8($10)
 	inv.s	$f4, $f4
 	mul.s	$f3, $f3, $f4
 	mv	$12, $10
@@ -4674,13 +4495,11 @@ ble.s_then.29412:
 	li	$12, 0
 ble.s_cont.29413:
 	beq	$12, $0, beq_then.29414
-	addi	$12, $10, 4
-	lw.s	$f1, 0($12)
+	lw.s	$f1, 4($10)
 	mul.s	$f1, $f3, $f1
 	add.s	$f1, $f1, $f2
 	abs.s	$f1, $f1
-	addi	$12, $13, 4
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 4($13)
 	ble.s	$f2, $f1, ble.s_then.29416
 	li	$12, 1
 	j	ble.s_cont.29417
@@ -4736,13 +4555,11 @@ ble.s_cont.29428:
 	mul.s	$f2, $f2, $f1
 	lw.s	$f3, 668($0)
 	add.s	$f2, $f2, $f3
-	addi	$13, $10, 4
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 4($10)
 	mul.s	$f3, $f3, $f1
 	lw.s	$f4, 672($0)
 	add.s	$f3, $f3, $f4
-	addi	$13, $10, 8
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 8($10)
 	mul.s	$f4, $f4, $f1
 	lw.s	$f5, 676($0)
 	add.s	$f4, $f4, $f5
@@ -4791,8 +4608,7 @@ beq_cont.29426:
 	j	solve_each_element..7207
 beq_then.29422:
 	sll	$11, $11, 2
-	addi	$11, $11, 80
-	lw	$11, 0($11)
+	lw	$11, 80($11)
 	lw	$11, 24($11)
 	beq	$11, $0, beq_then.29433
 	addi	$8, $8, 1
@@ -4807,8 +4623,7 @@ solve_one_or_network..7211:
 	lw	$11, 0($11)
 	beq	$11, $7, beq_then.29436
 	sll	$11, $11, 2
-	addi	$11, $11, 364
-	lw	$11, 0($11)
+	lw	$11, 364($11)
 	li	$12, 0
 	sw	$10, 0($sp)
 	sw	$9, 4($sp)
@@ -4840,45 +4655,38 @@ trace_or_matrix..7215:
 	sw	$8, 8($sp)
 	beq	$12, $13, beq_then.29439
 	sll	$12, $12, 2
-	addi	$12, $12, 80
-	lw	$12, 0($12)
+	lw	$12, 80($12)
 	lw.s	$f1, 668($0)
 	lw	$13, 20($12)
 	lw.s	$f2, 0($13)
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 672($0)
 	lw	$13, 20($12)
-	addi	$13, $13, 4
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 4($13)
 	sub.s	$f2, $f2, $f3
 	lw.s	$f3, 676($0)
 	lw	$13, 20($12)
-	addi	$13, $13, 8
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 8($13)
 	sub.s	$f3, $f3, $f4
 	lw	$13, 4($12)
 	beq	$13, $1, beq_then.29441
 	beq	$13, $2, beq_then.29443
 	mv	$13, $10
 	lw.s	$f4, 0($13)
-	addi	$13, $10, 4
-	lw.s	$f5, 0($13)
-	addi	$13, $10, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f5, 4($10)
+	lw.s	$f6, 8($10)
 	mul.s	$f7, $f4, $f4
 	lw	$13, 16($12)
 	lw.s	$f8, 0($13)
 	mul.s	$f7, $f7, $f8
 	mul.s	$f8, $f5, $f5
 	lw	$13, 16($12)
-	addi	$13, $13, 4
-	lw.s	$f9, 0($13)
+	lw.s	$f9, 4($13)
 	mul.s	$f8, $f8, $f9
 	add.s	$f7, $f7, $f8
 	mul.s	$f8, $f6, $f6
 	lw	$13, 16($12)
-	addi	$13, $13, 8
-	lw.s	$f9, 0($13)
+	lw.s	$f9, 8($13)
 	mul.s	$f8, $f8, $f9
 	add.s	$f7, $f7, $f8
 	lw	$13, 12($12)
@@ -4890,14 +4698,12 @@ trace_or_matrix..7215:
 	add.s	$f7, $f7, $f8
 	mul.s	$f6, $f6, $f4
 	lw	$13, 36($12)
-	addi	$13, $13, 4
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 4($13)
 	mul.s	$f6, $f6, $f8
 	add.s	$f6, $f7, $f6
 	mul.s	$f4, $f4, $f5
 	lw	$13, 36($12)
-	addi	$13, $13, 8
-	lw.s	$f5, 0($13)
+	lw.s	$f5, 8($13)
 	mul.s	$f4, $f4, $f5
 	add.s	$f4, $f6, $f4
 	j	beq_cont.29446
@@ -4916,24 +4722,20 @@ beq.s_cont.29448:
 beq_then.29449:
 	mv	$13, $10
 	lw.s	$f5, 0($13)
-	addi	$13, $10, 4
-	lw.s	$f6, 0($13)
-	addi	$13, $10, 8
-	lw.s	$f7, 0($13)
+	lw.s	$f6, 4($10)
+	lw.s	$f7, 8($10)
 	mul.s	$f8, $f5, $f1
 	lw	$13, 16($12)
 	lw.s	$f9, 0($13)
 	mul.s	$f8, $f8, $f9
 	mul.s	$f9, $f6, $f2
 	lw	$13, 16($12)
-	addi	$13, $13, 4
-	lw.s	$f10, 0($13)
+	lw.s	$f10, 4($13)
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	mul.s	$f9, $f7, $f3
 	lw	$13, 16($12)
-	addi	$13, $13, 8
-	lw.s	$f10, 0($13)
+	lw.s	$f10, 8($13)
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	lw	$13, 12($12)
@@ -4948,16 +4750,14 @@ beq_then.29449:
 	mul.s	$f7, $f7, $f1
 	add.s	$f7, $f10, $f7
 	lw	$13, 36($12)
-	addi	$13, $13, 4
-	lw.s	$f10, 0($13)
+	lw.s	$f10, 4($13)
 	mul.s	$f7, $f7, $f10
 	add.s	$f7, $f9, $f7
 	mul.s	$f5, $f5, $f2
 	mul.s	$f6, $f6, $f1
 	add.s	$f5, $f5, $f6
 	lw	$13, 36($12)
-	addi	$13, $13, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 8($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
 	lui.s	$f6, 0x3f00	# 0.500000の上位16ビット
@@ -4973,14 +4773,12 @@ beq_cont.29452:
 	mul.s	$f6, $f6, $f7
 	mul.s	$f7, $f2, $f2
 	lw	$13, 16($12)
-	addi	$13, $13, 4
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 4($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	mul.s	$f7, $f3, $f3
 	lw	$13, 16($12)
-	addi	$13, $13, 8
-	lw.s	$f8, 0($13)
+	lw.s	$f8, 8($13)
 	mul.s	$f7, $f7, $f8
 	add.s	$f6, $f6, $f7
 	lw	$13, 12($12)
@@ -4992,14 +4790,12 @@ beq_cont.29452:
 	add.s	$f6, $f6, $f7
 	mul.s	$f3, $f3, $f1
 	lw	$13, 36($12)
-	addi	$13, $13, 4
-	lw.s	$f7, 0($13)
+	lw.s	$f7, 4($13)
 	mul.s	$f3, $f3, $f7
 	add.s	$f3, $f6, $f3
 	mul.s	$f1, $f1, $f2
 	lw	$13, 36($12)
-	addi	$13, $13, 8
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 8($13)
 	mul.s	$f1, $f1, $f2
 	add.s	$f1, $f3, $f1
 	j	beq_cont.29454
@@ -5048,16 +4844,12 @@ beq_then.29443:
 	mv	$13, $12
 	lw.s	$f5, 0($13)
 	mul.s	$f4, $f4, $f5
-	addi	$13, $10, 4
-	lw.s	$f5, 0($13)
-	addi	$13, $12, 4
-	lw.s	$f6, 0($13)
+	lw.s	$f5, 4($10)
+	lw.s	$f6, 4($12)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
-	addi	$13, $10, 8
-	lw.s	$f5, 0($13)
-	addi	$13, $12, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f5, 8($10)
+	lw.s	$f6, 8($12)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	ble.s	$f4, $f0, ble.s_then.29463
@@ -5070,12 +4862,10 @@ ble.s_cont.29464:
 	mv	$13, $12
 	lw.s	$f5, 0($13)
 	mul.s	$f1, $f5, $f1
-	addi	$13, $12, 4
-	lw.s	$f5, 0($13)
+	lw.s	$f5, 4($12)
 	mul.s	$f2, $f5, $f2
 	add.s	$f1, $f1, $f2
-	addi	$12, $12, 8
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 8($12)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	neg.s	$f1, $f1
@@ -5130,13 +4920,11 @@ beq_cont.29476:
 	lw.s	$f5, 0($14)
 	inv.s	$f5, $f5
 	mul.s	$f4, $f4, $f5
-	addi	$14, $10, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($10)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f2
 	abs.s	$f5, $f5
-	addi	$14, $13, 4
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 4($13)
 	ble.s	$f6, $f5, ble.s_then.29477
 	li	$14, 1
 	j	ble.s_cont.29478
@@ -5144,13 +4932,11 @@ ble.s_then.29477:
 	li	$14, 0
 ble.s_cont.29478:
 	beq	$14, $0, beq_then.29479
-	addi	$14, $10, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($10)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
-	addi	$13, $13, 8
-	lw.s	$f6, 0($13)
+	lw.s	$f6, 8($13)
 	ble.s	$f6, $f5, ble.s_then.29481
 	li	$13, 1
 	j	ble.s_cont.29482
@@ -5173,8 +4959,7 @@ beq_cont.29470:
 	li	$12, 1
 	j	beq_cont.29486
 beq_then.29485:
-	addi	$13, $10, 4
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 4($10)
 	beq.s	$f4, $f0, beq.s_then.29487
 	li	$13, 0
 	j	beq.s_cont.29488
@@ -5187,8 +4972,7 @@ beq.s_cont.29488:
 beq_then.29489:
 	lw	$13, 16($12)
 	lw	$14, 24($12)
-	addi	$15, $10, 4
-	lw.s	$f4, 0($15)
+	lw.s	$f4, 4($10)
 	ble.s	$f0, $f4, ble.s_then.29491
 	li	$15, 1
 	j	ble.s_cont.29492
@@ -5201,25 +4985,21 @@ ble.s_cont.29492:
 beq_then.29493:
 	li	$14, 0
 beq_cont.29494:
-	addi	$15, $13, 4
-	lw.s	$f4, 0($15)
+	lw.s	$f4, 4($13)
 	beq	$14, $0, beq_then.29495
 	j	beq_cont.29496
 beq_then.29495:
 	neg.s	$f4, $f4
 beq_cont.29496:
 	sub.s	$f4, $f4, $f2
-	addi	$14, $10, 4
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 4($10)
 	inv.s	$f5, $f5
 	mul.s	$f4, $f4, $f5
-	addi	$14, $10, 8
-	lw.s	$f5, 0($14)
+	lw.s	$f5, 8($10)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
-	addi	$14, $13, 8
-	lw.s	$f6, 0($14)
+	lw.s	$f6, 8($13)
 	ble.s	$f6, $f5, ble.s_then.29497
 	li	$14, 1
 	j	ble.s_cont.29498
@@ -5255,8 +5035,7 @@ beq_cont.29490:
 	li	$12, 2
 	j	beq_cont.29506
 beq_then.29505:
-	addi	$13, $10, 8
-	lw.s	$f4, 0($13)
+	lw.s	$f4, 8($10)
 	beq.s	$f4, $f0, beq.s_then.29507
 	li	$13, 0
 	j	beq.s_cont.29508
@@ -5269,8 +5048,7 @@ beq.s_cont.29508:
 beq_then.29509:
 	lw	$13, 16($12)
 	lw	$12, 24($12)
-	addi	$14, $10, 8
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 8($10)
 	ble.s	$f0, $f4, ble.s_then.29511
 	li	$14, 1
 	j	ble.s_cont.29512
@@ -5283,16 +5061,14 @@ ble.s_cont.29512:
 beq_then.29513:
 	li	$12, 0
 beq_cont.29514:
-	addi	$14, $13, 8
-	lw.s	$f4, 0($14)
+	lw.s	$f4, 8($13)
 	beq	$12, $0, beq_then.29515
 	j	beq_cont.29516
 beq_then.29515:
 	neg.s	$f4, $f4
 beq_cont.29516:
 	sub.s	$f3, $f4, $f3
-	addi	$12, $10, 8
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 8($10)
 	inv.s	$f4, $f4
 	mul.s	$f3, $f3, $f4
 	mv	$12, $10
@@ -5309,13 +5085,11 @@ ble.s_then.29517:
 	li	$12, 0
 ble.s_cont.29518:
 	beq	$12, $0, beq_then.29519
-	addi	$12, $10, 4
-	lw.s	$f1, 0($12)
+	lw.s	$f1, 4($10)
 	mul.s	$f1, $f3, $f1
 	add.s	$f1, $f1, $f2
 	abs.s	$f1, $f1
-	addi	$12, $13, 4
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 4($13)
 	ble.s	$f2, $f1, ble.s_then.29521
 	li	$12, 1
 	j	ble.s_cont.29522
@@ -5392,15 +5166,12 @@ solve_each_element_fast..7221:
 	lw	$12, 0($12)
 	beq	$12, $7, beq_then.29534
 	sll	$13, $12, 2
-	addi	$13, $13, 80
-	lw	$13, 0($13)
+	lw	$13, 80($13)
 	lw	$14, 40($13)
 	mv	$15, $14
 	lw.s	$f1, 0($15)
-	addi	$15, $14, 4
-	lw.s	$f2, 0($15)
-	addi	$15, $14, 8
-	lw.s	$f3, 0($15)
+	lw.s	$f2, 4($14)
+	lw.s	$f3, 8($14)
 	lw	$15, 4($10)
 	sll	$16, $12, 2
 	add	$15, $15, $16
@@ -5420,19 +5191,15 @@ beq.s_cont.29540:
 	li	$13, 0
 	j	beq_cont.29542
 beq_then.29541:
-	addi	$16, $15, 4
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 4($15)
 	mul.s	$f1, $f5, $f1
-	addi	$16, $15, 8
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 8($15)
 	mul.s	$f2, $f5, $f2
 	add.s	$f1, $f1, $f2
-	addi	$16, $15, 12
-	lw.s	$f2, 0($16)
+	lw.s	$f2, 12($15)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
-	addi	$14, $14, 12
-	lw.s	$f2, 0($14)
+	lw.s	$f2, 12($14)
 	mul.s	$f3, $f1, $f1
 	mul.s	$f2, $f4, $f2
 	sub.s	$f2, $f3, $f2
@@ -5447,16 +5214,14 @@ ble.s_cont.29544:
 	beq	$13, $0, beq_then.29547
 	sqrt.s	$f2, $f2
 	add.s	$f1, $f1, $f2
-	addi	$13, $15, 16
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 16($15)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 	j	beq_cont.29548
 beq_then.29547:
 	sqrt.s	$f2, $f2
 	sub.s	$f1, $f1, $f2
-	addi	$13, $15, 16
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 16($15)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 beq_cont.29548:
@@ -5479,8 +5244,7 @@ ble.s_cont.29550:
 	beq	$13, $0, beq_then.29551
 	mv	$13, $15
 	lw.s	$f1, 0($13)
-	addi	$13, $14, 12
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 12($14)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 	li	$13, 1
@@ -5495,17 +5259,14 @@ beq_then.29535:
 	mv	$16, $15
 	lw.s	$f4, 0($16)
 	sub.s	$f4, $f4, $f1
-	addi	$16, $15, 4
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 4($15)
 	mul.s	$f4, $f4, $f5
-	addi	$16, $14, 4
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 4($14)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f2
 	abs.s	$f5, $f5
 	lw	$16, 16($13)
-	addi	$16, $16, 4
-	lw.s	$f6, 0($16)
+	lw.s	$f6, 4($16)
 	ble.s	$f6, $f5, ble.s_then.29553
 	li	$16, 1
 	j	ble.s_cont.29554
@@ -5513,14 +5274,12 @@ ble.s_then.29553:
 	li	$16, 0
 ble.s_cont.29554:
 	beq	$16, $0, beq_then.29555
-	addi	$16, $14, 8
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 8($14)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$16, 16($13)
-	addi	$16, $16, 8
-	lw.s	$f6, 0($16)
+	lw.s	$f6, 8($16)
 	ble.s	$f6, $f5, ble.s_then.29557
 	li	$16, 1
 	j	ble.s_cont.29558
@@ -5528,8 +5287,7 @@ ble.s_then.29557:
 	li	$16, 0
 ble.s_cont.29558:
 	beq	$16, $0, beq_then.29559
-	addi	$16, $15, 4
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 4($15)
 	beq.s	$f5, $f0, beq.s_then.29561
 	li	$16, 0
 	j	beq.s_cont.29562
@@ -5555,11 +5313,9 @@ beq_cont.29556:
 	li	$13, 1
 	j	beq_cont.29566
 beq_then.29565:
-	addi	$16, $15, 8
-	lw.s	$f4, 0($16)
+	lw.s	$f4, 8($15)
 	sub.s	$f4, $f4, $f2
-	addi	$16, $15, 12
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 12($15)
 	mul.s	$f4, $f4, $f5
 	mv	$16, $14
 	lw.s	$f5, 0($16)
@@ -5575,14 +5331,12 @@ ble.s_then.29567:
 	li	$16, 0
 ble.s_cont.29568:
 	beq	$16, $0, beq_then.29569
-	addi	$16, $14, 8
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 8($14)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$16, 16($13)
-	addi	$16, $16, 8
-	lw.s	$f6, 0($16)
+	lw.s	$f6, 8($16)
 	ble.s	$f6, $f5, ble.s_then.29571
 	li	$16, 1
 	j	ble.s_cont.29572
@@ -5590,8 +5344,7 @@ ble.s_then.29571:
 	li	$16, 0
 ble.s_cont.29572:
 	beq	$16, $0, beq_then.29573
-	addi	$16, $15, 12
-	lw.s	$f5, 0($16)
+	lw.s	$f5, 12($15)
 	beq.s	$f5, $f0, beq.s_then.29575
 	li	$16, 0
 	j	beq.s_cont.29576
@@ -5617,11 +5370,9 @@ beq_cont.29570:
 	li	$13, 2
 	j	beq_cont.29580
 beq_then.29579:
-	addi	$16, $15, 16
-	lw.s	$f4, 0($16)
+	lw.s	$f4, 16($15)
 	sub.s	$f3, $f4, $f3
-	addi	$16, $15, 20
-	lw.s	$f4, 0($16)
+	lw.s	$f4, 20($15)
 	mul.s	$f3, $f3, $f4
 	mv	$16, $14
 	lw.s	$f4, 0($16)
@@ -5637,14 +5388,12 @@ ble.s_then.29581:
 	li	$16, 0
 ble.s_cont.29582:
 	beq	$16, $0, beq_then.29583
-	addi	$14, $14, 4
-	lw.s	$f1, 0($14)
+	lw.s	$f1, 4($14)
 	mul.s	$f1, $f3, $f1
 	add.s	$f1, $f1, $f2
 	abs.s	$f1, $f1
 	lw	$13, 16($13)
-	addi	$13, $13, 4
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 4($13)
 	ble.s	$f2, $f1, ble.s_then.29585
 	li	$13, 1
 	j	ble.s_cont.29586
@@ -5652,8 +5401,7 @@ ble.s_then.29585:
 	li	$13, 0
 ble.s_cont.29586:
 	beq	$13, $0, beq_then.29587
-	addi	$13, $15, 20
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 20($15)
 	beq.s	$f1, $f0, beq.s_then.29589
 	li	$13, 0
 	j	beq.s_cont.29590
@@ -5712,13 +5460,11 @@ ble.s_cont.29601:
 	mul.s	$f2, $f2, $f1
 	lw.s	$f3, 680($0)
 	add.s	$f2, $f2, $f3
-	addi	$14, $11, 4
-	lw.s	$f3, 0($14)
+	lw.s	$f3, 4($11)
 	mul.s	$f3, $f3, $f1
 	lw.s	$f4, 684($0)
 	add.s	$f3, $f3, $f4
-	addi	$11, $11, 8
-	lw.s	$f4, 0($11)
+	lw.s	$f4, 8($11)
 	mul.s	$f4, $f4, $f1
 	lw.s	$f5, 688($0)
 	add.s	$f4, $f4, $f5
@@ -5767,8 +5513,7 @@ beq_cont.29599:
 	j	solve_each_element_fast..7221
 beq_then.29595:
 	sll	$11, $12, 2
-	addi	$11, $11, 80
-	lw	$11, 0($11)
+	lw	$11, 80($11)
 	lw	$11, 24($11)
 	beq	$11, $0, beq_then.29606
 	addi	$8, $8, 1
@@ -5783,8 +5528,7 @@ solve_one_or_network_fast..7225:
 	lw	$11, 0($11)
 	beq	$11, $7, beq_then.29609
 	sll	$11, $11, 2
-	addi	$11, $11, 364
-	lw	$11, 0($11)
+	lw	$11, 364($11)
 	li	$12, 0
 	sw	$10, 0($sp)
 	sw	$9, 4($sp)
@@ -5816,15 +5560,12 @@ trace_or_matrix_fast..7229:
 	sw	$8, 8($sp)
 	beq	$12, $13, beq_then.29612
 	sll	$13, $12, 2
-	addi	$13, $13, 80
-	lw	$13, 0($13)
+	lw	$13, 80($13)
 	lw	$14, 40($13)
 	mv	$15, $14
 	lw.s	$f1, 0($15)
-	addi	$15, $14, 4
-	lw.s	$f2, 0($15)
-	addi	$15, $14, 8
-	lw.s	$f3, 0($15)
+	lw.s	$f2, 4($14)
+	lw.s	$f3, 8($14)
 	lw	$15, 4($10)
 	sll	$12, $12, 2
 	add	$12, $15, $12
@@ -5844,19 +5585,15 @@ beq.s_cont.29619:
 	li	$12, 0
 	j	beq_cont.29621
 beq_then.29620:
-	addi	$15, $12, 4
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 4($12)
 	mul.s	$f1, $f5, $f1
-	addi	$15, $12, 8
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 8($12)
 	mul.s	$f2, $f5, $f2
 	add.s	$f1, $f1, $f2
-	addi	$15, $12, 12
-	lw.s	$f2, 0($15)
+	lw.s	$f2, 12($12)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
-	addi	$14, $14, 12
-	lw.s	$f2, 0($14)
+	lw.s	$f2, 12($14)
 	mul.s	$f3, $f1, $f1
 	mul.s	$f2, $f4, $f2
 	sub.s	$f2, $f3, $f2
@@ -5871,16 +5608,14 @@ ble.s_cont.29623:
 	beq	$13, $0, beq_then.29626
 	sqrt.s	$f2, $f2
 	add.s	$f1, $f1, $f2
-	addi	$12, $12, 16
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 16($12)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 	j	beq_cont.29627
 beq_then.29626:
 	sqrt.s	$f2, $f2
 	sub.s	$f1, $f1, $f2
-	addi	$12, $12, 16
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 16($12)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 beq_cont.29627:
@@ -5902,8 +5637,7 @@ ble.s_then.29628:
 ble.s_cont.29629:
 	beq	$13, $0, beq_then.29630
 	lw.s	$f1, 0($12)
-	addi	$12, $14, 12
-	lw.s	$f2, 0($12)
+	lw.s	$f2, 12($14)
 	mul.s	$f1, $f1, $f2
 	sw.s	$f1, 572($0)
 	li	$12, 1
@@ -5918,17 +5652,14 @@ beq_then.29614:
 	mv	$15, $12
 	lw.s	$f4, 0($15)
 	sub.s	$f4, $f4, $f1
-	addi	$15, $12, 4
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 4($12)
 	mul.s	$f4, $f4, $f5
-	addi	$15, $14, 4
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 4($14)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f2
 	abs.s	$f5, $f5
 	lw	$15, 16($13)
-	addi	$15, $15, 4
-	lw.s	$f6, 0($15)
+	lw.s	$f6, 4($15)
 	ble.s	$f6, $f5, ble.s_then.29632
 	li	$15, 1
 	j	ble.s_cont.29633
@@ -5936,14 +5667,12 @@ ble.s_then.29632:
 	li	$15, 0
 ble.s_cont.29633:
 	beq	$15, $0, beq_then.29634
-	addi	$15, $14, 8
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 8($14)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$15, 16($13)
-	addi	$15, $15, 8
-	lw.s	$f6, 0($15)
+	lw.s	$f6, 8($15)
 	ble.s	$f6, $f5, ble.s_then.29636
 	li	$15, 1
 	j	ble.s_cont.29637
@@ -5951,8 +5680,7 @@ ble.s_then.29636:
 	li	$15, 0
 ble.s_cont.29637:
 	beq	$15, $0, beq_then.29638
-	addi	$15, $12, 4
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 4($12)
 	beq.s	$f5, $f0, beq.s_then.29640
 	li	$15, 0
 	j	beq.s_cont.29641
@@ -5978,11 +5706,9 @@ beq_cont.29635:
 	li	$12, 1
 	j	beq_cont.29645
 beq_then.29644:
-	addi	$15, $12, 8
-	lw.s	$f4, 0($15)
+	lw.s	$f4, 8($12)
 	sub.s	$f4, $f4, $f2
-	addi	$15, $12, 12
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 12($12)
 	mul.s	$f4, $f4, $f5
 	mv	$15, $14
 	lw.s	$f5, 0($15)
@@ -5998,14 +5724,12 @@ ble.s_then.29646:
 	li	$15, 0
 ble.s_cont.29647:
 	beq	$15, $0, beq_then.29648
-	addi	$15, $14, 8
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 8($14)
 	mul.s	$f5, $f4, $f5
 	add.s	$f5, $f5, $f3
 	abs.s	$f5, $f5
 	lw	$15, 16($13)
-	addi	$15, $15, 8
-	lw.s	$f6, 0($15)
+	lw.s	$f6, 8($15)
 	ble.s	$f6, $f5, ble.s_then.29650
 	li	$15, 1
 	j	ble.s_cont.29651
@@ -6013,8 +5737,7 @@ ble.s_then.29650:
 	li	$15, 0
 ble.s_cont.29651:
 	beq	$15, $0, beq_then.29652
-	addi	$15, $12, 12
-	lw.s	$f5, 0($15)
+	lw.s	$f5, 12($12)
 	beq.s	$f5, $f0, beq.s_then.29654
 	li	$15, 0
 	j	beq.s_cont.29655
@@ -6040,11 +5763,9 @@ beq_cont.29649:
 	li	$12, 2
 	j	beq_cont.29659
 beq_then.29658:
-	addi	$15, $12, 16
-	lw.s	$f4, 0($15)
+	lw.s	$f4, 16($12)
 	sub.s	$f3, $f4, $f3
-	addi	$15, $12, 20
-	lw.s	$f4, 0($15)
+	lw.s	$f4, 20($12)
 	mul.s	$f3, $f3, $f4
 	mv	$15, $14
 	lw.s	$f4, 0($15)
@@ -6060,14 +5781,12 @@ ble.s_then.29660:
 	li	$15, 0
 ble.s_cont.29661:
 	beq	$15, $0, beq_then.29662
-	addi	$14, $14, 4
-	lw.s	$f1, 0($14)
+	lw.s	$f1, 4($14)
 	mul.s	$f1, $f3, $f1
 	add.s	$f1, $f1, $f2
 	abs.s	$f1, $f1
 	lw	$13, 16($13)
-	addi	$13, $13, 4
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 4($13)
 	ble.s	$f2, $f1, ble.s_then.29664
 	li	$13, 1
 	j	ble.s_cont.29665
@@ -6075,8 +5794,7 @@ ble.s_then.29664:
 	li	$13, 0
 ble.s_cont.29665:
 	beq	$13, $0, beq_then.29666
-	addi	$12, $12, 20
-	lw.s	$f1, 0($12)
+	lw.s	$f1, 20($12)
 	beq.s	$f1, $f0, beq.s_then.29668
 	li	$12, 0
 	j	beq.s_cont.29669
@@ -6154,8 +5872,7 @@ trace_reflections..7251:
 	jr	$ra
 ble_then.29681:
 	sll	$10, $8, 2
-	addi	$10, $10, 1048
-	lw	$10, 0($10)
+	lw	$10, 1048($10)
 	lw	$11, 4($10)
 	lui.s	$f3, 0x4e6e	# 1000000000.000000の上位16ビット
 	lli.s	$f3, 0x6b28	# 1000000000.000000の下位16ビット
@@ -6230,13 +5947,11 @@ beq_cont.29694:
 	lw.s	$f2, 0($10)
 	mul.s	$f1, $f1, $f2
 	lw.s	$f2, 604($0)
-	addi	$10, $9, 4
-	lw.s	$f3, 0($10)
+	lw.s	$f3, 4($9)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	lw.s	$f2, 608($0)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	lw	$9, 20($sp)
@@ -6251,16 +5966,12 @@ beq_cont.29694:
 	mv	$10, $8
 	lw.s	$f5, 0($10)
 	mul.s	$f4, $f4, $f5
-	addi	$10, $9, 4
-	lw.s	$f5, 0($10)
-	addi	$10, $8, 4
-	lw.s	$f6, 0($10)
+	lw.s	$f5, 4($9)
+	lw.s	$f6, 4($8)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
-	addi	$10, $9, 8
-	lw.s	$f5, 0($10)
-	addi	$8, $8, 8
-	lw.s	$f6, 0($8)
+	lw.s	$f5, 8($9)
+	lw.s	$f6, 8($8)
 	mul.s	$f5, $f5, $f6
 	add.s	$f4, $f4, $f5
 	mul.s	$f2, $f2, $f4
@@ -6376,8 +6087,7 @@ beq_cont.29710:
 	beq	$8, $0, beq_then.29713
 	lw	$8, 596($0)
 	sll	$9, $8, 2
-	addi	$9, $9, 80
-	lw	$9, 0($9)
+	lw	$9, 80($9)
 	lw	$10, 8($9)
 	lw	$11, 28($9)
 	lw.s	$f1, 0($11)
@@ -6392,34 +6102,28 @@ beq_cont.29710:
 	sub.s	$f3, $f3, $f4
 	lw.s	$f4, 588($0)
 	lw	$11, 20($9)
-	addi	$11, $11, 4
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 4($11)
 	sub.s	$f4, $f4, $f5
 	lw.s	$f5, 592($0)
 	lw	$11, 20($9)
-	addi	$11, $11, 8
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 8($11)
 	sub.s	$f5, $f5, $f6
 	lw	$11, 16($9)
 	lw.s	$f6, 0($11)
 	mul.s	$f6, $f3, $f6
 	lw	$11, 16($9)
-	addi	$11, $11, 4
-	lw.s	$f7, 0($11)
+	lw.s	$f7, 4($11)
 	mul.s	$f7, $f4, $f7
 	lw	$11, 16($9)
-	addi	$11, $11, 8
-	lw.s	$f8, 0($11)
+	lw.s	$f8, 8($11)
 	mul.s	$f8, $f5, $f8
 	lw	$11, 12($9)
 	beq	$11, $0, beq_then.29718
 	lw	$11, 36($9)
-	addi	$11, $11, 8
-	lw.s	$f9, 0($11)
+	lw.s	$f9, 8($11)
 	mul.s	$f9, $f4, $f9
 	lw	$11, 36($9)
-	addi	$11, $11, 4
-	lw.s	$f10, 0($11)
+	lw.s	$f10, 4($11)
 	mul.s	$f10, $f5, $f10
 	add.s	$f9, $f9, $f10
 	lui.s	$f10, 0x3f00	# 0.500000の上位16ビット
@@ -6427,8 +6131,7 @@ beq_cont.29710:
 	add.s	$f6, $f6, $f9
 	sw.s	$f6, 600($0)
 	lw	$11, 36($9)
-	addi	$11, $11, 8
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 8($11)
 	mul.s	$f6, $f3, $f6
 	lw	$11, 36($9)
 	lw.s	$f9, 0($11)
@@ -6439,8 +6142,7 @@ beq_cont.29710:
 	add.s	$f5, $f7, $f5
 	sw.s	$f5, 604($0)
 	lw	$11, 36($9)
-	addi	$11, $11, 4
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 4($11)
 	mul.s	$f3, $f3, $f5
 	lw	$11, 36($9)
 	lw.s	$f5, 0($11)
@@ -6500,13 +6202,11 @@ beq_then.29716:
 	neg.s	$f3, $f3
 	sw.s	$f3, 600($0)
 	lw	$11, 16($9)
-	addi	$11, $11, 4
-	lw.s	$f3, 0($11)
+	lw.s	$f3, 4($11)
 	neg.s	$f3, $f3
 	sw.s	$f3, 604($0)
 	lw	$11, 16($9)
-	addi	$11, $11, 8
-	lw.s	$f3, 0($11)
+	lw.s	$f3, 8($11)
 	neg.s	$f3, $f3
 	sw.s	$f3, 608($0)
 beq_cont.29717:
@@ -6561,12 +6261,10 @@ beq_cont.29715:
 	lw.s	$f3, 0($12)
 	sw.s	$f3, 612($0)
 	lw	$12, 32($9)
-	addi	$12, $12, 4
-	lw.s	$f3, 0($12)
+	lw.s	$f3, 4($12)
 	sw.s	$f3, 616($0)
 	lw	$12, 32($9)
-	addi	$12, $12, 8
-	lw.s	$f3, 0($12)
+	lw.s	$f3, 8($12)
 	sw.s	$f3, 620($0)
 	sw	$10, 28($sp)
 	sw.s	$f1, 32($sp)
@@ -6588,12 +6286,10 @@ beq_then.29740:
 	mul.s	$f3, $f3, $f4
 	lw.s	$f4, 592($0)
 	lw	$11, 20($9)
-	addi	$11, $11, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($11)
 	sub.s	$f4, $f4, $f5
 	lw	$11, 16($9)
-	addi	$11, $11, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($11)
 	sqrt.s	$f5, $f5
 	mul.s	$f4, $f4, $f5
 	mul.s	$f5, $f3, $f3
@@ -6652,12 +6348,10 @@ ble.s_cont.29747:
 	sub.s	$f3, $f3, $f4
 	lw.s	$f4, 588($0)
 	lw	$11, 20($9)
-	addi	$11, $11, 4
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 4($11)
 	sub.s	$f4, $f4, $f6
 	lw	$11, 16($9)
-	addi	$11, $11, 4
-	lw.s	$f6, 0($11)
+	lw.s	$f6, 4($11)
 	sqrt.s	$f6, $f6
 	mul.s	$f4, $f4, $f6
 	abs.s	$f6, $f5
@@ -6747,8 +6441,7 @@ beq_then.29738:
 	sub.s	$f3, $f3, $f4
 	lw.s	$f4, 592($0)
 	lw	$11, 20($9)
-	addi	$11, $11, 8
-	lw.s	$f5, 0($11)
+	lw.s	$f5, 8($11)
 	sub.s	$f4, $f4, $f5
 	mul.s	$f3, $f3, $f3
 	mul.s	$f4, $f4, $f4
@@ -6845,8 +6538,7 @@ ble.s_then.29770:
 ble.s_cont.29771:
 	lw.s	$f3, 592($0)
 	lw	$12, 20($9)
-	addi	$12, $12, 8
-	lw.s	$f4, 0($12)
+	lw.s	$f4, 8($12)
 	sub.s	$f3, $f3, $f4
 	lui.s	$f4, 0x3d4c	# 0.050000の上位16ビット
 	lli.s	$f4, 0xcccd	# 0.050000の下位16ビット
@@ -6959,13 +6651,11 @@ beq_then.29786:
 	mul.s	$f3, $f3, $f1
 	mv	$13, $10
 	sw.s	$f3, 0($13)
-	addi	$13, $10, 4
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 4($10)
 	mul.s	$f3, $f3, $f1
 	addi	$13, $10, 4
 	sw.s	$f3, 0($13)
-	addi	$13, $10, 8
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 8($10)
 	mul.s	$f1, $f3, $f1
 	addi	$10, $10, 8
 	sw.s	$f1, 0($10)
@@ -6989,13 +6679,11 @@ beq_cont.29787:
 	lw.s	$f2, 0($13)
 	lw.s	$f3, 600($0)
 	mul.s	$f2, $f2, $f3
-	addi	$13, $10, 4
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 4($10)
 	lw.s	$f4, 604($0)
 	mul.s	$f3, $f3, $f4
 	add.s	$f2, $f2, $f3
-	addi	$13, $10, 8
-	lw.s	$f3, 0($13)
+	lw.s	$f3, 8($10)
 	lw.s	$f4, 608($0)
 	mul.s	$f3, $f3, $f4
 	add.s	$f2, $f2, $f3
@@ -7007,23 +6695,20 @@ beq_cont.29787:
 	add.s	$f2, $f2, $f3
 	mv	$13, $10
 	sw.s	$f2, 0($13)
-	addi	$13, $10, 4
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 4($10)
 	lw.s	$f3, 604($0)
 	mul.s	$f3, $f1, $f3
 	add.s	$f2, $f2, $f3
 	addi	$13, $10, 4
 	sw.s	$f2, 0($13)
-	addi	$13, $10, 8
-	lw.s	$f2, 0($13)
+	lw.s	$f2, 8($10)
 	lw.s	$f3, 608($0)
 	mul.s	$f1, $f1, $f3
 	add.s	$f1, $f2, $f1
 	addi	$13, $10, 8
 	sw.s	$f1, 0($13)
 	lw	$13, 28($12)
-	addi	$13, $13, 4
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 4($13)
 	lw.s	$f2, 12($sp)
 	mul.s	$f1, $f2, $f1
 	li	$13, 0
@@ -7062,13 +6747,11 @@ beq_cont.29789:
 	lw.s	$f3, 0($9)
 	lw.s	$f4, 344($0)
 	mul.s	$f3, $f3, $f4
-	addi	$9, $8, 4
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 4($8)
 	lw.s	$f5, 348($0)
 	mul.s	$f4, $f4, $f5
 	add.s	$f3, $f3, $f4
-	addi	$9, $8, 8
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 8($8)
 	lw.s	$f5, 352($0)
 	mul.s	$f4, $f4, $f5
 	add.s	$f3, $f3, $f4
@@ -7199,13 +6882,11 @@ beq_then.29713:
 	lw.s	$f1, 0($9)
 	lw.s	$f2, 344($0)
 	mul.s	$f1, $f1, $f2
-	addi	$9, $8, 4
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 4($8)
 	lw.s	$f3, 348($0)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
-	addi	$8, $8, 8
-	lw.s	$f2, 0($8)
+	lw.s	$f2, 8($8)
 	lw.s	$f3, 352($0)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
@@ -7250,16 +6931,12 @@ ble_then.29815:
 	mv	$13, $9
 	lw.s	$f2, 0($13)
 	mul.s	$f1, $f1, $f2
-	addi	$13, $12, 4
-	lw.s	$f2, 0($13)
-	addi	$13, $9, 4
-	lw.s	$f3, 0($13)
+	lw.s	$f2, 4($12)
+	lw.s	$f3, 4($9)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
-	addi	$12, $12, 8
-	lw.s	$f2, 0($12)
-	addi	$12, $9, 8
-	lw.s	$f3, 0($12)
+	lw.s	$f2, 8($12)
+	lw.s	$f3, 8($9)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	ble.s	$f0, $f1, ble.s_then.29817
@@ -7320,8 +6997,7 @@ beq_cont.29824:
 	beq	$8, $0, beq_then.29827
 	lw	$8, 596($0)
 	sll	$8, $8, 2
-	addi	$8, $8, 80
-	lw	$8, 0($8)
+	lw	$8, 80($8)
 	lw	$9, 20($sp)
 	lw	$9, 0($9)
 	lw	$10, 4($8)
@@ -7333,34 +7009,28 @@ beq_cont.29824:
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 588($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 4
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 4($9)
 	sub.s	$f2, $f2, $f3
 	lw.s	$f3, 592($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 8
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 8($9)
 	sub.s	$f3, $f3, $f4
 	lw	$9, 16($8)
 	lw.s	$f4, 0($9)
 	mul.s	$f4, $f1, $f4
 	lw	$9, 16($8)
-	addi	$9, $9, 4
-	lw.s	$f5, 0($9)
+	lw.s	$f5, 4($9)
 	mul.s	$f5, $f2, $f5
 	lw	$9, 16($8)
-	addi	$9, $9, 8
-	lw.s	$f6, 0($9)
+	lw.s	$f6, 8($9)
 	mul.s	$f6, $f3, $f6
 	lw	$9, 12($8)
 	beq	$9, $0, beq_then.29833
 	lw	$9, 36($8)
-	addi	$9, $9, 8
-	lw.s	$f7, 0($9)
+	lw.s	$f7, 8($9)
 	mul.s	$f7, $f2, $f7
 	lw	$9, 36($8)
-	addi	$9, $9, 4
-	lw.s	$f8, 0($9)
+	lw.s	$f8, 4($9)
 	mul.s	$f8, $f3, $f8
 	add.s	$f7, $f7, $f8
 	lui.s	$f8, 0x3f00	# 0.500000の上位16ビット
@@ -7368,8 +7038,7 @@ beq_cont.29824:
 	add.s	$f4, $f4, $f7
 	sw.s	$f4, 600($0)
 	lw	$9, 36($8)
-	addi	$9, $9, 8
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 8($9)
 	mul.s	$f4, $f1, $f4
 	lw	$9, 36($8)
 	lw.s	$f7, 0($9)
@@ -7380,8 +7049,7 @@ beq_cont.29824:
 	add.s	$f3, $f5, $f3
 	sw.s	$f3, 604($0)
 	lw	$9, 36($8)
-	addi	$9, $9, 4
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 4($9)
 	mul.s	$f1, $f1, $f3
 	lw	$9, 36($8)
 	lw.s	$f3, 0($9)
@@ -7441,13 +7109,11 @@ beq_then.29831:
 	neg.s	$f1, $f1
 	sw.s	$f1, 600($0)
 	lw	$9, 16($8)
-	addi	$9, $9, 4
-	lw.s	$f1, 0($9)
+	lw.s	$f1, 4($9)
 	neg.s	$f1, $f1
 	sw.s	$f1, 604($0)
 	lw	$9, 16($8)
-	addi	$9, $9, 8
-	lw.s	$f1, 0($9)
+	lw.s	$f1, 8($9)
 	neg.s	$f1, $f1
 	sw.s	$f1, 608($0)
 beq_cont.29832:
@@ -7495,12 +7161,10 @@ beq_cont.29830:
 	lw.s	$f1, 0($10)
 	sw.s	$f1, 612($0)
 	lw	$10, 32($8)
-	addi	$10, $10, 4
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 4($10)
 	sw.s	$f1, 616($0)
 	lw	$10, 32($8)
-	addi	$10, $10, 8
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 8($10)
 	sw.s	$f1, 620($0)
 	sw	$8, 24($sp)
 	beq	$9, $1, beq_then.29849
@@ -7519,12 +7183,10 @@ beq_then.29855:
 	mul.s	$f1, $f1, $f2
 	lw.s	$f2, 592($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	sub.s	$f2, $f2, $f3
 	lw	$9, 16($8)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	sqrt.s	$f3, $f3
 	mul.s	$f2, $f2, $f3
 	mul.s	$f3, $f1, $f1
@@ -7583,12 +7245,10 @@ ble.s_cont.29862:
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 588($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 4
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 4($9)
 	sub.s	$f2, $f2, $f4
 	lw	$9, 16($8)
-	addi	$9, $9, 4
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 4($9)
 	sqrt.s	$f4, $f4
 	mul.s	$f2, $f2, $f4
 	abs.s	$f4, $f3
@@ -7678,8 +7338,7 @@ beq_then.29853:
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 592($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	sub.s	$f2, $f2, $f3
 	mul.s	$f1, $f1, $f1
 	mul.s	$f2, $f2, $f2
@@ -7774,8 +7433,7 @@ ble.s_then.29885:
 ble.s_cont.29886:
 	lw.s	$f1, 592($0)
 	lw	$10, 20($8)
-	addi	$10, $10, 8
-	lw.s	$f2, 0($10)
+	lw.s	$f2, 8($10)
 	sub.s	$f1, $f1, $f2
 	lui.s	$f2, 0x3d4c	# 0.050000の上位16ビット
 	lli.s	$f2, 0xcccd	# 0.050000の下位16ビット
@@ -7933,8 +7591,7 @@ beq_cont.29910:
 	beq	$8, $0, beq_then.29913
 	lw	$8, 596($0)
 	sll	$8, $8, 2
-	addi	$8, $8, 80
-	lw	$8, 0($8)
+	lw	$8, 80($8)
 	lw	$9, 32($sp)
 	lw	$9, 0($9)
 	lw	$10, 4($8)
@@ -7946,34 +7603,28 @@ beq_cont.29910:
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 588($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 4
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 4($9)
 	sub.s	$f2, $f2, $f3
 	lw.s	$f3, 592($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 8
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 8($9)
 	sub.s	$f3, $f3, $f4
 	lw	$9, 16($8)
 	lw.s	$f4, 0($9)
 	mul.s	$f4, $f1, $f4
 	lw	$9, 16($8)
-	addi	$9, $9, 4
-	lw.s	$f5, 0($9)
+	lw.s	$f5, 4($9)
 	mul.s	$f5, $f2, $f5
 	lw	$9, 16($8)
-	addi	$9, $9, 8
-	lw.s	$f6, 0($9)
+	lw.s	$f6, 8($9)
 	mul.s	$f6, $f3, $f6
 	lw	$9, 12($8)
 	beq	$9, $0, beq_then.29919
 	lw	$9, 36($8)
-	addi	$9, $9, 8
-	lw.s	$f7, 0($9)
+	lw.s	$f7, 8($9)
 	mul.s	$f7, $f2, $f7
 	lw	$9, 36($8)
-	addi	$9, $9, 4
-	lw.s	$f8, 0($9)
+	lw.s	$f8, 4($9)
 	mul.s	$f8, $f3, $f8
 	add.s	$f7, $f7, $f8
 	lui.s	$f8, 0x3f00	# 0.500000の上位16ビット
@@ -7981,8 +7632,7 @@ beq_cont.29910:
 	add.s	$f4, $f4, $f7
 	sw.s	$f4, 600($0)
 	lw	$9, 36($8)
-	addi	$9, $9, 8
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 8($9)
 	mul.s	$f4, $f1, $f4
 	lw	$9, 36($8)
 	lw.s	$f7, 0($9)
@@ -7993,8 +7643,7 @@ beq_cont.29910:
 	add.s	$f3, $f5, $f3
 	sw.s	$f3, 604($0)
 	lw	$9, 36($8)
-	addi	$9, $9, 4
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 4($9)
 	mul.s	$f1, $f1, $f3
 	lw	$9, 36($8)
 	lw.s	$f3, 0($9)
@@ -8054,13 +7703,11 @@ beq_then.29917:
 	neg.s	$f1, $f1
 	sw.s	$f1, 600($0)
 	lw	$9, 16($8)
-	addi	$9, $9, 4
-	lw.s	$f1, 0($9)
+	lw.s	$f1, 4($9)
 	neg.s	$f1, $f1
 	sw.s	$f1, 604($0)
 	lw	$9, 16($8)
-	addi	$9, $9, 8
-	lw.s	$f1, 0($9)
+	lw.s	$f1, 8($9)
 	neg.s	$f1, $f1
 	sw.s	$f1, 608($0)
 beq_cont.29918:
@@ -8108,12 +7755,10 @@ beq_cont.29916:
 	lw.s	$f1, 0($10)
 	sw.s	$f1, 612($0)
 	lw	$10, 32($8)
-	addi	$10, $10, 4
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 4($10)
 	sw.s	$f1, 616($0)
 	lw	$10, 32($8)
-	addi	$10, $10, 8
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 8($10)
 	sw.s	$f1, 620($0)
 	sw	$8, 36($sp)
 	beq	$9, $1, beq_then.29935
@@ -8132,12 +7777,10 @@ beq_then.29941:
 	mul.s	$f1, $f1, $f2
 	lw.s	$f2, 592($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	sub.s	$f2, $f2, $f3
 	lw	$9, 16($8)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	sqrt.s	$f3, $f3
 	mul.s	$f2, $f2, $f3
 	mul.s	$f3, $f1, $f1
@@ -8196,12 +7839,10 @@ ble.s_cont.29948:
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 588($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 4
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 4($9)
 	sub.s	$f2, $f2, $f4
 	lw	$9, 16($8)
-	addi	$9, $9, 4
-	lw.s	$f4, 0($9)
+	lw.s	$f4, 4($9)
 	sqrt.s	$f4, $f4
 	mul.s	$f2, $f2, $f4
 	abs.s	$f4, $f3
@@ -8291,8 +7932,7 @@ beq_then.29939:
 	sub.s	$f1, $f1, $f2
 	lw.s	$f2, 592($0)
 	lw	$9, 20($8)
-	addi	$9, $9, 8
-	lw.s	$f3, 0($9)
+	lw.s	$f3, 8($9)
 	sub.s	$f2, $f2, $f3
 	mul.s	$f1, $f1, $f1
 	mul.s	$f2, $f2, $f2
@@ -8387,8 +8027,7 @@ ble.s_then.29971:
 ble.s_cont.29972:
 	lw.s	$f1, 592($0)
 	lw	$10, 20($8)
-	addi	$10, $10, 8
-	lw.s	$f2, 0($10)
+	lw.s	$f2, 8($10)
 	sub.s	$f1, $f1, $f2
 	lui.s	$f2, 0x3d4c	# 0.050000の上位16ビット
 	lli.s	$f2, 0xcccd	# 0.050000の下位16ビット
@@ -8533,11 +8172,9 @@ ble_then.29995:
 	mv	$14, $10
 	lw.s	$f1, 0($14)
 	sw.s	$f1, 624($0)
-	addi	$14, $10, 4
-	lw.s	$f1, 0($14)
+	lw.s	$f1, 4($10)
 	sw.s	$f1, 628($0)
-	addi	$10, $10, 8
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 8($10)
 	sw.s	$f1, 632($0)
 	lw	$10, 24($8)
 	lw	$10, 0($10)
@@ -8556,11 +8193,9 @@ ble_then.29995:
 	mv	$15, $12
 	lw.s	$f1, 0($15)
 	sw.s	$f1, 680($0)
-	addi	$15, $12, 4
-	lw.s	$f1, 0($15)
+	lw.s	$f1, 4($12)
 	sw.s	$f1, 684($0)
-	addi	$15, $12, 8
-	lw.s	$f1, 0($15)
+	lw.s	$f1, 8($12)
 	sw.s	$f1, 688($0)
 	lw	$15, 32($0)
 	addi	$15, $15, -1
@@ -8591,11 +8226,9 @@ beq_cont.30000:
 	mv	$11, $10
 	lw.s	$f1, 0($11)
 	sw.s	$f1, 680($0)
-	addi	$11, $10, 4
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 4($10)
 	sw.s	$f1, 684($0)
-	addi	$11, $10, 8
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 8($10)
 	sw.s	$f1, 688($0)
 	lw	$11, 32($0)
 	addi	$11, $11, -1
@@ -8626,11 +8259,9 @@ beq_cont.30002:
 	mv	$11, $10
 	lw.s	$f1, 0($11)
 	sw.s	$f1, 680($0)
-	addi	$11, $10, 4
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 4($10)
 	sw.s	$f1, 684($0)
-	addi	$11, $10, 8
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 8($10)
 	sw.s	$f1, 688($0)
 	lw	$11, 32($0)
 	addi	$11, $11, -1
@@ -8661,11 +8292,9 @@ beq_cont.30004:
 	mv	$11, $10
 	lw.s	$f1, 0($11)
 	sw.s	$f1, 680($0)
-	addi	$11, $10, 4
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 4($10)
 	sw.s	$f1, 684($0)
-	addi	$11, $10, 8
-	lw.s	$f1, 0($11)
+	lw.s	$f1, 8($10)
 	sw.s	$f1, 688($0)
 	lw	$11, 32($0)
 	addi	$11, $11, -1
@@ -8696,11 +8325,9 @@ beq_cont.30006:
 	mv	$10, $9
 	lw.s	$f1, 0($10)
 	sw.s	$f1, 680($0)
-	addi	$10, $9, 4
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 4($9)
 	sw.s	$f1, 684($0)
-	addi	$10, $9, 8
-	lw.s	$f1, 0($10)
+	lw.s	$f1, 8($9)
 	sw.s	$f1, 688($0)
 	lw	$10, 32($0)
 	addi	$10, $10, -1
@@ -8737,15 +8364,13 @@ beq_cont.30008:
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 636($0)
 	lw.s	$f1, 640($0)
-	addi	$10, $9, 4
-	lw.s	$f2, 0($10)
+	lw.s	$f2, 4($9)
 	lw.s	$f3, 628($0)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 640($0)
 	lw.s	$f1, 644($0)
-	addi	$9, $9, 8
-	lw.s	$f2, 0($9)
+	lw.s	$f2, 8($9)
 	lw.s	$f3, 632($0)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
@@ -8863,11 +8488,9 @@ beq_cont.30014:
 	mv	$19, $14
 	lw.s	$f1, 0($19)
 	sw.s	$f1, 624($0)
-	addi	$19, $14, 4
-	lw.s	$f1, 0($19)
+	lw.s	$f1, 4($14)
 	sw.s	$f1, 628($0)
-	addi	$14, $14, 8
-	lw.s	$f1, 0($14)
+	lw.s	$f1, 8($14)
 	sw.s	$f1, 632($0)
 	sll	$14, $13, 2
 	add	$14, $15, $14
@@ -8878,13 +8501,11 @@ beq_cont.30014:
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 624($0)
 	lw.s	$f1, 628($0)
-	addi	$15, $14, 4
-	lw.s	$f2, 0($15)
+	lw.s	$f2, 4($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 628($0)
 	lw.s	$f1, 632($0)
-	addi	$14, $14, 8
-	lw.s	$f2, 0($14)
+	lw.s	$f2, 8($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 632($0)
 	sll	$14, $13, 2
@@ -8896,13 +8517,11 @@ beq_cont.30014:
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 624($0)
 	lw.s	$f1, 628($0)
-	addi	$15, $14, 4
-	lw.s	$f2, 0($15)
+	lw.s	$f2, 4($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 628($0)
 	lw.s	$f1, 632($0)
-	addi	$14, $14, 8
-	lw.s	$f2, 0($14)
+	lw.s	$f2, 8($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 632($0)
 	sll	$14, $13, 2
@@ -8914,13 +8533,11 @@ beq_cont.30014:
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 624($0)
 	lw.s	$f1, 628($0)
-	addi	$15, $14, 4
-	lw.s	$f2, 0($15)
+	lw.s	$f2, 4($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 628($0)
 	lw.s	$f1, 632($0)
-	addi	$14, $14, 8
-	lw.s	$f2, 0($14)
+	lw.s	$f2, 8($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 632($0)
 	sll	$14, $13, 2
@@ -8932,13 +8549,11 @@ beq_cont.30014:
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 624($0)
 	lw.s	$f1, 628($0)
-	addi	$15, $14, 4
-	lw.s	$f2, 0($15)
+	lw.s	$f2, 4($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 628($0)
 	lw.s	$f1, 632($0)
-	addi	$14, $14, 8
-	lw.s	$f2, 0($14)
+	lw.s	$f2, 8($14)
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 632($0)
 	sll	$14, $8, 2
@@ -8956,15 +8571,13 @@ beq_cont.30014:
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 636($0)
 	lw.s	$f1, 640($0)
-	addi	$15, $14, 4
-	lw.s	$f2, 0($15)
+	lw.s	$f2, 4($14)
 	lw.s	$f3, 628($0)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
 	sw.s	$f1, 640($0)
 	lw.s	$f1, 644($0)
-	addi	$14, $14, 8
-	lw.s	$f2, 0($14)
+	lw.s	$f2, 8($14)
 	lw.s	$f3, 632($0)
 	mul.s	$f2, $f2, $f3
 	add.s	$f1, $f1, $f2
@@ -9005,8 +8618,7 @@ ble_then.30026:
 	lw	$11, 28($8)
 	lw	$12, 4($8)
 	sll	$10, $10, 2
-	addi	$10, $10, 748
-	lw	$10, 0($10)
+	lw	$10, 748($10)
 	sll	$13, $9, 2
 	add	$11, $11, $13
 	lw	$11, 0($11)
@@ -9016,11 +8628,9 @@ ble_then.30026:
 	mv	$13, $12
 	lw.s	$f1, 0($13)
 	sw.s	$f1, 680($0)
-	addi	$13, $12, 4
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 4($12)
 	sw.s	$f1, 684($0)
-	addi	$13, $12, 8
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 8($12)
 	sw.s	$f1, 688($0)
 	lw	$13, 32($0)
 	addi	$13, $13, -1
@@ -9205,11 +8815,9 @@ scan_pixel.A(A(f))A(f)A(b)A(A(f))A(i)A(A(f))A(A(f))A(f)A(b)A(A(f))A(i)A(A(f)).73
 	mv	$14, $13
 	lw.s	$f1, 0($14)
 	sw.s	$f1, 636($0)
-	addi	$14, $13, 4
-	lw.s	$f1, 0($14)
+	lw.s	$f1, 4($13)
 	sw.s	$f1, 640($0)
-	addi	$13, $13, 8
-	lw.s	$f1, 0($13)
+	lw.s	$f1, 8($13)
 	sw.s	$f1, 644($0)
 	lw	$13, 652($0)
 	addi	$14, $9, 1
@@ -9861,8 +9469,7 @@ ble_then.30069:
 	mul.s	$f2, $f2, $f4
 	inv.s	$f3, $f3
 	sll	$8, $9, 2
-	addi	$8, $8, 748
-	lw	$8, 0($8)
+	lw	$8, 748($8)
 	sll	$9, $10, 2
 	add	$9, $8, $9
 	lw	$9, 0($9)
@@ -10125,8 +9732,7 @@ ble_then.30081:
 	addi	$10, $10, 748
 	sw	$8, 0($10)
 	sll	$8, $9, 2
-	addi	$8, $8, 748
-	lw	$8, 0($8)
+	lw	$8, 748($8)
 	li	$10, 118
 	mv	$9, $10
 	sw	$ra, 24($sp)
@@ -10164,8 +9770,7 @@ init_vecset_constants..7381:
 	jr	$ra
 ble_then.30085:
 	sll	$9, $8, 2
-	addi	$9, $9, 748
-	lw	$9, 0($9)
+	lw	$9, 748($9)
 	li	$10, 119
 	sw	$8, 0($sp)
 	mv	$8, $9
