@@ -1267,23 +1267,23 @@ min_caml_start:
 	lw	$ra, 60($sp)
 	lw	$8, 32($0)
 	addi	$8, $8, -1
-	ble	$0, $8, ble_then.28909
-	j	ble_cont.28910
-ble_then.28909:
+	ble	$0, $8, ble_then.28900
+	j	ble_cont.28901
+ble_then.28900:
 	sll	$9, $8, 2
 	lw	$9, 80($9)
 	lw	$10, 8($9)
-	beq	$10, $2, beq_then.28911
-	j	beq_cont.28912
-beq_then.28911:
+	beq	$10, $2, beq_then.28902
+	j	beq_cont.28903
+beq_then.28902:
 	lw	$10, 28($9)
 	lw.s	$f5, 0($10)
-	ble.s	$f1, $f5, ble.s_then.28913
+	ble.s	$f1, $f5, ble.s_then.28904
 	lw	$10, 4($9)
-	beq	$10, $1, beq_then.28915
-	beq	$10, $2, beq_then.28917
-	j	beq_cont.28918
-beq_then.28917:
+	beq	$10, $1, beq_then.28906
+	beq	$10, $2, beq_then.28908
+	j	beq_cont.28909
+beq_then.28908:
 	sll	$8, $8, 2
 	addi	$8, $8, 1
 	lw	$10, 1768($0)
@@ -1374,9 +1374,9 @@ beq_then.28917:
 	sw	$8, 1048($10)
 	addi	$8, $9, 1
 	sw	$8, 1768($0)
-beq_cont.28918:
-	j	beq_cont.28916
-beq_then.28915:
+beq_cont.28909:
+	j	beq_cont.28907
+beq_then.28906:
 	sll	$8, $8, 2
 	lw	$10, 1768($0)
 	lw	$9, 28($9)
@@ -1548,12 +1548,12 @@ beq_then.28915:
 	lw	$8, 104($sp)
 	addi	$8, $8, 3
 	sw	$8, 1768($0)
-beq_cont.28916:
-	j	ble.s_cont.28914
-ble.s_then.28913:
-ble.s_cont.28914:
-beq_cont.28912:
-ble_cont.28910:
+beq_cont.28907:
+	j	ble.s_cont.28905
+ble.s_then.28904:
+ble.s_cont.28905:
+beq_cont.28903:
+ble_cont.28901:
 	li	$10, 0
 	lw.s	$f5, 664($0)
 	lw	$8, 660($0)
@@ -1596,37 +1596,37 @@ ble_cont.28910:
 	lw	$ra, 188($sp)
 	noop
 create_array_loop:
-	beq	$8, $0, beq_then.28919
+	beq	$8, $0, beq_then.28910
 	sw	$9, 0($gp)
 	addi	$8, $8, -1
 	addi	$gp, $gp, 4
 	j	create_array_loop
-beq_then.28919:
+beq_then.28910:
 	jr	$ra
 create_float_array_loop:
-	beq	$8, $0, beq_then.28921
+	beq	$8, $0, beq_then.28912
 	sw.s	$f5, 0($gp)
 	addi	$8, $8, -1
 	addi	$gp, $gp, 4
 	j	create_float_array_loop
-beq_then.28921:
+beq_then.28912:
 	jr	$ra
 cos..6891:
 	lui.s	$f6, 0x4049	# 3.141593の上位16ビット
 	lli.s	$f6, 0xfdb	# 3.141593の下位16ビット
-	ble.s	$f0, $f5, ble.s_then.28923
+	ble.s	$f0, $f5, ble.s_then.28914
 	neg.s	$f5, $f5
 	j	cos..6891
-ble.s_then.28923:
-	ble.s	$f5, $f6, ble.s_then.28924
+ble.s_then.28914:
+	ble.s	$f5, $f6, ble.s_then.28915
 	lui.s	$f7, 0x40c9	# 6.283185の上位16ビット
 	lli.s	$f7, 0xfdb	# 6.283185の下位16ビット
-	ble.s	$f5, $f7, ble.s_then.28925
+	ble.s	$f5, $f7, ble.s_then.28916
 	lui.s	$f6, 0x40c9	# 6.283185の上位16ビット
 	lli.s	$f6, 0xfdb	# 6.283185の下位16ビット
 	sub.s	$f5, $f5, $f6
 	j	cos..6891
-ble.s_then.28925:
+ble.s_then.28916:
 	sub.s	$f5, $f5, $f6
 	sw	$ra, 0($sp)
 	addi	$sp, $sp, 4
@@ -1635,7 +1635,7 @@ ble.s_then.28925:
 	lw	$ra, 0($sp)
 	neg.s	$f5, $f5
 	jr	$ra
-ble.s_then.28924:
+ble.s_then.28915:
 	mul.s	$f5, $f5, $f5
 	lui.s	$f6, 0x3d2a	# 0.041667の上位16ビット
 	lli.s	$f6, 0xaaab	# 0.041667の下位16ビット
@@ -1655,7 +1655,7 @@ ble.s_then.28924:
 sin..6893:
 	lui.s	$f6, 0x4049	# 3.141593の上位16ビット
 	lli.s	$f6, 0xfdb	# 3.141593の下位16ビット
-	ble.s	$f0, $f5, ble.s_then.28926
+	ble.s	$f0, $f5, ble.s_then.28917
 	neg.s	$f5, $f5
 	sw	$ra, 0($sp)
 	addi	$sp, $sp, 4
@@ -1664,16 +1664,16 @@ sin..6893:
 	lw	$ra, 0($sp)
 	neg.s	$f5, $f5
 	jr	$ra
-ble.s_then.28926:
-	ble.s	$f5, $f6, ble.s_then.28927
+ble.s_then.28917:
+	ble.s	$f5, $f6, ble.s_then.28918
 	lui.s	$f7, 0x40c9	# 6.283185の上位16ビット
 	lli.s	$f7, 0xfdb	# 6.283185の下位16ビット
-	ble.s	$f5, $f7, ble.s_then.28928
+	ble.s	$f5, $f7, ble.s_then.28919
 	lui.s	$f6, 0x40c9	# 6.283185の上位16ビット
 	lli.s	$f6, 0xfdb	# 6.283185の下位16ビット
 	sub.s	$f5, $f5, $f6
 	j	sin..6893
-ble.s_then.28928:
+ble.s_then.28919:
 	sub.s	$f5, $f5, $f6
 	sw	$ra, 0($sp)
 	addi	$sp, $sp, 4
@@ -1682,7 +1682,7 @@ ble.s_then.28928:
 	lw	$ra, 0($sp)
 	neg.s	$f5, $f5
 	jr	$ra
-ble.s_then.28927:
+ble.s_then.28918:
 	mul.s	$f6, $f5, $f5
 	lui.s	$f7, 0x3e2a	# 0.166667の上位16ビット
 	lli.s	$f7, 0xaaab	# 0.166667の下位16ビット
@@ -1701,7 +1701,7 @@ ble.s_then.28927:
 tan..6895:
 	lui.s	$f6, 0x4049	# 3.141593の上位16ビット
 	lli.s	$f6, 0xfdb	# 3.141593の下位16ビット
-	ble.s	$f0, $f5, ble.s_then.28929
+	ble.s	$f0, $f5, ble.s_then.28920
 	neg.s	$f5, $f5
 	sw	$ra, 0($sp)
 	addi	$sp, $sp, 4
@@ -1710,13 +1710,13 @@ tan..6895:
 	lw	$ra, 0($sp)
 	neg.s	$f5, $f5
 	jr	$ra
-ble.s_then.28929:
+ble.s_then.28920:
 	lui.s	$f7, 0x3fc9	# 1.570796の上位16ビット
 	lli.s	$f7, 0xfdb	# 1.570796の下位16ビット
-	ble.s	$f5, $f7, ble.s_then.28930
+	ble.s	$f5, $f7, ble.s_then.28921
 	sub.s	$f5, $f5, $f6
 	j	tan..6895
-ble.s_then.28930:
+ble.s_then.28921:
 	mul.s	$f6, $f5, $f5
 	lui.s	$f7, 0x3eaa	# 0.333333の上位16ビット
 	lli.s	$f7, 0xaaab	# 0.333333の下位16ビット
@@ -1734,7 +1734,7 @@ ble.s_then.28930:
 	jr	$ra
 read_object..7057:
 	li	$9, 60
-	ble	$9, $8, ble_then.28931
+	ble	$9, $8, ble_then.28922
 	in	$9
 	sll	$9, $9, 24
 	in	$10
@@ -1746,7 +1746,7 @@ read_object..7057:
 	in	$10
 	add	$9, $10, $9
 	sw	$8, 0($sp)
-	beq	$9, $7, beq_then.28932
+	beq	$9, $7, beq_then.28923
 	in	$10
 	sll	$10, $10, 24
 	in	$11
@@ -1893,55 +1893,20 @@ read_object..7057:
 	add	$9, $10, $9
 	sw	$9, 16($0)
 	lw.s	$f5, 16($0)
-	ble.s	$f0, $f5, ble.s_then.28934
+	ble.s	$f0, $f5, ble.s_then.28925
 	li	$9, 1
-	j	ble.s_cont.28935
-ble.s_then.28934:
+	j	ble.s_cont.28926
+ble.s_then.28925:
 	li	$9, 0
-ble.s_cont.28935:
+ble.s_cont.28926:
 	li	$10, 2
-	lui.s	$f5, 0x0	# 0.000000の上位16ビット
+	lui.s	$f6, 0x0	# 0.000000の上位16ビット
 	mv	$11, $gp
-	sw	$9, 28($sp)
-	sw	$11, 32($sp)
+	sw.s	$f5, 28($sp)
+	sw	$9, 32($sp)
+	sw	$11, 36($sp)
 	mv	$8, $10
-	sw	$ra, 36($sp)
-	addi	$sp, $sp, 40
-	jal	create_float_array_loop
-	addi	$sp, $sp, -40
-	lw	$ra, 36($sp)
-	in	$8
-	sll	$8, $8, 24
-	in	$9
-	sll	$9, $9, 16
-	add	$8, $9, $8
-	in	$9
-	sll	$9, $9, 8
-	add	$8, $9, $8
-	in	$9
-	add	$8, $9, $8
-	sw	$8, 16($0)
-	lw.s	$f5, 16($0)
-	lw	$8, 32($sp)
-	sw.s	$f5, 0($8)
-	in	$9
-	sll	$9, $9, 24
-	in	$10
-	sll	$10, $10, 16
-	add	$9, $10, $9
-	in	$10
-	sll	$10, $10, 8
-	add	$9, $10, $9
-	in	$10
-	add	$9, $10, $9
-	sw	$9, 16($0)
-	lw.s	$f5, 16($0)
-	sw.s	$f5, 4($8)
-	li	$9, 3
-	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-	mv	$10, $gp
-	sw	$10, 36($sp)
-	mv	$8, $9
+	mv.s	$f5, $f6
 	sw	$ra, 40($sp)
 	addi	$sp, $sp, 44
 	jal	create_float_array_loop
@@ -1974,6 +1939,43 @@ ble.s_cont.28935:
 	sw	$9, 16($0)
 	lw.s	$f5, 16($0)
 	sw.s	$f5, 4($8)
+	li	$9, 3
+	lui.s	$f5, 0x0	# 0.000000の上位16ビット
+	mv	$10, $gp
+	sw	$10, 40($sp)
+	mv	$8, $9
+	sw	$ra, 44($sp)
+	addi	$sp, $sp, 48
+	jal	create_float_array_loop
+	addi	$sp, $sp, -48
+	lw	$ra, 44($sp)
+	in	$8
+	sll	$8, $8, 24
+	in	$9
+	sll	$9, $9, 16
+	add	$8, $9, $8
+	in	$9
+	sll	$9, $9, 8
+	add	$8, $9, $8
+	in	$9
+	add	$8, $9, $8
+	sw	$8, 16($0)
+	lw.s	$f5, 16($0)
+	lw	$8, 40($sp)
+	sw.s	$f5, 0($8)
+	in	$9
+	sll	$9, $9, 24
+	in	$10
+	sll	$10, $10, 16
+	add	$9, $10, $9
+	in	$10
+	sll	$10, $10, 8
+	add	$9, $10, $9
+	in	$10
+	add	$9, $10, $9
+	sw	$9, 16($0)
+	lw.s	$f5, 16($0)
+	sw.s	$f5, 4($8)
 	in	$9
 	sll	$9, $9, 24
 	in	$10
@@ -1990,15 +1992,15 @@ ble.s_cont.28935:
 	li	$9, 3
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
 	mv	$10, $gp
-	sw	$10, 40($sp)
+	sw	$10, 44($sp)
 	mv	$8, $9
-	sw	$ra, 44($sp)
-	addi	$sp, $sp, 48
+	sw	$ra, 48($sp)
+	addi	$sp, $sp, 52
 	jal	create_float_array_loop
-	addi	$sp, $sp, -48
-	lw	$ra, 44($sp)
+	addi	$sp, $sp, -52
+	lw	$ra, 48($sp)
 	lw	$8, 16($sp)
-	beq	$8, $0, beq_then.28936
+	beq	$8, $0, beq_then.28927
 	in	$9
 	sll	$9, $9, 24
 	in	$10
@@ -2014,7 +2016,7 @@ ble.s_cont.28935:
 	lui.s	$f6, 0x3c8e	# 0.017453の上位16ビット
 	lli.s	$f6, 0xfa35	# 0.017453の下位16ビット
 	mul.s	$f5, $f5, $f6
-	lw	$9, 40($sp)
+	lw	$9, 44($sp)
 	sw.s	$f5, 0($9)
 	in	$10
 	sll	$10, $10, 24
@@ -2049,38 +2051,38 @@ ble.s_cont.28935:
 	mul.s	$f5, $f5, $f6
 	addi	$10, $9, 8
 	sw.s	$f5, 0($10)
-	j	beq_cont.28937
-beq_then.28936:
-beq_cont.28937:
+	j	beq_cont.28928
+beq_then.28927:
+beq_cont.28928:
 	lw	$9, 12($sp)
-	beq	$9, $2, beq_then.28938
-	lw	$10, 28($sp)
-	j	beq_cont.28939
-beq_then.28938:
+	beq	$9, $2, beq_then.28929
+	lw	$10, 32($sp)
+	j	beq_cont.28930
+beq_then.28929:
 	li	$10, 1
-beq_cont.28939:
+beq_cont.28930:
 	li	$11, 4
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
 	mv	$12, $gp
-	sw	$10, 44($sp)
-	sw	$12, 48($sp)
+	sw	$10, 48($sp)
+	sw	$12, 52($sp)
 	mv	$8, $11
-	sw	$ra, 52($sp)
-	addi	$sp, $sp, 56
+	sw	$ra, 56($sp)
+	addi	$sp, $sp, 60
 	jal	create_float_array_loop
-	addi	$sp, $sp, -56
-	lw	$ra, 52($sp)
+	addi	$sp, $sp, -60
+	lw	$ra, 56($sp)
 	mv	$8, $gp
 	addi	$gp, $gp, 44
-	lw	$9, 48($sp)
+	lw	$9, 52($sp)
 	sw	$9, 40($8)
-	lw	$9, 40($sp)
+	lw	$9, 44($sp)
 	sw	$9, 36($8)
-	lw	$10, 36($sp)
+	lw	$10, 40($sp)
 	sw	$10, 32($8)
-	lw	$10, 32($sp)
+	lw	$10, 36($sp)
 	sw	$10, 28($8)
-	lw	$10, 44($sp)
+	lw	$10, 48($sp)
 	sw	$10, 24($8)
 	lw	$10, 24($sp)
 	sw	$10, 20($8)
@@ -2097,17 +2099,10 @@ beq_cont.28939:
 	lw	$13, 0($sp)
 	sll	$14, $13, 2
 	sw	$8, 80($14)
-	beq	$12, $3, beq_then.28940
-	beq	$12, $2, beq_then.28942
-	j	beq_cont.28943
-beq_then.28942:
-	lw	$8, 28($sp)
-	beq	$8, $0, beq_then.28944
-	li	$8, 0
-	j	beq_cont.28945
-beq_then.28944:
-	li	$8, 1
-beq_cont.28945:
+	beq	$12, $3, beq_then.28931
+	beq	$12, $2, beq_then.28933
+	j	beq_cont.28934
+beq_then.28933:
 	lw.s	$f5, 0($10)
 	mul.s	$f5, $f5, $f5
 	lw.s	$f6, 4($10)
@@ -2117,18 +2112,19 @@ beq_cont.28945:
 	mul.s	$f6, $f6, $f6
 	add.s	$f5, $f5, $f6
 	sqrt.s	$f5, $f5
-	beq.s	$f5, $f0, beq.s_then.28946
-	beq	$8, $0, beq_then.28948
+	beq.s	$f5, $f0, beq.s_then.28935
+	lw.s	$f6, 28($sp)
+	ble.s	$f0, $f6, ble.s_then.28937
+	inv.s	$f5, $f5
+	j	ble.s_cont.28938
+ble.s_then.28937:
 	inv.s	$f5, $f5
 	neg.s	$f5, $f5
-	j	beq_cont.28949
-beq_then.28948:
-	inv.s	$f5, $f5
-beq_cont.28949:
-	j	beq.s_cont.28947
-beq.s_then.28946:
+ble.s_cont.28938:
+	j	beq.s_cont.28936
+beq.s_then.28935:
 	lui.s	$f5, 0x3f80	# 1.000000の上位16ビット
-beq.s_cont.28947:
+beq.s_cont.28936:
 	lw.s	$f6, 0($10)
 	mul.s	$f6, $f6, $f5
 	sw.s	$f6, 0($10)
@@ -2139,134 +2135,134 @@ beq.s_cont.28947:
 	mul.s	$f5, $f6, $f5
 	addi	$8, $10, 8
 	sw.s	$f5, 0($8)
-beq_cont.28943:
-	j	beq_cont.28941
-beq_then.28940:
+beq_cont.28934:
+	j	beq_cont.28932
+beq_then.28931:
 	lw.s	$f5, 0($10)
-	beq.s	$f5, $f0, beq.s_then.28950
-	beq.s	$f5, $f0, beq.s_then.28952
-	ble.s	$f5, $f0, ble.s_then.28954
+	beq.s	$f5, $f0, beq.s_then.28939
+	beq.s	$f5, $f0, beq.s_then.28941
+	ble.s	$f5, $f0, ble.s_then.28943
 	lui.s	$f6, 0x3f80	# 1.000000の上位16ビット
-	j	ble.s_cont.28955
-ble.s_then.28954:
+	j	ble.s_cont.28944
+ble.s_then.28943:
 	lui.s	$f6, 0xbf80	# -1.000000の上位16ビット
-ble.s_cont.28955:
-	j	beq.s_cont.28953
-beq.s_then.28952:
+ble.s_cont.28944:
+	j	beq.s_cont.28942
+beq.s_then.28941:
 	lui.s	$f6, 0x0	# 0.000000の上位16ビット
-beq.s_cont.28953:
+beq.s_cont.28942:
 	mul.s	$f5, $f5, $f5
 	inv.s	$f5, $f5
 	mul.s	$f5, $f6, $f5
-	j	beq.s_cont.28951
-beq.s_then.28950:
+	j	beq.s_cont.28940
+beq.s_then.28939:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-beq.s_cont.28951:
+beq.s_cont.28940:
 	sw.s	$f5, 0($10)
 	lw.s	$f5, 4($10)
-	beq.s	$f5, $f0, beq.s_then.28956
-	beq.s	$f5, $f0, beq.s_then.28958
-	ble.s	$f5, $f0, ble.s_then.28960
+	beq.s	$f5, $f0, beq.s_then.28945
+	beq.s	$f5, $f0, beq.s_then.28947
+	ble.s	$f5, $f0, ble.s_then.28949
 	lui.s	$f6, 0x3f80	# 1.000000の上位16ビット
-	j	ble.s_cont.28961
-ble.s_then.28960:
+	j	ble.s_cont.28950
+ble.s_then.28949:
 	lui.s	$f6, 0xbf80	# -1.000000の上位16ビット
-ble.s_cont.28961:
-	j	beq.s_cont.28959
-beq.s_then.28958:
+ble.s_cont.28950:
+	j	beq.s_cont.28948
+beq.s_then.28947:
 	lui.s	$f6, 0x0	# 0.000000の上位16ビット
-beq.s_cont.28959:
+beq.s_cont.28948:
 	mul.s	$f5, $f5, $f5
 	inv.s	$f5, $f5
 	mul.s	$f5, $f6, $f5
-	j	beq.s_cont.28957
-beq.s_then.28956:
+	j	beq.s_cont.28946
+beq.s_then.28945:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-beq.s_cont.28957:
+beq.s_cont.28946:
 	sw.s	$f5, 4($10)
 	lw.s	$f5, 8($10)
-	beq.s	$f5, $f0, beq.s_then.28962
-	beq.s	$f5, $f0, beq.s_then.28964
-	ble.s	$f5, $f0, ble.s_then.28966
+	beq.s	$f5, $f0, beq.s_then.28951
+	beq.s	$f5, $f0, beq.s_then.28953
+	ble.s	$f5, $f0, ble.s_then.28955
 	lui.s	$f6, 0x3f80	# 1.000000の上位16ビット
-	j	ble.s_cont.28967
-ble.s_then.28966:
+	j	ble.s_cont.28956
+ble.s_then.28955:
 	lui.s	$f6, 0xbf80	# -1.000000の上位16ビット
-ble.s_cont.28967:
-	j	beq.s_cont.28965
-beq.s_then.28964:
+ble.s_cont.28956:
+	j	beq.s_cont.28954
+beq.s_then.28953:
 	lui.s	$f6, 0x0	# 0.000000の上位16ビット
-beq.s_cont.28965:
+beq.s_cont.28954:
 	mul.s	$f5, $f5, $f5
 	inv.s	$f5, $f5
 	mul.s	$f5, $f6, $f5
-	j	beq.s_cont.28963
-beq.s_then.28962:
+	j	beq.s_cont.28952
+beq.s_then.28951:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-beq.s_cont.28963:
+beq.s_cont.28952:
 	addi	$8, $10, 8
 	sw.s	$f5, 0($8)
-beq_cont.28941:
-	beq	$11, $0, beq_then.28968
+beq_cont.28932:
+	beq	$11, $0, beq_then.28957
 	lw.s	$f5, 0($9)
-	sw	$ra, 52($sp)
-	addi	$sp, $sp, 56
-	jal	cos..6891
-	addi	$sp, $sp, -56
-	lw	$ra, 52($sp)
-	lw	$8, 40($sp)
-	lw.s	$f6, 0($8)
-	sw.s	$f5, 52($sp)
-	mv.s	$f5, $f6
 	sw	$ra, 56($sp)
 	addi	$sp, $sp, 60
-	jal	sin..6893
+	jal	cos..6891
 	addi	$sp, $sp, -60
 	lw	$ra, 56($sp)
-	lw	$8, 40($sp)
-	lw.s	$f6, 4($8)
+	lw	$8, 44($sp)
+	lw.s	$f6, 0($8)
 	sw.s	$f5, 56($sp)
 	mv.s	$f5, $f6
 	sw	$ra, 60($sp)
 	addi	$sp, $sp, 64
-	jal	cos..6891
+	jal	sin..6893
 	addi	$sp, $sp, -64
 	lw	$ra, 60($sp)
-	lw	$8, 40($sp)
+	lw	$8, 44($sp)
 	lw.s	$f6, 4($8)
 	sw.s	$f5, 60($sp)
 	mv.s	$f5, $f6
 	sw	$ra, 64($sp)
 	addi	$sp, $sp, 68
-	jal	sin..6893
+	jal	cos..6891
 	addi	$sp, $sp, -68
 	lw	$ra, 64($sp)
-	lw	$8, 40($sp)
-	lw.s	$f6, 8($8)
+	lw	$8, 44($sp)
+	lw.s	$f6, 4($8)
 	sw.s	$f5, 64($sp)
 	mv.s	$f5, $f6
 	sw	$ra, 68($sp)
 	addi	$sp, $sp, 72
-	jal	cos..6891
+	jal	sin..6893
 	addi	$sp, $sp, -72
 	lw	$ra, 68($sp)
-	lw	$8, 40($sp)
+	lw	$8, 44($sp)
 	lw.s	$f6, 8($8)
 	sw.s	$f5, 68($sp)
 	mv.s	$f5, $f6
 	sw	$ra, 72($sp)
 	addi	$sp, $sp, 76
-	jal	sin..6893
+	jal	cos..6891
 	addi	$sp, $sp, -76
 	lw	$ra, 72($sp)
-	lw.s	$f6, 68($sp)
-	lw.s	$f7, 60($sp)
+	lw	$8, 44($sp)
+	lw.s	$f6, 8($8)
+	sw.s	$f5, 72($sp)
+	mv.s	$f5, $f6
+	sw	$ra, 76($sp)
+	addi	$sp, $sp, 80
+	jal	sin..6893
+	addi	$sp, $sp, -80
+	lw	$ra, 76($sp)
+	lw.s	$f6, 72($sp)
+	lw.s	$f7, 64($sp)
 	mul.s	$f8, $f7, $f6
-	lw.s	$f9, 64($sp)
-	lw.s	$f10, 56($sp)
+	lw.s	$f9, 68($sp)
+	lw.s	$f10, 60($sp)
 	mul.s	$f11, $f10, $f9
 	mul.s	$f11, $f11, $f6
-	lw.s	$f12, 52($sp)
+	lw.s	$f12, 56($sp)
 	mul.s	$f13, $f12, $f5
 	sub.s	$f11, $f11, $f13
 	mul.s	$f13, $f12, $f9
@@ -2326,7 +2322,7 @@ beq_cont.28941:
 	mul.s	$f19, $f19, $f7
 	add.s	$f18, $f18, $f19
 	mul.s	$f17, $f17, $f18
-	lw	$8, 40($sp)
+	lw	$8, 44($sp)
 	sw.s	$f17, 0($8)
 	lui.s	$f17, 0x4000	# 2.000000の上位16ビット
 	mul.s	$f18, $f10, $f8
@@ -2351,23 +2347,23 @@ beq_cont.28941:
 	mul.s	$f5, $f5, $f6
 	addi	$8, $8, 8
 	sw.s	$f5, 0($8)
-	j	beq_cont.28969
-beq_then.28968:
-beq_cont.28969:
+	j	beq_cont.28958
+beq_then.28957:
+beq_cont.28958:
 	li	$8, 1
-	j	beq_cont.28933
-beq_then.28932:
+	j	beq_cont.28924
+beq_then.28923:
 	li	$8, 0
-beq_cont.28933:
-	beq	$8, $0, beq_then.28970
+beq_cont.28924:
+	beq	$8, $0, beq_then.28959
 	lw	$8, 0($sp)
 	addi	$8, $8, 1
 	j	read_object..7057
-beq_then.28970:
+beq_then.28959:
 	lw	$8, 0($sp)
 	sw	$8, 32($0)
 	jr	$ra
-ble_then.28931:
+ble_then.28922:
 	jr	$ra
 read_net_item..7061:
 	in	$9
@@ -2380,7 +2376,7 @@ read_net_item..7061:
 	add	$9, $10, $9
 	in	$10
 	add	$9, $10, $9
-	beq	$9, $7, beq_then.28973
+	beq	$9, $7, beq_then.28962
 	addi	$10, $8, 1
 	sw	$9, 0($sp)
 	sw	$8, 4($sp)
@@ -2396,7 +2392,7 @@ read_net_item..7061:
 	lw	$10, 0($sp)
 	sw	$10, 0($9)
 	jr	$ra
-beq_then.28973:
+beq_then.28962:
 	addi	$8, $8, 1
 	li	$9, -1
 	mv	$10, $gp
@@ -2419,7 +2415,7 @@ read_or_network..7063:
 	lw	$ra, 4($sp)
 	mv	$9, $8
 	lw	$8, 0($9)
-	beq	$8, $7, beq_then.28974
+	beq	$8, $7, beq_then.28963
 	lw	$8, 0($sp)
 	addi	$10, $8, 1
 	sw	$9, 4($sp)
@@ -2435,7 +2431,7 @@ read_or_network..7063:
 	lw	$10, 4($sp)
 	sw	$10, 0($9)
 	jr	$ra
-beq_then.28974:
+beq_then.28963:
 	lw	$8, 0($sp)
 	addi	$8, $8, 1
 	mv	$10, $gp
@@ -2457,18 +2453,18 @@ read_and_network..7065:
 	addi	$sp, $sp, -8
 	lw	$ra, 4($sp)
 	lw	$9, 0($8)
-	beq	$9, $7, beq_then.28975
+	beq	$9, $7, beq_then.28964
 	lw	$9, 0($sp)
 	sll	$10, $9, 2
 	sw	$8, 364($10)
 	addi	$8, $9, 1
 	j	read_and_network..7065
-beq_then.28975:
+beq_then.28964:
 	jr	$ra
 iter_setup_dirvec_constants..7162:
-	ble	$0, $9, ble_then.28977
+	ble	$0, $9, ble_then.28966
 	jr	$ra
-ble_then.28977:
+ble_then.28966:
 	sll	$10, $9, 2
 	lw	$10, 80($10)
 	lw	$11, 4($8)
@@ -2476,8 +2472,8 @@ ble_then.28977:
 	lw	$13, 4($10)
 	sw	$8, 0($sp)
 	sw	$9, 4($sp)
-	beq	$13, $1, beq_then.28979
-	beq	$13, $2, beq_then.28981
+	beq	$13, $1, beq_then.28968
+	beq	$13, $2, beq_then.28970
 	li	$13, 5
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
 	mv	$14, $gp
@@ -2511,7 +2507,7 @@ ble_then.28977:
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	lw	$10, 12($9)
-	beq	$10, $0, beq_then.28983
+	beq	$10, $0, beq_then.28972
 	mul.s	$f9, $f6, $f7
 	lw	$10, 36($9)
 	lw.s	$f10, 0($10)
@@ -2527,10 +2523,10 @@ ble_then.28977:
 	lw.s	$f6, 8($10)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
-	j	beq_cont.28984
-beq_then.28983:
+	j	beq_cont.28973
+beq_then.28972:
 	mv.s	$f5, $f8
-beq_cont.28984:
+beq_cont.28973:
 	lw.s	$f6, 0($8)
 	lw	$10, 16($9)
 	lw.s	$f7, 0($10)
@@ -2549,7 +2545,7 @@ beq_cont.28984:
 	lw	$10, 12($sp)
 	sw.s	$f5, 0($10)
 	lw	$11, 12($9)
-	beq	$11, $0, beq_then.28985
+	beq	$11, $0, beq_then.28974
 	lw.s	$f9, 8($8)
 	lw	$11, 36($9)
 	lw.s	$f10, 4($11)
@@ -2587,27 +2583,27 @@ beq_cont.28984:
 	sub.s	$f6, $f8, $f6
 	addi	$8, $10, 12
 	sw.s	$f6, 0($8)
-	j	beq_cont.28986
-beq_then.28985:
+	j	beq_cont.28975
+beq_then.28974:
 	sw.s	$f6, 4($10)
 	sw.s	$f7, 8($10)
 	addi	$8, $10, 12
 	sw.s	$f8, 0($8)
-beq_cont.28986:
-	beq.s	$f5, $f0, beq.s_then.28987
+beq_cont.28975:
+	beq.s	$f5, $f0, beq.s_then.28976
 	inv.s	$f5, $f5
 	addi	$8, $10, 16
 	sw.s	$f5, 0($8)
-	j	beq.s_cont.28988
-beq.s_then.28987:
-beq.s_cont.28988:
+	j	beq.s_cont.28977
+beq.s_then.28976:
+beq.s_cont.28977:
 	lw	$8, 4($sp)
 	sll	$9, $8, 2
 	lw	$11, 8($sp)
 	add	$9, $11, $9
 	sw	$10, 0($9)
-	j	beq_cont.28982
-beq_then.28981:
+	j	beq_cont.28971
+beq_then.28970:
 	li	$13, 4
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
 	mv	$14, $gp
@@ -2637,7 +2633,7 @@ beq_then.28981:
 	lw.s	$f7, 8($8)
 	mul.s	$f6, $f6, $f7
 	add.s	$f5, $f5, $f6
-	ble.s	$f5, $f0, ble.s_then.28989
+	ble.s	$f5, $f0, ble.s_then.28978
 	inv.s	$f6, $f5
 	neg.s	$f6, $f6
 	lw	$8, 24($sp)
@@ -2661,19 +2657,19 @@ beq_then.28981:
 	neg.s	$f5, $f5
 	addi	$9, $8, 12
 	sw.s	$f5, 0($9)
-	j	ble.s_cont.28990
-ble.s_then.28989:
+	j	ble.s_cont.28979
+ble.s_then.28978:
 	lw	$8, 24($sp)
 	sw.s	$f0, 0($8)
-ble.s_cont.28990:
+ble.s_cont.28979:
 	lw	$9, 4($sp)
 	sll	$10, $9, 2
 	lw	$11, 8($sp)
 	add	$10, $11, $10
 	sw	$8, 0($10)
-beq_cont.28982:
-	j	beq_cont.28980
-beq_then.28979:
+beq_cont.28971:
+	j	beq_cont.28969
+beq_then.28968:
 	li	$13, 6
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
 	mv	$14, $gp
@@ -2689,128 +2685,110 @@ beq_then.28979:
 	lw	$ra, 32($sp)
 	lw	$8, 20($sp)
 	lw.s	$f5, 0($8)
-	beq.s	$f5, $f0, beq.s_then.28991
+	beq.s	$f5, $f0, beq.s_then.28980
 	lw	$9, 16($sp)
 	lw	$10, 24($9)
 	lw.s	$f5, 0($8)
-	ble.s	$f0, $f5, ble.s_then.28993
+	ble.s	$f0, $f5, ble.s_then.28982
 	li	$11, 1
-	j	ble.s_cont.28994
-ble.s_then.28993:
+	j	ble.s_cont.28983
+ble.s_then.28982:
 	li	$11, 0
-ble.s_cont.28994:
-	beq	$10, $11, beq_then.28995
-	li	$10, 1
-	j	beq_cont.28996
-beq_then.28995:
-	li	$10, 0
-beq_cont.28996:
-	lw	$11, 16($9)
-	lw.s	$f5, 0($11)
-	beq	$10, $0, beq_then.28997
-	j	beq_cont.28998
-beq_then.28997:
+ble.s_cont.28983:
+	lw	$12, 16($9)
+	lw.s	$f5, 0($12)
+	beq	$10, $11, beq_then.28984
+	j	beq_cont.28985
+beq_then.28984:
 	neg.s	$f5, $f5
-beq_cont.28998:
+beq_cont.28985:
 	lw	$10, 28($sp)
 	sw.s	$f5, 0($10)
 	lw.s	$f5, 0($8)
 	inv.s	$f5, $f5
 	addi	$11, $10, 4
 	sw.s	$f5, 0($11)
-	j	beq.s_cont.28992
-beq.s_then.28991:
+	j	beq.s_cont.28981
+beq.s_then.28980:
 	lw	$9, 28($sp)
 	addi	$10, $9, 4
 	sw.s	$f0, 0($10)
-beq.s_cont.28992:
+beq.s_cont.28981:
 	lw.s	$f5, 4($8)
-	beq.s	$f5, $f0, beq.s_then.28999
+	beq.s	$f5, $f0, beq.s_then.28986
 	lw	$9, 16($sp)
 	lw	$10, 24($9)
 	lw.s	$f5, 4($8)
-	ble.s	$f0, $f5, ble.s_then.29001
+	ble.s	$f0, $f5, ble.s_then.28988
 	li	$11, 1
-	j	ble.s_cont.29002
-ble.s_then.29001:
+	j	ble.s_cont.28989
+ble.s_then.28988:
 	li	$11, 0
-ble.s_cont.29002:
-	beq	$10, $11, beq_then.29003
-	li	$10, 1
-	j	beq_cont.29004
-beq_then.29003:
-	li	$10, 0
-beq_cont.29004:
-	lw	$11, 16($9)
-	lw.s	$f5, 4($11)
-	beq	$10, $0, beq_then.29005
-	j	beq_cont.29006
-beq_then.29005:
+ble.s_cont.28989:
+	lw	$12, 16($9)
+	lw.s	$f5, 4($12)
+	beq	$10, $11, beq_then.28990
+	j	beq_cont.28991
+beq_then.28990:
 	neg.s	$f5, $f5
-beq_cont.29006:
+beq_cont.28991:
 	lw	$10, 28($sp)
 	sw.s	$f5, 8($10)
 	lw.s	$f5, 4($8)
 	inv.s	$f5, $f5
 	addi	$11, $10, 12
 	sw.s	$f5, 0($11)
-	j	beq.s_cont.29000
-beq.s_then.28999:
+	j	beq.s_cont.28987
+beq.s_then.28986:
 	lw	$9, 28($sp)
 	addi	$10, $9, 12
 	sw.s	$f0, 0($10)
-beq.s_cont.29000:
+beq.s_cont.28987:
 	lw.s	$f5, 8($8)
-	beq.s	$f5, $f0, beq.s_then.29007
+	beq.s	$f5, $f0, beq.s_then.28992
 	lw	$9, 16($sp)
 	lw	$10, 24($9)
 	lw.s	$f5, 8($8)
-	ble.s	$f0, $f5, ble.s_then.29009
+	ble.s	$f0, $f5, ble.s_then.28994
 	li	$11, 1
-	j	ble.s_cont.29010
-ble.s_then.29009:
+	j	ble.s_cont.28995
+ble.s_then.28994:
 	li	$11, 0
-ble.s_cont.29010:
-	beq	$10, $11, beq_then.29011
-	li	$10, 1
-	j	beq_cont.29012
-beq_then.29011:
-	li	$10, 0
-beq_cont.29012:
+ble.s_cont.28995:
 	lw	$9, 16($9)
 	lw.s	$f5, 8($9)
-	beq	$10, $0, beq_then.29013
-	j	beq_cont.29014
-beq_then.29013:
+	beq	$10, $11, beq_then.28996
+	j	beq_cont.28997
+beq_then.28996:
 	neg.s	$f5, $f5
-beq_cont.29014:
+beq_cont.28997:
 	lw	$9, 28($sp)
 	sw.s	$f5, 16($9)
 	lw.s	$f5, 8($8)
 	inv.s	$f5, $f5
 	addi	$8, $9, 20
 	sw.s	$f5, 0($8)
-	j	beq.s_cont.29008
-beq.s_then.29007:
+	j	beq.s_cont.28993
+beq.s_then.28992:
 	lw	$8, 28($sp)
 	addi	$9, $8, 20
 	sw.s	$f0, 0($9)
-beq.s_cont.29008:
+beq.s_cont.28993:
 	lw	$8, 4($sp)
 	sll	$9, $8, 2
 	lw	$10, 8($sp)
 	add	$9, $10, $9
 	lw	$10, 28($sp)
 	sw	$10, 0($9)
-beq_cont.28980:
+beq_cont.28969:
 	lw	$8, 4($sp)
 	addi	$9, $8, -1
 	lw	$8, 0($sp)
 	j	iter_setup_dirvec_constants..7162
 setup_startp_constants..7167:
-	ble	$0, $9, ble_then.29015
+	ble	$0, $9, ble_then.28998
 	jr	$ra
-ble_then.29015:
+ble_then.28998:
 	sll	$10, $9, 2
 	lw	$10, 80($10)
 	lw	$11, 40($10)
@@ -2830,8 +2808,8 @@ ble_then.29015:
 	lw.s	$f6, 8($13)
 	sub.s	$f5, $f5, $f6
 	sw.s	$f5, 8($11)
-	beq	$12, $2, beq_then.29017
-	ble	$12, $2, ble_then.29019
+	beq	$12, $2, beq_then.29000
+	ble	$12, $2, ble_then.29002
 	lw.s	$f5, 0($11)
 	lw.s	$f6, 4($11)
 	lw.s	$f7, 8($11)
@@ -2850,7 +2828,7 @@ ble_then.29015:
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	lw	$13, 12($10)
-	beq	$13, $0, beq_then.29021
+	beq	$13, $0, beq_then.29004
 	mul.s	$f9, $f6, $f7
 	lw	$13, 36($10)
 	lw.s	$f10, 0($13)
@@ -2866,22 +2844,22 @@ ble_then.29015:
 	lw.s	$f6, 8($10)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
-	j	beq_cont.29022
-beq_then.29021:
+	j	beq_cont.29005
+beq_then.29004:
 	mv.s	$f5, $f8
-beq_cont.29022:
-	beq	$12, $3, beq_then.29023
-	j	beq_cont.29024
-beq_then.29023:
+beq_cont.29005:
+	beq	$12, $3, beq_then.29006
+	j	beq_cont.29007
+beq_then.29006:
 	sub.s	$f5, $f5, $f1
-beq_cont.29024:
+beq_cont.29007:
 	addi	$10, $11, 12
 	sw.s	$f5, 0($10)
-	j	ble_cont.29020
-ble_then.29019:
-ble_cont.29020:
-	j	beq_cont.29018
-beq_then.29017:
+	j	ble_cont.29003
+ble_then.29002:
+ble_cont.29003:
+	j	beq_cont.29001
+beq_then.29000:
 	lw	$10, 16($10)
 	lw.s	$f5, 0($11)
 	lw.s	$f6, 4($11)
@@ -2896,14 +2874,14 @@ beq_then.29017:
 	add.s	$f5, $f5, $f6
 	addi	$10, $11, 12
 	sw.s	$f5, 0($10)
-beq_cont.29018:
+beq_cont.29001:
 	addi	$9, $9, -1
 	j	setup_startp_constants..7167
 check_all_inside..7192:
 	sll	$10, $8, 2
 	add	$10, $9, $10
 	lw	$10, 0($10)
-	beq	$10, $7, beq_then.29025
+	beq	$10, $7, beq_then.29008
 	sll	$10, $10, 2
 	lw	$10, 80($10)
 	lw	$11, 20($10)
@@ -2916,8 +2894,8 @@ check_all_inside..7192:
 	lw.s	$f10, 8($11)
 	sub.s	$f10, $f7, $f10
 	lw	$11, 4($10)
-	beq	$11, $1, beq_then.29026
-	beq	$11, $2, beq_then.29028
+	beq	$11, $1, beq_then.29009
+	beq	$11, $2, beq_then.29011
 	mul.s	$f11, $f8, $f8
 	lw	$11, 16($10)
 	lw.s	$f12, 0($11)
@@ -2933,7 +2911,7 @@ check_all_inside..7192:
 	mul.s	$f12, $f12, $f13
 	add.s	$f11, $f11, $f12
 	lw	$11, 12($10)
-	beq	$11, $0, beq_then.29030
+	beq	$11, $0, beq_then.29013
 	mul.s	$f12, $f9, $f10
 	lw	$11, 36($10)
 	lw.s	$f13, 0($11)
@@ -2949,31 +2927,31 @@ check_all_inside..7192:
 	lw.s	$f9, 8($11)
 	mul.s	$f8, $f8, $f9
 	add.s	$f8, $f10, $f8
-	j	beq_cont.29031
-beq_then.29030:
+	j	beq_cont.29014
+beq_then.29013:
 	mv.s	$f8, $f11
-beq_cont.29031:
+beq_cont.29014:
 	lw	$11, 4($10)
-	beq	$11, $3, beq_then.29032
-	j	beq_cont.29033
-beq_then.29032:
+	beq	$11, $3, beq_then.29015
+	j	beq_cont.29016
+beq_then.29015:
 	sub.s	$f8, $f8, $f1
-beq_cont.29033:
+beq_cont.29016:
 	lw	$10, 24($10)
-	ble.s	$f0, $f8, ble.s_then.29034
+	ble.s	$f0, $f8, ble.s_then.29017
 	li	$11, 1
-	j	ble.s_cont.29035
-ble.s_then.29034:
+	j	ble.s_cont.29018
+ble.s_then.29017:
 	li	$11, 0
-ble.s_cont.29035:
-	beq	$10, $11, beq_then.29036
+ble.s_cont.29018:
+	beq	$10, $11, beq_then.29019
 	li	$10, 0
-	j	beq_cont.29037
-beq_then.29036:
+	j	beq_cont.29020
+beq_then.29019:
 	li	$10, 1
-beq_cont.29037:
-	j	beq_cont.29029
-beq_then.29028:
+beq_cont.29020:
+	j	beq_cont.29012
+beq_then.29011:
 	lw	$11, 16($10)
 	lw.s	$f11, 0($11)
 	mul.s	$f8, $f11, $f8
@@ -2984,73 +2962,73 @@ beq_then.29028:
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	lw	$10, 24($10)
-	ble.s	$f0, $f8, ble.s_then.29038
+	ble.s	$f0, $f8, ble.s_then.29021
 	li	$11, 1
-	j	ble.s_cont.29039
-ble.s_then.29038:
+	j	ble.s_cont.29022
+ble.s_then.29021:
 	li	$11, 0
-ble.s_cont.29039:
-	beq	$10, $11, beq_then.29040
+ble.s_cont.29022:
+	beq	$10, $11, beq_then.29023
 	li	$10, 0
-	j	beq_cont.29041
-beq_then.29040:
+	j	beq_cont.29024
+beq_then.29023:
 	li	$10, 1
-beq_cont.29041:
-beq_cont.29029:
-	j	beq_cont.29027
-beq_then.29026:
+beq_cont.29024:
+beq_cont.29012:
+	j	beq_cont.29010
+beq_then.29009:
 	abs.s	$f8, $f8
 	lw	$11, 16($10)
 	lw.s	$f11, 0($11)
-	ble.s	$f11, $f8, ble.s_then.29042
+	ble.s	$f11, $f8, ble.s_then.29025
 	abs.s	$f8, $f9
 	lw	$11, 16($10)
 	lw.s	$f9, 4($11)
-	ble.s	$f9, $f8, ble.s_then.29044
+	ble.s	$f9, $f8, ble.s_then.29027
 	abs.s	$f8, $f10
 	lw	$11, 16($10)
 	lw.s	$f9, 8($11)
-	ble.s	$f9, $f8, ble.s_then.29046
+	ble.s	$f9, $f8, ble.s_then.29029
 	li	$11, 1
-	j	ble.s_cont.29047
-ble.s_then.29046:
+	j	ble.s_cont.29030
+ble.s_then.29029:
 	li	$11, 0
-ble.s_cont.29047:
-	j	ble.s_cont.29045
-ble.s_then.29044:
+ble.s_cont.29030:
+	j	ble.s_cont.29028
+ble.s_then.29027:
 	li	$11, 0
-ble.s_cont.29045:
-	j	ble.s_cont.29043
-ble.s_then.29042:
+ble.s_cont.29028:
+	j	ble.s_cont.29026
+ble.s_then.29025:
 	li	$11, 0
-ble.s_cont.29043:
-	beq	$11, $0, beq_then.29048
+ble.s_cont.29026:
+	beq	$11, $0, beq_then.29031
 	lw	$10, 24($10)
-	j	beq_cont.29049
-beq_then.29048:
+	j	beq_cont.29032
+beq_then.29031:
 	lw	$10, 24($10)
-	beq	$10, $0, beq_then.29050
+	beq	$10, $0, beq_then.29033
 	li	$10, 0
-	j	beq_cont.29051
-beq_then.29050:
+	j	beq_cont.29034
+beq_then.29033:
 	li	$10, 1
-beq_cont.29051:
-beq_cont.29049:
-beq_cont.29027:
-	beq	$10, $0, beq_then.29052
+beq_cont.29034:
+beq_cont.29032:
+beq_cont.29010:
+	beq	$10, $0, beq_then.29035
 	li	$8, 0
 	jr	$ra
-beq_then.29052:
+beq_then.29035:
 	addi	$8, $8, 1
 	j	check_all_inside..7192
-beq_then.29025:
+beq_then.29008:
 	li	$8, 1
 	jr	$ra
 shadow_check_and_group..7198:
 	sll	$10, $8, 2
 	add	$10, $9, $10
 	lw	$10, 0($10)
-	beq	$10, $7, beq_then.29053
+	beq	$10, $7, beq_then.29036
 	sll	$10, $8, 2
 	add	$10, $9, $10
 	lw	$10, 0($10)
@@ -3073,10 +3051,10 @@ shadow_check_and_group..7198:
 	add	$12, $12, $13
 	lw	$12, 0($12)
 	lw	$13, 4($11)
-	beq	$13, $1, beq_then.29054
-	beq	$13, $2, beq_then.29056
+	beq	$13, $1, beq_then.29037
+	beq	$13, $2, beq_then.29039
 	lw.s	$f8, 0($12)
-	beq.s	$f8, $f0, beq.s_then.29058
+	beq.s	$f8, $f0, beq.s_then.29041
 	lw.s	$f9, 4($12)
 	mul.s	$f9, $f9, $f5
 	lw.s	$f10, 8($12)
@@ -3100,7 +3078,7 @@ shadow_check_and_group..7198:
 	mul.s	$f11, $f11, $f12
 	add.s	$f10, $f10, $f11
 	lw	$13, 12($11)
-	beq	$13, $0, beq_then.29060
+	beq	$13, $0, beq_then.29043
 	mul.s	$f11, $f6, $f7
 	lw	$13, 36($11)
 	lw.s	$f12, 0($13)
@@ -3116,48 +3094,48 @@ shadow_check_and_group..7198:
 	lw.s	$f6, 8($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
-	j	beq_cont.29061
-beq_then.29060:
+	j	beq_cont.29044
+beq_then.29043:
 	mv.s	$f5, $f10
-beq_cont.29061:
+beq_cont.29044:
 	lw	$13, 4($11)
-	beq	$13, $3, beq_then.29062
-	j	beq_cont.29063
-beq_then.29062:
+	beq	$13, $3, beq_then.29045
+	j	beq_cont.29046
+beq_then.29045:
 	sub.s	$f5, $f5, $f1
-beq_cont.29063:
+beq_cont.29046:
 	mul.s	$f6, $f9, $f9
 	mul.s	$f5, $f8, $f5
 	sub.s	$f5, $f6, $f5
-	ble.s	$f5, $f0, ble.s_then.29064
+	ble.s	$f5, $f0, ble.s_then.29047
 	lw	$11, 24($11)
-	beq	$11, $0, beq_then.29066
+	beq	$11, $0, beq_then.29049
 	sqrt.s	$f5, $f5
 	add.s	$f5, $f9, $f5
 	lw.s	$f6, 16($12)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-	j	beq_cont.29067
-beq_then.29066:
+	j	beq_cont.29050
+beq_then.29049:
 	sqrt.s	$f5, $f5
 	sub.s	$f5, $f9, $f5
 	lw.s	$f6, 16($12)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-beq_cont.29067:
+beq_cont.29050:
 	li	$11, 1
-	j	ble.s_cont.29065
-ble.s_then.29064:
+	j	ble.s_cont.29048
+ble.s_then.29047:
 	li	$11, 0
-ble.s_cont.29065:
-	j	beq.s_cont.29059
-beq.s_then.29058:
+ble.s_cont.29048:
+	j	beq.s_cont.29042
+beq.s_then.29041:
 	li	$11, 0
-beq.s_cont.29059:
-	j	beq_cont.29057
-beq_then.29056:
+beq.s_cont.29042:
+	j	beq_cont.29040
+beq_then.29039:
 	lw.s	$f8, 0($12)
-	ble.s	$f0, $f8, ble.s_then.29068
+	ble.s	$f0, $f8, ble.s_then.29051
 	lw.s	$f8, 4($12)
 	mul.s	$f5, $f8, $f5
 	lw.s	$f8, 8($12)
@@ -3168,13 +3146,13 @@ beq_then.29056:
 	add.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$11, 1
-	j	ble.s_cont.29069
-ble.s_then.29068:
+	j	ble.s_cont.29052
+ble.s_then.29051:
 	li	$11, 0
-ble.s_cont.29069:
-beq_cont.29057:
-	j	beq_cont.29055
-beq_then.29054:
+ble.s_cont.29052:
+beq_cont.29040:
+	j	beq_cont.29038
+beq_then.29037:
 	lw	$13, 1020($0)
 	lw.s	$f8, 0($12)
 	sub.s	$f8, $f8, $f5
@@ -3186,34 +3164,34 @@ beq_then.29054:
 	abs.s	$f9, $f9
 	lw	$14, 16($11)
 	lw.s	$f10, 4($14)
-	ble.s	$f10, $f9, ble.s_then.29070
+	ble.s	$f10, $f9, ble.s_then.29053
 	lw.s	$f9, 8($13)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$14, 16($11)
 	lw.s	$f10, 8($14)
-	ble.s	$f10, $f9, ble.s_then.29072
+	ble.s	$f10, $f9, ble.s_then.29055
 	lw.s	$f9, 4($12)
-	beq.s	$f9, $f0, beq.s_then.29074
+	beq.s	$f9, $f0, beq.s_then.29057
 	li	$14, 1
-	j	beq.s_cont.29075
-beq.s_then.29074:
+	j	beq.s_cont.29058
+beq.s_then.29057:
 	li	$14, 0
-beq.s_cont.29075:
-	j	ble.s_cont.29073
-ble.s_then.29072:
+beq.s_cont.29058:
+	j	ble.s_cont.29056
+ble.s_then.29055:
 	li	$14, 0
-ble.s_cont.29073:
-	j	ble.s_cont.29071
-ble.s_then.29070:
+ble.s_cont.29056:
+	j	ble.s_cont.29054
+ble.s_then.29053:
 	li	$14, 0
-ble.s_cont.29071:
-	beq	$14, $0, beq_then.29076
+ble.s_cont.29054:
+	beq	$14, $0, beq_then.29059
 	sw.s	$f8, 572($0)
 	li	$11, 1
-	j	beq_cont.29077
-beq_then.29076:
+	j	beq_cont.29060
+beq_then.29059:
 	lw.s	$f8, 8($12)
 	sub.s	$f8, $f8, $f6
 	lw.s	$f9, 12($12)
@@ -3224,34 +3202,34 @@ beq_then.29076:
 	abs.s	$f9, $f9
 	lw	$14, 16($11)
 	lw.s	$f10, 0($14)
-	ble.s	$f10, $f9, ble.s_then.29078
+	ble.s	$f10, $f9, ble.s_then.29061
 	lw.s	$f9, 8($13)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$14, 16($11)
 	lw.s	$f10, 8($14)
-	ble.s	$f10, $f9, ble.s_then.29080
+	ble.s	$f10, $f9, ble.s_then.29063
 	lw.s	$f9, 12($12)
-	beq.s	$f9, $f0, beq.s_then.29082
+	beq.s	$f9, $f0, beq.s_then.29065
 	li	$14, 1
-	j	beq.s_cont.29083
-beq.s_then.29082:
+	j	beq.s_cont.29066
+beq.s_then.29065:
 	li	$14, 0
-beq.s_cont.29083:
-	j	ble.s_cont.29081
-ble.s_then.29080:
+beq.s_cont.29066:
+	j	ble.s_cont.29064
+ble.s_then.29063:
 	li	$14, 0
-ble.s_cont.29081:
-	j	ble.s_cont.29079
-ble.s_then.29078:
+ble.s_cont.29064:
+	j	ble.s_cont.29062
+ble.s_then.29061:
 	li	$14, 0
-ble.s_cont.29079:
-	beq	$14, $0, beq_then.29084
+ble.s_cont.29062:
+	beq	$14, $0, beq_then.29067
 	sw.s	$f8, 572($0)
 	li	$11, 2
-	j	beq_cont.29085
-beq_then.29084:
+	j	beq_cont.29068
+beq_then.29067:
 	lw.s	$f8, 16($12)
 	sub.s	$f7, $f8, $f7
 	lw.s	$f8, 20($12)
@@ -3262,54 +3240,54 @@ beq_then.29084:
 	abs.s	$f5, $f5
 	lw	$14, 16($11)
 	lw.s	$f8, 0($14)
-	ble.s	$f8, $f5, ble.s_then.29086
+	ble.s	$f8, $f5, ble.s_then.29069
 	lw.s	$f5, 4($13)
 	mul.s	$f5, $f7, $f5
 	add.s	$f5, $f5, $f6
 	abs.s	$f5, $f5
 	lw	$11, 16($11)
 	lw.s	$f6, 4($11)
-	ble.s	$f6, $f5, ble.s_then.29088
+	ble.s	$f6, $f5, ble.s_then.29071
 	lw.s	$f5, 20($12)
-	beq.s	$f5, $f0, beq.s_then.29090
+	beq.s	$f5, $f0, beq.s_then.29073
 	li	$11, 1
-	j	beq.s_cont.29091
-beq.s_then.29090:
+	j	beq.s_cont.29074
+beq.s_then.29073:
 	li	$11, 0
-beq.s_cont.29091:
-	j	ble.s_cont.29089
-ble.s_then.29088:
+beq.s_cont.29074:
+	j	ble.s_cont.29072
+ble.s_then.29071:
 	li	$11, 0
-ble.s_cont.29089:
-	j	ble.s_cont.29087
-ble.s_then.29086:
+ble.s_cont.29072:
+	j	ble.s_cont.29070
+ble.s_then.29069:
 	li	$11, 0
-ble.s_cont.29087:
-	beq	$11, $0, beq_then.29092
+ble.s_cont.29070:
+	beq	$11, $0, beq_then.29075
 	sw.s	$f7, 572($0)
 	li	$11, 3
-	j	beq_cont.29093
-beq_then.29092:
+	j	beq_cont.29076
+beq_then.29075:
 	li	$11, 0
-beq_cont.29093:
-beq_cont.29085:
-beq_cont.29077:
-beq_cont.29055:
+beq_cont.29076:
+beq_cont.29068:
+beq_cont.29060:
+beq_cont.29038:
 	lw.s	$f5, 572($0)
-	beq	$11, $0, beq_then.29094
+	beq	$11, $0, beq_then.29077
 	lui.s	$f6, 0xbe4c	# -0.200000の上位16ビット
 	lli.s	$f6, 0xcccd	# -0.200000の下位16ビット
-	ble.s	$f6, $f5, ble.s_then.29096
+	ble.s	$f6, $f5, ble.s_then.29079
 	li	$11, 1
-	j	ble.s_cont.29097
-ble.s_then.29096:
+	j	ble.s_cont.29080
+ble.s_then.29079:
 	li	$11, 0
-ble.s_cont.29097:
-	j	beq_cont.29095
-beq_then.29094:
+ble.s_cont.29080:
+	j	beq_cont.29078
+beq_then.29077:
 	li	$11, 0
-beq_cont.29095:
-	beq	$11, $0, beq_then.29098
+beq_cont.29078:
+	beq	$11, $0, beq_then.29081
 	lui.s	$f6, 0x3c23	# 0.010000の上位16ビット
 	lli.s	$f6, 0xd70a	# 0.010000の下位16ビット
 	add.s	$f5, $f5, $f6
@@ -3338,32 +3316,32 @@ beq_cont.29095:
 	jal	check_all_inside..7192
 	addi	$sp, $sp, -12
 	lw	$ra, 8($sp)
-	beq	$8, $0, beq_then.29099
+	beq	$8, $0, beq_then.29082
 	li	$8, 1
 	jr	$ra
-beq_then.29099:
+beq_then.29082:
 	lw	$8, 4($sp)
 	addi	$8, $8, 1
 	lw	$9, 0($sp)
 	j	shadow_check_and_group..7198
-beq_then.29098:
+beq_then.29081:
 	sll	$10, $10, 2
 	lw	$10, 80($10)
 	lw	$10, 24($10)
-	beq	$10, $0, beq_then.29100
+	beq	$10, $0, beq_then.29083
 	addi	$8, $8, 1
 	j	shadow_check_and_group..7198
-beq_then.29100:
+beq_then.29083:
 	li	$8, 0
 	jr	$ra
-beq_then.29053:
+beq_then.29036:
 	li	$8, 0
 	jr	$ra
 shadow_check_one_or_group..7201:
 	sll	$10, $8, 2
 	add	$10, $9, $10
 	lw	$10, 0($10)
-	beq	$10, $7, beq_then.29101
+	beq	$10, $7, beq_then.29084
 	sll	$10, $10, 2
 	lw	$10, 364($10)
 	li	$11, 0
@@ -3376,15 +3354,15 @@ shadow_check_one_or_group..7201:
 	jal	shadow_check_and_group..7198
 	addi	$sp, $sp, -12
 	lw	$ra, 8($sp)
-	beq	$8, $0, beq_then.29102
+	beq	$8, $0, beq_then.29085
 	li	$8, 1
 	jr	$ra
-beq_then.29102:
+beq_then.29085:
 	lw	$8, 4($sp)
 	addi	$8, $8, 1
 	lw	$9, 0($sp)
 	j	shadow_check_one_or_group..7201
-beq_then.29101:
+beq_then.29084:
 	li	$8, 0
 	jr	$ra
 shadow_check_one_or_matrix..7204:
@@ -3392,12 +3370,12 @@ shadow_check_one_or_matrix..7204:
 	add	$10, $9, $10
 	lw	$10, 0($10)
 	lw	$11, 0($10)
-	beq	$11, $7, beq_then.29103
+	beq	$11, $7, beq_then.29086
 	li	$12, 99
 	sw	$10, 0($sp)
 	sw	$9, 4($sp)
 	sw	$8, 8($sp)
-	beq	$11, $12, beq_then.29104
+	beq	$11, $12, beq_then.29087
 	sll	$12, $11, 2
 	lw	$12, 80($12)
 	lw.s	$f5, 584($0)
@@ -3417,10 +3395,10 @@ shadow_check_one_or_matrix..7204:
 	add	$11, $13, $11
 	lw	$11, 0($11)
 	lw	$13, 4($12)
-	beq	$13, $1, beq_then.29106
-	beq	$13, $2, beq_then.29108
+	beq	$13, $1, beq_then.29089
+	beq	$13, $2, beq_then.29091
 	lw.s	$f8, 0($11)
-	beq.s	$f8, $f0, beq.s_then.29110
+	beq.s	$f8, $f0, beq.s_then.29093
 	lw.s	$f9, 4($11)
 	mul.s	$f9, $f9, $f5
 	lw.s	$f10, 8($11)
@@ -3444,7 +3422,7 @@ shadow_check_one_or_matrix..7204:
 	mul.s	$f11, $f11, $f12
 	add.s	$f10, $f10, $f11
 	lw	$13, 12($12)
-	beq	$13, $0, beq_then.29112
+	beq	$13, $0, beq_then.29095
 	mul.s	$f11, $f6, $f7
 	lw	$13, 36($12)
 	lw.s	$f12, 0($13)
@@ -3460,48 +3438,48 @@ shadow_check_one_or_matrix..7204:
 	lw.s	$f6, 8($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
-	j	beq_cont.29113
-beq_then.29112:
+	j	beq_cont.29096
+beq_then.29095:
 	mv.s	$f5, $f10
-beq_cont.29113:
+beq_cont.29096:
 	lw	$13, 4($12)
-	beq	$13, $3, beq_then.29114
-	j	beq_cont.29115
-beq_then.29114:
+	beq	$13, $3, beq_then.29097
+	j	beq_cont.29098
+beq_then.29097:
 	sub.s	$f5, $f5, $f1
-beq_cont.29115:
+beq_cont.29098:
 	mul.s	$f6, $f9, $f9
 	mul.s	$f5, $f8, $f5
 	sub.s	$f5, $f6, $f5
-	ble.s	$f5, $f0, ble.s_then.29116
+	ble.s	$f5, $f0, ble.s_then.29099
 	lw	$12, 24($12)
-	beq	$12, $0, beq_then.29118
+	beq	$12, $0, beq_then.29101
 	sqrt.s	$f5, $f5
 	add.s	$f5, $f9, $f5
 	lw.s	$f6, 16($11)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-	j	beq_cont.29119
-beq_then.29118:
+	j	beq_cont.29102
+beq_then.29101:
 	sqrt.s	$f5, $f5
 	sub.s	$f5, $f9, $f5
 	lw.s	$f6, 16($11)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-beq_cont.29119:
+beq_cont.29102:
 	li	$11, 1
-	j	ble.s_cont.29117
-ble.s_then.29116:
+	j	ble.s_cont.29100
+ble.s_then.29099:
 	li	$11, 0
-ble.s_cont.29117:
-	j	beq.s_cont.29111
-beq.s_then.29110:
+ble.s_cont.29100:
+	j	beq.s_cont.29094
+beq.s_then.29093:
 	li	$11, 0
-beq.s_cont.29111:
-	j	beq_cont.29109
-beq_then.29108:
+beq.s_cont.29094:
+	j	beq_cont.29092
+beq_then.29091:
 	lw.s	$f8, 0($11)
-	ble.s	$f0, $f8, ble.s_then.29120
+	ble.s	$f0, $f8, ble.s_then.29103
 	lw.s	$f8, 4($11)
 	mul.s	$f5, $f8, $f5
 	lw.s	$f8, 8($11)
@@ -3512,13 +3490,13 @@ beq_then.29108:
 	add.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$11, 1
-	j	ble.s_cont.29121
-ble.s_then.29120:
+	j	ble.s_cont.29104
+ble.s_then.29103:
 	li	$11, 0
-ble.s_cont.29121:
-beq_cont.29109:
-	j	beq_cont.29107
-beq_then.29106:
+ble.s_cont.29104:
+beq_cont.29092:
+	j	beq_cont.29090
+beq_then.29089:
 	lw	$13, 1020($0)
 	lw.s	$f8, 0($11)
 	sub.s	$f8, $f8, $f5
@@ -3530,34 +3508,34 @@ beq_then.29106:
 	abs.s	$f9, $f9
 	lw	$14, 16($12)
 	lw.s	$f10, 4($14)
-	ble.s	$f10, $f9, ble.s_then.29122
+	ble.s	$f10, $f9, ble.s_then.29105
 	lw.s	$f9, 8($13)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$14, 16($12)
 	lw.s	$f10, 8($14)
-	ble.s	$f10, $f9, ble.s_then.29124
+	ble.s	$f10, $f9, ble.s_then.29107
 	lw.s	$f9, 4($11)
-	beq.s	$f9, $f0, beq.s_then.29126
+	beq.s	$f9, $f0, beq.s_then.29109
 	li	$14, 1
-	j	beq.s_cont.29127
-beq.s_then.29126:
+	j	beq.s_cont.29110
+beq.s_then.29109:
 	li	$14, 0
-beq.s_cont.29127:
-	j	ble.s_cont.29125
-ble.s_then.29124:
+beq.s_cont.29110:
+	j	ble.s_cont.29108
+ble.s_then.29107:
 	li	$14, 0
-ble.s_cont.29125:
-	j	ble.s_cont.29123
-ble.s_then.29122:
+ble.s_cont.29108:
+	j	ble.s_cont.29106
+ble.s_then.29105:
 	li	$14, 0
-ble.s_cont.29123:
-	beq	$14, $0, beq_then.29128
+ble.s_cont.29106:
+	beq	$14, $0, beq_then.29111
 	sw.s	$f8, 572($0)
 	li	$11, 1
-	j	beq_cont.29129
-beq_then.29128:
+	j	beq_cont.29112
+beq_then.29111:
 	lw.s	$f8, 8($11)
 	sub.s	$f8, $f8, $f6
 	lw.s	$f9, 12($11)
@@ -3568,34 +3546,34 @@ beq_then.29128:
 	abs.s	$f9, $f9
 	lw	$14, 16($12)
 	lw.s	$f10, 0($14)
-	ble.s	$f10, $f9, ble.s_then.29130
+	ble.s	$f10, $f9, ble.s_then.29113
 	lw.s	$f9, 8($13)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$14, 16($12)
 	lw.s	$f10, 8($14)
-	ble.s	$f10, $f9, ble.s_then.29132
+	ble.s	$f10, $f9, ble.s_then.29115
 	lw.s	$f9, 12($11)
-	beq.s	$f9, $f0, beq.s_then.29134
+	beq.s	$f9, $f0, beq.s_then.29117
 	li	$14, 1
-	j	beq.s_cont.29135
-beq.s_then.29134:
+	j	beq.s_cont.29118
+beq.s_then.29117:
 	li	$14, 0
-beq.s_cont.29135:
-	j	ble.s_cont.29133
-ble.s_then.29132:
+beq.s_cont.29118:
+	j	ble.s_cont.29116
+ble.s_then.29115:
 	li	$14, 0
-ble.s_cont.29133:
-	j	ble.s_cont.29131
-ble.s_then.29130:
+ble.s_cont.29116:
+	j	ble.s_cont.29114
+ble.s_then.29113:
 	li	$14, 0
-ble.s_cont.29131:
-	beq	$14, $0, beq_then.29136
+ble.s_cont.29114:
+	beq	$14, $0, beq_then.29119
 	sw.s	$f8, 572($0)
 	li	$11, 2
-	j	beq_cont.29137
-beq_then.29136:
+	j	beq_cont.29120
+beq_then.29119:
 	lw.s	$f8, 16($11)
 	sub.s	$f7, $f8, $f7
 	lw.s	$f8, 20($11)
@@ -3606,44 +3584,44 @@ beq_then.29136:
 	abs.s	$f5, $f5
 	lw	$14, 16($12)
 	lw.s	$f8, 0($14)
-	ble.s	$f8, $f5, ble.s_then.29138
+	ble.s	$f8, $f5, ble.s_then.29121
 	lw.s	$f5, 4($13)
 	mul.s	$f5, $f7, $f5
 	add.s	$f5, $f5, $f6
 	abs.s	$f5, $f5
 	lw	$12, 16($12)
 	lw.s	$f6, 4($12)
-	ble.s	$f6, $f5, ble.s_then.29140
+	ble.s	$f6, $f5, ble.s_then.29123
 	lw.s	$f5, 20($11)
-	beq.s	$f5, $f0, beq.s_then.29142
+	beq.s	$f5, $f0, beq.s_then.29125
 	li	$11, 1
-	j	beq.s_cont.29143
-beq.s_then.29142:
+	j	beq.s_cont.29126
+beq.s_then.29125:
 	li	$11, 0
-beq.s_cont.29143:
-	j	ble.s_cont.29141
-ble.s_then.29140:
+beq.s_cont.29126:
+	j	ble.s_cont.29124
+ble.s_then.29123:
 	li	$11, 0
-ble.s_cont.29141:
-	j	ble.s_cont.29139
-ble.s_then.29138:
+ble.s_cont.29124:
+	j	ble.s_cont.29122
+ble.s_then.29121:
 	li	$11, 0
-ble.s_cont.29139:
-	beq	$11, $0, beq_then.29144
+ble.s_cont.29122:
+	beq	$11, $0, beq_then.29127
 	sw.s	$f7, 572($0)
 	li	$11, 3
-	j	beq_cont.29145
-beq_then.29144:
+	j	beq_cont.29128
+beq_then.29127:
 	li	$11, 0
-beq_cont.29145:
-beq_cont.29137:
-beq_cont.29129:
-beq_cont.29107:
-	beq	$11, $0, beq_then.29146
+beq_cont.29128:
+beq_cont.29120:
+beq_cont.29112:
+beq_cont.29090:
+	beq	$11, $0, beq_then.29129
 	lw.s	$f5, 572($0)
 	lui.s	$f6, 0xbdcc	# -0.100000の上位16ビット
 	lli.s	$f6, 0xcccd	# -0.100000の下位16ビット
-	ble.s	$f6, $f5, ble.s_then.29148
+	ble.s	$f6, $f5, ble.s_then.29131
 	li	$11, 1
 	mv	$9, $10
 	mv	$8, $11
@@ -3652,25 +3630,25 @@ beq_cont.29107:
 	jal	shadow_check_one_or_group..7201
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-	beq	$8, $0, beq_then.29150
+	beq	$8, $0, beq_then.29133
 	li	$8, 1
-	j	beq_cont.29151
-beq_then.29150:
+	j	beq_cont.29134
+beq_then.29133:
 	li	$8, 0
-beq_cont.29151:
-	j	ble.s_cont.29149
-ble.s_then.29148:
+beq_cont.29134:
+	j	ble.s_cont.29132
+ble.s_then.29131:
 	li	$8, 0
-ble.s_cont.29149:
-	j	beq_cont.29147
-beq_then.29146:
+ble.s_cont.29132:
+	j	beq_cont.29130
+beq_then.29129:
 	li	$8, 0
-beq_cont.29147:
-	j	beq_cont.29105
-beq_then.29104:
+beq_cont.29130:
+	j	beq_cont.29088
+beq_then.29087:
 	li	$8, 1
-beq_cont.29105:
-	beq	$8, $0, beq_then.29152
+beq_cont.29088:
+	beq	$8, $0, beq_then.29135
 	li	$8, 1
 	lw	$9, 0($sp)
 	sw	$ra, 12($sp)
@@ -3678,27 +3656,27 @@ beq_cont.29105:
 	jal	shadow_check_one_or_group..7201
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-	beq	$8, $0, beq_then.29153
+	beq	$8, $0, beq_then.29136
 	li	$8, 1
 	jr	$ra
-beq_then.29153:
+beq_then.29136:
 	lw	$8, 8($sp)
 	addi	$8, $8, 1
 	lw	$9, 4($sp)
 	j	shadow_check_one_or_matrix..7204
-beq_then.29152:
+beq_then.29135:
 	lw	$8, 8($sp)
 	addi	$8, $8, 1
 	lw	$9, 4($sp)
 	j	shadow_check_one_or_matrix..7204
-beq_then.29103:
+beq_then.29086:
 	li	$8, 0
 	jr	$ra
 solve_each_element..7207:
 	sll	$11, $8, 2
 	add	$11, $9, $11
 	lw	$11, 0($11)
-	beq	$11, $7, beq_then.29154
+	beq	$11, $7, beq_then.29137
 	sll	$12, $11, 2
 	lw	$12, 80($12)
 	lw.s	$f5, 668($0)
@@ -3714,8 +3692,8 @@ solve_each_element..7207:
 	lw.s	$f8, 8($13)
 	sub.s	$f7, $f7, $f8
 	lw	$13, 4($12)
-	beq	$13, $1, beq_then.29155
-	beq	$13, $2, beq_then.29157
+	beq	$13, $1, beq_then.29138
+	beq	$13, $2, beq_then.29140
 	lw.s	$f8, 0($10)
 	lw.s	$f9, 4($10)
 	lw.s	$f10, 8($10)
@@ -3734,7 +3712,7 @@ solve_each_element..7207:
 	mul.s	$f12, $f12, $f13
 	add.s	$f11, $f11, $f12
 	lw	$13, 12($12)
-	beq	$13, $0, beq_then.29159
+	beq	$13, $0, beq_then.29142
 	mul.s	$f12, $f9, $f10
 	lw	$13, 36($12)
 	lw.s	$f13, 0($13)
@@ -3750,11 +3728,11 @@ solve_each_element..7207:
 	lw.s	$f9, 8($13)
 	mul.s	$f8, $f8, $f9
 	add.s	$f8, $f10, $f8
-	j	beq_cont.29160
-beq_then.29159:
+	j	beq_cont.29143
+beq_then.29142:
 	mv.s	$f8, $f11
-beq_cont.29160:
-	beq.s	$f8, $f0, beq.s_then.29161
+beq_cont.29143:
+	beq.s	$f8, $f0, beq.s_then.29144
 	lw.s	$f9, 0($10)
 	lw.s	$f10, 4($10)
 	lw.s	$f11, 8($10)
@@ -3773,7 +3751,7 @@ beq_cont.29160:
 	mul.s	$f13, $f13, $f14
 	add.s	$f12, $f12, $f13
 	lw	$13, 12($12)
-	beq	$13, $0, beq_then.29163
+	beq	$13, $0, beq_then.29146
 	mul.s	$f13, $f11, $f6
 	mul.s	$f14, $f10, $f7
 	add.s	$f13, $f13, $f14
@@ -3796,10 +3774,10 @@ beq_cont.29160:
 	add.s	$f9, $f11, $f9
 	mul.s	$f9, $f9, $f2
 	add.s	$f9, $f12, $f9
-	j	beq_cont.29164
-beq_then.29163:
+	j	beq_cont.29147
+beq_then.29146:
 	mv.s	$f9, $f12
-beq_cont.29164:
+beq_cont.29147:
 	mul.s	$f10, $f5, $f5
 	lw	$13, 16($12)
 	lw.s	$f11, 0($13)
@@ -3815,7 +3793,7 @@ beq_cont.29164:
 	mul.s	$f11, $f11, $f12
 	add.s	$f10, $f10, $f11
 	lw	$13, 12($12)
-	beq	$13, $0, beq_then.29165
+	beq	$13, $0, beq_then.29148
 	mul.s	$f11, $f6, $f7
 	lw	$13, 36($12)
 	lw.s	$f12, 0($13)
@@ -3831,42 +3809,42 @@ beq_cont.29164:
 	lw.s	$f6, 8($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
-	j	beq_cont.29166
-beq_then.29165:
+	j	beq_cont.29149
+beq_then.29148:
 	mv.s	$f5, $f10
-beq_cont.29166:
+beq_cont.29149:
 	lw	$13, 4($12)
-	beq	$13, $3, beq_then.29167
-	j	beq_cont.29168
-beq_then.29167:
+	beq	$13, $3, beq_then.29150
+	j	beq_cont.29151
+beq_then.29150:
 	sub.s	$f5, $f5, $f1
-beq_cont.29168:
+beq_cont.29151:
 	mul.s	$f6, $f9, $f9
 	mul.s	$f5, $f8, $f5
 	sub.s	$f5, $f6, $f5
-	ble.s	$f5, $f0, ble.s_then.29169
+	ble.s	$f5, $f0, ble.s_then.29152
 	sqrt.s	$f5, $f5
 	lw	$12, 24($12)
-	beq	$12, $0, beq_then.29171
-	j	beq_cont.29172
-beq_then.29171:
+	beq	$12, $0, beq_then.29154
+	j	beq_cont.29155
+beq_then.29154:
 	neg.s	$f5, $f5
-beq_cont.29172:
+beq_cont.29155:
 	sub.s	$f5, $f5, $f9
 	inv.s	$f6, $f8
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$12, 1
-	j	ble.s_cont.29170
-ble.s_then.29169:
+	j	ble.s_cont.29153
+ble.s_then.29152:
 	li	$12, 0
-ble.s_cont.29170:
-	j	beq.s_cont.29162
-beq.s_then.29161:
+ble.s_cont.29153:
+	j	beq.s_cont.29145
+beq.s_then.29144:
 	li	$12, 0
-beq.s_cont.29162:
-	j	beq_cont.29158
-beq_then.29157:
+beq.s_cont.29145:
+	j	beq_cont.29141
+beq_then.29140:
 	lw	$12, 16($12)
 	lw.s	$f8, 0($10)
 	lw.s	$f9, 0($12)
@@ -3879,7 +3857,7 @@ beq_then.29157:
 	lw.s	$f10, 8($12)
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
-	ble.s	$f8, $f0, ble.s_then.29173
+	ble.s	$f8, $f0, ble.s_then.29156
 	lw.s	$f9, 0($12)
 	mul.s	$f5, $f9, $f5
 	lw.s	$f9, 4($12)
@@ -3893,36 +3871,30 @@ beq_then.29157:
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$12, 1
-	j	ble.s_cont.29174
-ble.s_then.29173:
+	j	ble.s_cont.29157
+ble.s_then.29156:
 	li	$12, 0
-ble.s_cont.29174:
-beq_cont.29158:
-	j	beq_cont.29156
-beq_then.29155:
+ble.s_cont.29157:
+beq_cont.29141:
+	j	beq_cont.29139
+beq_then.29138:
 	lw.s	$f8, 0($10)
-	beq.s	$f8, $f0, beq.s_then.29175
+	beq.s	$f8, $f0, beq.s_then.29158
 	lw	$13, 16($12)
 	lw	$14, 24($12)
 	lw.s	$f8, 0($10)
-	ble.s	$f0, $f8, ble.s_then.29177
+	ble.s	$f0, $f8, ble.s_then.29160
 	li	$15, 1
-	j	ble.s_cont.29178
-ble.s_then.29177:
+	j	ble.s_cont.29161
+ble.s_then.29160:
 	li	$15, 0
-ble.s_cont.29178:
-	beq	$14, $15, beq_then.29179
-	li	$14, 1
-	j	beq_cont.29180
-beq_then.29179:
-	li	$14, 0
-beq_cont.29180:
+ble.s_cont.29161:
 	lw.s	$f8, 0($13)
-	beq	$14, $0, beq_then.29181
-	j	beq_cont.29182
-beq_then.29181:
+	beq	$14, $15, beq_then.29162
+	j	beq_cont.29163
+beq_then.29162:
 	neg.s	$f8, $f8
-beq_cont.29182:
+beq_cont.29163:
 	sub.s	$f8, $f8, $f5
 	lw.s	$f9, 0($10)
 	inv.s	$f9, $f9
@@ -3932,54 +3904,48 @@ beq_cont.29182:
 	add.s	$f9, $f9, $f6
 	abs.s	$f9, $f9
 	lw.s	$f10, 4($13)
-	ble.s	$f10, $f9, ble.s_then.29183
+	ble.s	$f10, $f9, ble.s_then.29164
 	lw.s	$f9, 8($10)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw.s	$f10, 8($13)
-	ble.s	$f10, $f9, ble.s_then.29185
+	ble.s	$f10, $f9, ble.s_then.29166
 	sw.s	$f8, 572($0)
 	li	$13, 1
-	j	ble.s_cont.29186
-ble.s_then.29185:
+	j	ble.s_cont.29167
+ble.s_then.29166:
 	li	$13, 0
-ble.s_cont.29186:
-	j	ble.s_cont.29184
-ble.s_then.29183:
+ble.s_cont.29167:
+	j	ble.s_cont.29165
+ble.s_then.29164:
 	li	$13, 0
-ble.s_cont.29184:
-	j	beq.s_cont.29176
-beq.s_then.29175:
+ble.s_cont.29165:
+	j	beq.s_cont.29159
+beq.s_then.29158:
 	li	$13, 0
-beq.s_cont.29176:
-	beq	$13, $0, beq_then.29187
+beq.s_cont.29159:
+	beq	$13, $0, beq_then.29168
 	li	$12, 1
-	j	beq_cont.29188
-beq_then.29187:
+	j	beq_cont.29169
+beq_then.29168:
 	lw.s	$f8, 4($10)
-	beq.s	$f8, $f0, beq.s_then.29189
+	beq.s	$f8, $f0, beq.s_then.29170
 	lw	$13, 16($12)
 	lw	$14, 24($12)
 	lw.s	$f8, 4($10)
-	ble.s	$f0, $f8, ble.s_then.29191
+	ble.s	$f0, $f8, ble.s_then.29172
 	li	$15, 1
-	j	ble.s_cont.29192
-ble.s_then.29191:
+	j	ble.s_cont.29173
+ble.s_then.29172:
 	li	$15, 0
-ble.s_cont.29192:
-	beq	$14, $15, beq_then.29193
-	li	$14, 1
-	j	beq_cont.29194
-beq_then.29193:
-	li	$14, 0
-beq_cont.29194:
+ble.s_cont.29173:
 	lw.s	$f8, 4($13)
-	beq	$14, $0, beq_then.29195
-	j	beq_cont.29196
-beq_then.29195:
+	beq	$14, $15, beq_then.29174
+	j	beq_cont.29175
+beq_then.29174:
 	neg.s	$f8, $f8
-beq_cont.29196:
+beq_cont.29175:
 	sub.s	$f8, $f8, $f6
 	lw.s	$f9, 4($10)
 	inv.s	$f9, $f9
@@ -3989,54 +3955,48 @@ beq_cont.29196:
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw.s	$f10, 8($13)
-	ble.s	$f10, $f9, ble.s_then.29197
+	ble.s	$f10, $f9, ble.s_then.29176
 	lw.s	$f9, 0($10)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f5
 	abs.s	$f9, $f9
 	lw.s	$f10, 0($13)
-	ble.s	$f10, $f9, ble.s_then.29199
+	ble.s	$f10, $f9, ble.s_then.29178
 	sw.s	$f8, 572($0)
 	li	$13, 1
-	j	ble.s_cont.29200
-ble.s_then.29199:
+	j	ble.s_cont.29179
+ble.s_then.29178:
 	li	$13, 0
-ble.s_cont.29200:
-	j	ble.s_cont.29198
-ble.s_then.29197:
+ble.s_cont.29179:
+	j	ble.s_cont.29177
+ble.s_then.29176:
 	li	$13, 0
-ble.s_cont.29198:
-	j	beq.s_cont.29190
-beq.s_then.29189:
+ble.s_cont.29177:
+	j	beq.s_cont.29171
+beq.s_then.29170:
 	li	$13, 0
-beq.s_cont.29190:
-	beq	$13, $0, beq_then.29201
+beq.s_cont.29171:
+	beq	$13, $0, beq_then.29180
 	li	$12, 2
-	j	beq_cont.29202
-beq_then.29201:
+	j	beq_cont.29181
+beq_then.29180:
 	lw.s	$f8, 8($10)
-	beq.s	$f8, $f0, beq.s_then.29203
+	beq.s	$f8, $f0, beq.s_then.29182
 	lw	$13, 16($12)
 	lw	$12, 24($12)
 	lw.s	$f8, 8($10)
-	ble.s	$f0, $f8, ble.s_then.29205
+	ble.s	$f0, $f8, ble.s_then.29184
 	li	$14, 1
-	j	ble.s_cont.29206
-ble.s_then.29205:
+	j	ble.s_cont.29185
+ble.s_then.29184:
 	li	$14, 0
-ble.s_cont.29206:
-	beq	$12, $14, beq_then.29207
-	li	$12, 1
-	j	beq_cont.29208
-beq_then.29207:
-	li	$12, 0
-beq_cont.29208:
+ble.s_cont.29185:
 	lw.s	$f8, 8($13)
-	beq	$12, $0, beq_then.29209
-	j	beq_cont.29210
-beq_then.29209:
+	beq	$12, $14, beq_then.29186
+	j	beq_cont.29187
+beq_then.29186:
 	neg.s	$f8, $f8
-beq_cont.29210:
+beq_cont.29187:
 	sub.s	$f7, $f8, $f7
 	lw.s	$f8, 8($10)
 	inv.s	$f8, $f8
@@ -4046,44 +4006,44 @@ beq_cont.29210:
 	add.s	$f5, $f8, $f5
 	abs.s	$f5, $f5
 	lw.s	$f8, 0($13)
-	ble.s	$f8, $f5, ble.s_then.29211
+	ble.s	$f8, $f5, ble.s_then.29188
 	lw.s	$f5, 4($10)
 	mul.s	$f5, $f7, $f5
 	add.s	$f5, $f5, $f6
 	abs.s	$f5, $f5
 	lw.s	$f6, 4($13)
-	ble.s	$f6, $f5, ble.s_then.29213
+	ble.s	$f6, $f5, ble.s_then.29190
 	sw.s	$f7, 572($0)
 	li	$12, 1
-	j	ble.s_cont.29214
-ble.s_then.29213:
+	j	ble.s_cont.29191
+ble.s_then.29190:
 	li	$12, 0
-ble.s_cont.29214:
-	j	ble.s_cont.29212
-ble.s_then.29211:
+ble.s_cont.29191:
+	j	ble.s_cont.29189
+ble.s_then.29188:
 	li	$12, 0
-ble.s_cont.29212:
-	j	beq.s_cont.29204
-beq.s_then.29203:
+ble.s_cont.29189:
+	j	beq.s_cont.29183
+beq.s_then.29182:
 	li	$12, 0
-beq.s_cont.29204:
-	beq	$12, $0, beq_then.29215
+beq.s_cont.29183:
+	beq	$12, $0, beq_then.29192
 	li	$12, 3
-	j	beq_cont.29216
-beq_then.29215:
+	j	beq_cont.29193
+beq_then.29192:
 	li	$12, 0
-beq_cont.29216:
-beq_cont.29202:
-beq_cont.29188:
-beq_cont.29156:
-	beq	$12, $0, beq_then.29217
+beq_cont.29193:
+beq_cont.29181:
+beq_cont.29169:
+beq_cont.29139:
+	beq	$12, $0, beq_then.29194
 	lw.s	$f5, 572($0)
 	sw	$10, 0($sp)
 	sw	$9, 4($sp)
 	sw	$8, 8($sp)
-	ble.s	$f5, $f0, ble.s_then.29218
+	ble.s	$f5, $f0, ble.s_then.29195
 	lw.s	$f6, 580($0)
-	ble.s	$f6, $f5, ble.s_then.29220
+	ble.s	$f6, $f5, ble.s_then.29197
 	lui.s	$f6, 0x3c23	# 0.010000の上位16ビット
 	lli.s	$f6, 0xd70a	# 0.010000の下位16ビット
 	add.s	$f5, $f5, $f6
@@ -4115,7 +4075,7 @@ beq_cont.29156:
 	jal	check_all_inside..7192
 	addi	$sp, $sp, -40
 	lw	$ra, 36($sp)
-	beq	$8, $0, beq_then.29222
+	beq	$8, $0, beq_then.29199
 	lw.s	$f5, 32($sp)
 	sw.s	$f5, 580($0)
 	lw.s	$f5, 28($sp)
@@ -4128,36 +4088,36 @@ beq_cont.29156:
 	sw	$8, 596($0)
 	lw	$8, 12($sp)
 	sw	$8, 576($0)
-	j	beq_cont.29223
-beq_then.29222:
-beq_cont.29223:
-	j	ble.s_cont.29221
-ble.s_then.29220:
-ble.s_cont.29221:
-	j	ble.s_cont.29219
-ble.s_then.29218:
-ble.s_cont.29219:
+	j	beq_cont.29200
+beq_then.29199:
+beq_cont.29200:
+	j	ble.s_cont.29198
+ble.s_then.29197:
+ble.s_cont.29198:
+	j	ble.s_cont.29196
+ble.s_then.29195:
+ble.s_cont.29196:
 	lw	$8, 8($sp)
 	addi	$8, $8, 1
 	lw	$9, 4($sp)
 	lw	$10, 0($sp)
 	j	solve_each_element..7207
-beq_then.29217:
+beq_then.29194:
 	sll	$11, $11, 2
 	lw	$11, 80($11)
 	lw	$11, 24($11)
-	beq	$11, $0, beq_then.29224
+	beq	$11, $0, beq_then.29201
 	addi	$8, $8, 1
 	j	solve_each_element..7207
-beq_then.29224:
+beq_then.29201:
 	jr	$ra
-beq_then.29154:
+beq_then.29137:
 	jr	$ra
 solve_one_or_network..7211:
 	sll	$11, $8, 2
 	add	$11, $9, $11
 	lw	$11, 0($11)
-	beq	$11, $7, beq_then.29227
+	beq	$11, $7, beq_then.29204
 	sll	$11, $11, 2
 	lw	$11, 364($11)
 	li	$12, 0
@@ -4176,19 +4136,19 @@ solve_one_or_network..7211:
 	lw	$9, 4($sp)
 	lw	$10, 0($sp)
 	j	solve_one_or_network..7211
-beq_then.29227:
+beq_then.29204:
 	jr	$ra
 trace_or_matrix..7215:
 	sll	$11, $8, 2
 	add	$11, $9, $11
 	lw	$11, 0($11)
 	lw	$12, 0($11)
-	beq	$12, $7, beq_then.29229
+	beq	$12, $7, beq_then.29206
 	li	$13, 99
 	sw	$10, 0($sp)
 	sw	$9, 4($sp)
 	sw	$8, 8($sp)
-	beq	$12, $13, beq_then.29230
+	beq	$12, $13, beq_then.29207
 	sll	$12, $12, 2
 	lw	$12, 80($12)
 	lw.s	$f5, 668($0)
@@ -4204,8 +4164,8 @@ trace_or_matrix..7215:
 	lw.s	$f8, 8($13)
 	sub.s	$f7, $f7, $f8
 	lw	$13, 4($12)
-	beq	$13, $1, beq_then.29232
-	beq	$13, $2, beq_then.29234
+	beq	$13, $1, beq_then.29209
+	beq	$13, $2, beq_then.29211
 	lw.s	$f8, 0($10)
 	lw.s	$f9, 4($10)
 	lw.s	$f10, 8($10)
@@ -4224,7 +4184,7 @@ trace_or_matrix..7215:
 	mul.s	$f12, $f12, $f13
 	add.s	$f11, $f11, $f12
 	lw	$13, 12($12)
-	beq	$13, $0, beq_then.29236
+	beq	$13, $0, beq_then.29213
 	mul.s	$f12, $f9, $f10
 	lw	$13, 36($12)
 	lw.s	$f13, 0($13)
@@ -4240,11 +4200,11 @@ trace_or_matrix..7215:
 	lw.s	$f9, 8($13)
 	mul.s	$f8, $f8, $f9
 	add.s	$f8, $f10, $f8
-	j	beq_cont.29237
-beq_then.29236:
+	j	beq_cont.29214
+beq_then.29213:
 	mv.s	$f8, $f11
-beq_cont.29237:
-	beq.s	$f8, $f0, beq.s_then.29238
+beq_cont.29214:
+	beq.s	$f8, $f0, beq.s_then.29215
 	lw.s	$f9, 0($10)
 	lw.s	$f10, 4($10)
 	lw.s	$f11, 8($10)
@@ -4263,7 +4223,7 @@ beq_cont.29237:
 	mul.s	$f13, $f13, $f14
 	add.s	$f12, $f12, $f13
 	lw	$13, 12($12)
-	beq	$13, $0, beq_then.29240
+	beq	$13, $0, beq_then.29217
 	mul.s	$f13, $f11, $f6
 	mul.s	$f14, $f10, $f7
 	add.s	$f13, $f13, $f14
@@ -4286,10 +4246,10 @@ beq_cont.29237:
 	add.s	$f9, $f11, $f9
 	mul.s	$f9, $f9, $f2
 	add.s	$f9, $f12, $f9
-	j	beq_cont.29241
-beq_then.29240:
+	j	beq_cont.29218
+beq_then.29217:
 	mv.s	$f9, $f12
-beq_cont.29241:
+beq_cont.29218:
 	mul.s	$f10, $f5, $f5
 	lw	$13, 16($12)
 	lw.s	$f11, 0($13)
@@ -4305,7 +4265,7 @@ beq_cont.29241:
 	mul.s	$f11, $f11, $f12
 	add.s	$f10, $f10, $f11
 	lw	$13, 12($12)
-	beq	$13, $0, beq_then.29242
+	beq	$13, $0, beq_then.29219
 	mul.s	$f11, $f6, $f7
 	lw	$13, 36($12)
 	lw.s	$f12, 0($13)
@@ -4321,42 +4281,42 @@ beq_cont.29241:
 	lw.s	$f6, 8($13)
 	mul.s	$f5, $f5, $f6
 	add.s	$f5, $f7, $f5
-	j	beq_cont.29243
-beq_then.29242:
+	j	beq_cont.29220
+beq_then.29219:
 	mv.s	$f5, $f10
-beq_cont.29243:
+beq_cont.29220:
 	lw	$13, 4($12)
-	beq	$13, $3, beq_then.29244
-	j	beq_cont.29245
-beq_then.29244:
+	beq	$13, $3, beq_then.29221
+	j	beq_cont.29222
+beq_then.29221:
 	sub.s	$f5, $f5, $f1
-beq_cont.29245:
+beq_cont.29222:
 	mul.s	$f6, $f9, $f9
 	mul.s	$f5, $f8, $f5
 	sub.s	$f5, $f6, $f5
-	ble.s	$f5, $f0, ble.s_then.29246
+	ble.s	$f5, $f0, ble.s_then.29223
 	sqrt.s	$f5, $f5
 	lw	$12, 24($12)
-	beq	$12, $0, beq_then.29248
-	j	beq_cont.29249
-beq_then.29248:
+	beq	$12, $0, beq_then.29225
+	j	beq_cont.29226
+beq_then.29225:
 	neg.s	$f5, $f5
-beq_cont.29249:
+beq_cont.29226:
 	sub.s	$f5, $f5, $f9
 	inv.s	$f6, $f8
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$12, 1
-	j	ble.s_cont.29247
-ble.s_then.29246:
+	j	ble.s_cont.29224
+ble.s_then.29223:
 	li	$12, 0
-ble.s_cont.29247:
-	j	beq.s_cont.29239
-beq.s_then.29238:
+ble.s_cont.29224:
+	j	beq.s_cont.29216
+beq.s_then.29215:
 	li	$12, 0
-beq.s_cont.29239:
-	j	beq_cont.29235
-beq_then.29234:
+beq.s_cont.29216:
+	j	beq_cont.29212
+beq_then.29211:
 	lw	$12, 16($12)
 	lw.s	$f8, 0($10)
 	lw.s	$f9, 0($12)
@@ -4369,7 +4329,7 @@ beq_then.29234:
 	lw.s	$f10, 8($12)
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
-	ble.s	$f8, $f0, ble.s_then.29250
+	ble.s	$f8, $f0, ble.s_then.29227
 	lw.s	$f9, 0($12)
 	mul.s	$f5, $f9, $f5
 	lw.s	$f9, 4($12)
@@ -4383,36 +4343,30 @@ beq_then.29234:
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$12, 1
-	j	ble.s_cont.29251
-ble.s_then.29250:
+	j	ble.s_cont.29228
+ble.s_then.29227:
 	li	$12, 0
-ble.s_cont.29251:
-beq_cont.29235:
-	j	beq_cont.29233
-beq_then.29232:
+ble.s_cont.29228:
+beq_cont.29212:
+	j	beq_cont.29210
+beq_then.29209:
 	lw.s	$f8, 0($10)
-	beq.s	$f8, $f0, beq.s_then.29252
+	beq.s	$f8, $f0, beq.s_then.29229
 	lw	$13, 16($12)
 	lw	$14, 24($12)
 	lw.s	$f8, 0($10)
-	ble.s	$f0, $f8, ble.s_then.29254
+	ble.s	$f0, $f8, ble.s_then.29231
 	li	$15, 1
-	j	ble.s_cont.29255
-ble.s_then.29254:
+	j	ble.s_cont.29232
+ble.s_then.29231:
 	li	$15, 0
-ble.s_cont.29255:
-	beq	$14, $15, beq_then.29256
-	li	$14, 1
-	j	beq_cont.29257
-beq_then.29256:
-	li	$14, 0
-beq_cont.29257:
+ble.s_cont.29232:
 	lw.s	$f8, 0($13)
-	beq	$14, $0, beq_then.29258
-	j	beq_cont.29259
-beq_then.29258:
+	beq	$14, $15, beq_then.29233
+	j	beq_cont.29234
+beq_then.29233:
 	neg.s	$f8, $f8
-beq_cont.29259:
+beq_cont.29234:
 	sub.s	$f8, $f8, $f5
 	lw.s	$f9, 0($10)
 	inv.s	$f9, $f9
@@ -4422,54 +4376,48 @@ beq_cont.29259:
 	add.s	$f9, $f9, $f6
 	abs.s	$f9, $f9
 	lw.s	$f10, 4($13)
-	ble.s	$f10, $f9, ble.s_then.29260
+	ble.s	$f10, $f9, ble.s_then.29235
 	lw.s	$f9, 8($10)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw.s	$f10, 8($13)
-	ble.s	$f10, $f9, ble.s_then.29262
+	ble.s	$f10, $f9, ble.s_then.29237
 	sw.s	$f8, 572($0)
 	li	$13, 1
-	j	ble.s_cont.29263
-ble.s_then.29262:
+	j	ble.s_cont.29238
+ble.s_then.29237:
 	li	$13, 0
-ble.s_cont.29263:
-	j	ble.s_cont.29261
-ble.s_then.29260:
+ble.s_cont.29238:
+	j	ble.s_cont.29236
+ble.s_then.29235:
 	li	$13, 0
-ble.s_cont.29261:
-	j	beq.s_cont.29253
-beq.s_then.29252:
+ble.s_cont.29236:
+	j	beq.s_cont.29230
+beq.s_then.29229:
 	li	$13, 0
-beq.s_cont.29253:
-	beq	$13, $0, beq_then.29264
+beq.s_cont.29230:
+	beq	$13, $0, beq_then.29239
 	li	$12, 1
-	j	beq_cont.29265
-beq_then.29264:
+	j	beq_cont.29240
+beq_then.29239:
 	lw.s	$f8, 4($10)
-	beq.s	$f8, $f0, beq.s_then.29266
+	beq.s	$f8, $f0, beq.s_then.29241
 	lw	$13, 16($12)
 	lw	$14, 24($12)
 	lw.s	$f8, 4($10)
-	ble.s	$f0, $f8, ble.s_then.29268
+	ble.s	$f0, $f8, ble.s_then.29243
 	li	$15, 1
-	j	ble.s_cont.29269
-ble.s_then.29268:
+	j	ble.s_cont.29244
+ble.s_then.29243:
 	li	$15, 0
-ble.s_cont.29269:
-	beq	$14, $15, beq_then.29270
-	li	$14, 1
-	j	beq_cont.29271
-beq_then.29270:
-	li	$14, 0
-beq_cont.29271:
+ble.s_cont.29244:
 	lw.s	$f8, 4($13)
-	beq	$14, $0, beq_then.29272
-	j	beq_cont.29273
-beq_then.29272:
+	beq	$14, $15, beq_then.29245
+	j	beq_cont.29246
+beq_then.29245:
 	neg.s	$f8, $f8
-beq_cont.29273:
+beq_cont.29246:
 	sub.s	$f8, $f8, $f6
 	lw.s	$f9, 4($10)
 	inv.s	$f9, $f9
@@ -4479,54 +4427,48 @@ beq_cont.29273:
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw.s	$f10, 8($13)
-	ble.s	$f10, $f9, ble.s_then.29274
+	ble.s	$f10, $f9, ble.s_then.29247
 	lw.s	$f9, 0($10)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f5
 	abs.s	$f9, $f9
 	lw.s	$f10, 0($13)
-	ble.s	$f10, $f9, ble.s_then.29276
+	ble.s	$f10, $f9, ble.s_then.29249
 	sw.s	$f8, 572($0)
 	li	$13, 1
-	j	ble.s_cont.29277
-ble.s_then.29276:
+	j	ble.s_cont.29250
+ble.s_then.29249:
 	li	$13, 0
-ble.s_cont.29277:
-	j	ble.s_cont.29275
-ble.s_then.29274:
+ble.s_cont.29250:
+	j	ble.s_cont.29248
+ble.s_then.29247:
 	li	$13, 0
-ble.s_cont.29275:
-	j	beq.s_cont.29267
-beq.s_then.29266:
+ble.s_cont.29248:
+	j	beq.s_cont.29242
+beq.s_then.29241:
 	li	$13, 0
-beq.s_cont.29267:
-	beq	$13, $0, beq_then.29278
+beq.s_cont.29242:
+	beq	$13, $0, beq_then.29251
 	li	$12, 2
-	j	beq_cont.29279
-beq_then.29278:
+	j	beq_cont.29252
+beq_then.29251:
 	lw.s	$f8, 8($10)
-	beq.s	$f8, $f0, beq.s_then.29280
+	beq.s	$f8, $f0, beq.s_then.29253
 	lw	$13, 16($12)
 	lw	$12, 24($12)
 	lw.s	$f8, 8($10)
-	ble.s	$f0, $f8, ble.s_then.29282
+	ble.s	$f0, $f8, ble.s_then.29255
 	li	$14, 1
-	j	ble.s_cont.29283
-ble.s_then.29282:
+	j	ble.s_cont.29256
+ble.s_then.29255:
 	li	$14, 0
-ble.s_cont.29283:
-	beq	$12, $14, beq_then.29284
-	li	$12, 1
-	j	beq_cont.29285
-beq_then.29284:
-	li	$12, 0
-beq_cont.29285:
+ble.s_cont.29256:
 	lw.s	$f8, 8($13)
-	beq	$12, $0, beq_then.29286
-	j	beq_cont.29287
-beq_then.29286:
+	beq	$12, $14, beq_then.29257
+	j	beq_cont.29258
+beq_then.29257:
 	neg.s	$f8, $f8
-beq_cont.29287:
+beq_cont.29258:
 	sub.s	$f7, $f8, $f7
 	lw.s	$f8, 8($10)
 	inv.s	$f8, $f8
@@ -4536,40 +4478,40 @@ beq_cont.29287:
 	add.s	$f5, $f8, $f5
 	abs.s	$f5, $f5
 	lw.s	$f8, 0($13)
-	ble.s	$f8, $f5, ble.s_then.29288
+	ble.s	$f8, $f5, ble.s_then.29259
 	lw.s	$f5, 4($10)
 	mul.s	$f5, $f7, $f5
 	add.s	$f5, $f5, $f6
 	abs.s	$f5, $f5
 	lw.s	$f6, 4($13)
-	ble.s	$f6, $f5, ble.s_then.29290
+	ble.s	$f6, $f5, ble.s_then.29261
 	sw.s	$f7, 572($0)
 	li	$12, 1
-	j	ble.s_cont.29291
-ble.s_then.29290:
+	j	ble.s_cont.29262
+ble.s_then.29261:
 	li	$12, 0
-ble.s_cont.29291:
-	j	ble.s_cont.29289
-ble.s_then.29288:
+ble.s_cont.29262:
+	j	ble.s_cont.29260
+ble.s_then.29259:
 	li	$12, 0
-ble.s_cont.29289:
-	j	beq.s_cont.29281
-beq.s_then.29280:
+ble.s_cont.29260:
+	j	beq.s_cont.29254
+beq.s_then.29253:
 	li	$12, 0
-beq.s_cont.29281:
-	beq	$12, $0, beq_then.29292
+beq.s_cont.29254:
+	beq	$12, $0, beq_then.29263
 	li	$12, 3
-	j	beq_cont.29293
-beq_then.29292:
+	j	beq_cont.29264
+beq_then.29263:
 	li	$12, 0
-beq_cont.29293:
-beq_cont.29279:
-beq_cont.29265:
-beq_cont.29233:
-	beq	$12, $0, beq_then.29294
+beq_cont.29264:
+beq_cont.29252:
+beq_cont.29240:
+beq_cont.29210:
+	beq	$12, $0, beq_then.29265
 	lw.s	$f5, 572($0)
 	lw.s	$f6, 580($0)
-	ble.s	$f6, $f5, ble.s_then.29296
+	ble.s	$f6, $f5, ble.s_then.29267
 	li	$12, 1
 	mv	$9, $11
 	mv	$8, $12
@@ -4578,14 +4520,14 @@ beq_cont.29233:
 	jal	solve_one_or_network..7211
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-	j	ble.s_cont.29297
-ble.s_then.29296:
-ble.s_cont.29297:
-	j	beq_cont.29295
-beq_then.29294:
-beq_cont.29295:
-	j	beq_cont.29231
-beq_then.29230:
+	j	ble.s_cont.29268
+ble.s_then.29267:
+ble.s_cont.29268:
+	j	beq_cont.29266
+beq_then.29265:
+beq_cont.29266:
+	j	beq_cont.29208
+beq_then.29207:
 	li	$12, 1
 	mv	$9, $11
 	mv	$8, $12
@@ -4594,20 +4536,20 @@ beq_then.29230:
 	jal	solve_one_or_network..7211
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-beq_cont.29231:
+beq_cont.29208:
 	lw	$8, 8($sp)
 	addi	$8, $8, 1
 	lw	$9, 4($sp)
 	lw	$10, 0($sp)
 	j	trace_or_matrix..7215
-beq_then.29229:
+beq_then.29206:
 	jr	$ra
 solve_each_element_fast..7221:
 	lw	$11, 0($10)
 	sll	$12, $8, 2
 	add	$12, $9, $12
 	lw	$12, 0($12)
-	beq	$12, $7, beq_then.29299
+	beq	$12, $7, beq_then.29270
 	sll	$13, $12, 2
 	lw	$13, 80($13)
 	lw	$14, 40($13)
@@ -4619,10 +4561,10 @@ solve_each_element_fast..7221:
 	add	$15, $15, $16
 	lw	$15, 0($15)
 	lw	$16, 4($13)
-	beq	$16, $1, beq_then.29300
-	beq	$16, $2, beq_then.29302
+	beq	$16, $1, beq_then.29271
+	beq	$16, $2, beq_then.29273
 	lw.s	$f8, 0($15)
-	beq.s	$f8, $f0, beq.s_then.29304
+	beq.s	$f8, $f0, beq.s_then.29275
 	lw.s	$f9, 4($15)
 	mul.s	$f5, $f9, $f5
 	lw.s	$f9, 8($15)
@@ -4635,47 +4577,47 @@ solve_each_element_fast..7221:
 	mul.s	$f7, $f5, $f5
 	mul.s	$f6, $f8, $f6
 	sub.s	$f6, $f7, $f6
-	ble.s	$f6, $f0, ble.s_then.29306
+	ble.s	$f6, $f0, ble.s_then.29277
 	lw	$13, 24($13)
-	beq	$13, $0, beq_then.29308
+	beq	$13, $0, beq_then.29279
 	sqrt.s	$f6, $f6
 	add.s	$f5, $f5, $f6
 	lw.s	$f6, 16($15)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-	j	beq_cont.29309
-beq_then.29308:
+	j	beq_cont.29280
+beq_then.29279:
 	sqrt.s	$f6, $f6
 	sub.s	$f5, $f5, $f6
 	lw.s	$f6, 16($15)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-beq_cont.29309:
+beq_cont.29280:
 	li	$13, 1
-	j	ble.s_cont.29307
-ble.s_then.29306:
+	j	ble.s_cont.29278
+ble.s_then.29277:
 	li	$13, 0
-ble.s_cont.29307:
-	j	beq.s_cont.29305
-beq.s_then.29304:
+ble.s_cont.29278:
+	j	beq.s_cont.29276
+beq.s_then.29275:
 	li	$13, 0
-beq.s_cont.29305:
-	j	beq_cont.29303
-beq_then.29302:
+beq.s_cont.29276:
+	j	beq_cont.29274
+beq_then.29273:
 	lw.s	$f5, 0($15)
-	ble.s	$f0, $f5, ble.s_then.29310
+	ble.s	$f0, $f5, ble.s_then.29281
 	lw.s	$f5, 0($15)
 	lw.s	$f6, 12($14)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$13, 1
-	j	ble.s_cont.29311
-ble.s_then.29310:
+	j	ble.s_cont.29282
+ble.s_then.29281:
 	li	$13, 0
-ble.s_cont.29311:
-beq_cont.29303:
-	j	beq_cont.29301
-beq_then.29300:
+ble.s_cont.29282:
+beq_cont.29274:
+	j	beq_cont.29272
+beq_then.29271:
 	lw	$14, 0($10)
 	lw.s	$f8, 0($15)
 	sub.s	$f8, $f8, $f5
@@ -4687,34 +4629,34 @@ beq_then.29300:
 	abs.s	$f9, $f9
 	lw	$16, 16($13)
 	lw.s	$f10, 4($16)
-	ble.s	$f10, $f9, ble.s_then.29312
+	ble.s	$f10, $f9, ble.s_then.29283
 	lw.s	$f9, 8($14)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$16, 16($13)
 	lw.s	$f10, 8($16)
-	ble.s	$f10, $f9, ble.s_then.29314
+	ble.s	$f10, $f9, ble.s_then.29285
 	lw.s	$f9, 4($15)
-	beq.s	$f9, $f0, beq.s_then.29316
+	beq.s	$f9, $f0, beq.s_then.29287
 	li	$16, 1
-	j	beq.s_cont.29317
-beq.s_then.29316:
+	j	beq.s_cont.29288
+beq.s_then.29287:
 	li	$16, 0
-beq.s_cont.29317:
-	j	ble.s_cont.29315
-ble.s_then.29314:
+beq.s_cont.29288:
+	j	ble.s_cont.29286
+ble.s_then.29285:
 	li	$16, 0
-ble.s_cont.29315:
-	j	ble.s_cont.29313
-ble.s_then.29312:
+ble.s_cont.29286:
+	j	ble.s_cont.29284
+ble.s_then.29283:
 	li	$16, 0
-ble.s_cont.29313:
-	beq	$16, $0, beq_then.29318
+ble.s_cont.29284:
+	beq	$16, $0, beq_then.29289
 	sw.s	$f8, 572($0)
 	li	$13, 1
-	j	beq_cont.29319
-beq_then.29318:
+	j	beq_cont.29290
+beq_then.29289:
 	lw.s	$f8, 8($15)
 	sub.s	$f8, $f8, $f6
 	lw.s	$f9, 12($15)
@@ -4725,34 +4667,34 @@ beq_then.29318:
 	abs.s	$f9, $f9
 	lw	$16, 16($13)
 	lw.s	$f10, 0($16)
-	ble.s	$f10, $f9, ble.s_then.29320
+	ble.s	$f10, $f9, ble.s_then.29291
 	lw.s	$f9, 8($14)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$16, 16($13)
 	lw.s	$f10, 8($16)
-	ble.s	$f10, $f9, ble.s_then.29322
+	ble.s	$f10, $f9, ble.s_then.29293
 	lw.s	$f9, 12($15)
-	beq.s	$f9, $f0, beq.s_then.29324
+	beq.s	$f9, $f0, beq.s_then.29295
 	li	$16, 1
-	j	beq.s_cont.29325
-beq.s_then.29324:
+	j	beq.s_cont.29296
+beq.s_then.29295:
 	li	$16, 0
-beq.s_cont.29325:
-	j	ble.s_cont.29323
-ble.s_then.29322:
+beq.s_cont.29296:
+	j	ble.s_cont.29294
+ble.s_then.29293:
 	li	$16, 0
-ble.s_cont.29323:
-	j	ble.s_cont.29321
-ble.s_then.29320:
+ble.s_cont.29294:
+	j	ble.s_cont.29292
+ble.s_then.29291:
 	li	$16, 0
-ble.s_cont.29321:
-	beq	$16, $0, beq_then.29326
+ble.s_cont.29292:
+	beq	$16, $0, beq_then.29297
 	sw.s	$f8, 572($0)
 	li	$13, 2
-	j	beq_cont.29327
-beq_then.29326:
+	j	beq_cont.29298
+beq_then.29297:
 	lw.s	$f8, 16($15)
 	sub.s	$f7, $f8, $f7
 	lw.s	$f8, 20($15)
@@ -4763,47 +4705,47 @@ beq_then.29326:
 	abs.s	$f5, $f5
 	lw	$16, 16($13)
 	lw.s	$f8, 0($16)
-	ble.s	$f8, $f5, ble.s_then.29328
+	ble.s	$f8, $f5, ble.s_then.29299
 	lw.s	$f5, 4($14)
 	mul.s	$f5, $f7, $f5
 	add.s	$f5, $f5, $f6
 	abs.s	$f5, $f5
 	lw	$13, 16($13)
 	lw.s	$f6, 4($13)
-	ble.s	$f6, $f5, ble.s_then.29330
+	ble.s	$f6, $f5, ble.s_then.29301
 	lw.s	$f5, 20($15)
-	beq.s	$f5, $f0, beq.s_then.29332
+	beq.s	$f5, $f0, beq.s_then.29303
 	li	$13, 1
-	j	beq.s_cont.29333
-beq.s_then.29332:
+	j	beq.s_cont.29304
+beq.s_then.29303:
 	li	$13, 0
-beq.s_cont.29333:
-	j	ble.s_cont.29331
-ble.s_then.29330:
+beq.s_cont.29304:
+	j	ble.s_cont.29302
+ble.s_then.29301:
 	li	$13, 0
-ble.s_cont.29331:
-	j	ble.s_cont.29329
-ble.s_then.29328:
+ble.s_cont.29302:
+	j	ble.s_cont.29300
+ble.s_then.29299:
 	li	$13, 0
-ble.s_cont.29329:
-	beq	$13, $0, beq_then.29334
+ble.s_cont.29300:
+	beq	$13, $0, beq_then.29305
 	sw.s	$f7, 572($0)
 	li	$13, 3
-	j	beq_cont.29335
-beq_then.29334:
+	j	beq_cont.29306
+beq_then.29305:
 	li	$13, 0
-beq_cont.29335:
-beq_cont.29327:
-beq_cont.29319:
-beq_cont.29301:
-	beq	$13, $0, beq_then.29336
+beq_cont.29306:
+beq_cont.29298:
+beq_cont.29290:
+beq_cont.29272:
+	beq	$13, $0, beq_then.29307
 	lw.s	$f5, 572($0)
 	sw	$10, 0($sp)
 	sw	$9, 4($sp)
 	sw	$8, 8($sp)
-	ble.s	$f5, $f0, ble.s_then.29337
+	ble.s	$f5, $f0, ble.s_then.29308
 	lw.s	$f6, 580($0)
-	ble.s	$f6, $f5, ble.s_then.29339
+	ble.s	$f6, $f5, ble.s_then.29310
 	lui.s	$f6, 0x3c23	# 0.010000の上位16ビット
 	lli.s	$f6, 0xd70a	# 0.010000の下位16ビット
 	add.s	$f5, $f5, $f6
@@ -4835,7 +4777,7 @@ beq_cont.29301:
 	jal	check_all_inside..7192
 	addi	$sp, $sp, -40
 	lw	$ra, 36($sp)
-	beq	$8, $0, beq_then.29341
+	beq	$8, $0, beq_then.29312
 	lw.s	$f5, 32($sp)
 	sw.s	$f5, 580($0)
 	lw.s	$f5, 28($sp)
@@ -4848,36 +4790,36 @@ beq_cont.29301:
 	sw	$8, 596($0)
 	lw	$8, 12($sp)
 	sw	$8, 576($0)
-	j	beq_cont.29342
-beq_then.29341:
-beq_cont.29342:
-	j	ble.s_cont.29340
-ble.s_then.29339:
-ble.s_cont.29340:
-	j	ble.s_cont.29338
-ble.s_then.29337:
-ble.s_cont.29338:
+	j	beq_cont.29313
+beq_then.29312:
+beq_cont.29313:
+	j	ble.s_cont.29311
+ble.s_then.29310:
+ble.s_cont.29311:
+	j	ble.s_cont.29309
+ble.s_then.29308:
+ble.s_cont.29309:
 	lw	$8, 8($sp)
 	addi	$8, $8, 1
 	lw	$9, 4($sp)
 	lw	$10, 0($sp)
 	j	solve_each_element_fast..7221
-beq_then.29336:
+beq_then.29307:
 	sll	$11, $12, 2
 	lw	$11, 80($11)
 	lw	$11, 24($11)
-	beq	$11, $0, beq_then.29343
+	beq	$11, $0, beq_then.29314
 	addi	$8, $8, 1
 	j	solve_each_element_fast..7221
-beq_then.29343:
+beq_then.29314:
 	jr	$ra
-beq_then.29299:
+beq_then.29270:
 	jr	$ra
 solve_one_or_network_fast..7225:
 	sll	$11, $8, 2
 	add	$11, $9, $11
 	lw	$11, 0($11)
-	beq	$11, $7, beq_then.29346
+	beq	$11, $7, beq_then.29317
 	sll	$11, $11, 2
 	lw	$11, 364($11)
 	li	$12, 0
@@ -4896,19 +4838,19 @@ solve_one_or_network_fast..7225:
 	lw	$9, 4($sp)
 	lw	$10, 0($sp)
 	j	solve_one_or_network_fast..7225
-beq_then.29346:
+beq_then.29317:
 	jr	$ra
 trace_or_matrix_fast..7229:
 	sll	$11, $8, 2
 	add	$11, $9, $11
 	lw	$11, 0($11)
 	lw	$12, 0($11)
-	beq	$12, $7, beq_then.29348
+	beq	$12, $7, beq_then.29319
 	li	$13, 99
 	sw	$10, 0($sp)
 	sw	$9, 4($sp)
 	sw	$8, 8($sp)
-	beq	$12, $13, beq_then.29349
+	beq	$12, $13, beq_then.29320
 	sll	$13, $12, 2
 	lw	$13, 80($13)
 	lw	$14, 40($13)
@@ -4920,10 +4862,10 @@ trace_or_matrix_fast..7229:
 	add	$12, $15, $12
 	lw	$12, 0($12)
 	lw	$15, 4($13)
-	beq	$15, $1, beq_then.29351
-	beq	$15, $2, beq_then.29353
+	beq	$15, $1, beq_then.29322
+	beq	$15, $2, beq_then.29324
 	lw.s	$f8, 0($12)
-	beq.s	$f8, $f0, beq.s_then.29355
+	beq.s	$f8, $f0, beq.s_then.29326
 	lw.s	$f9, 4($12)
 	mul.s	$f5, $f9, $f5
 	lw.s	$f9, 8($12)
@@ -4936,47 +4878,47 @@ trace_or_matrix_fast..7229:
 	mul.s	$f7, $f5, $f5
 	mul.s	$f6, $f8, $f6
 	sub.s	$f6, $f7, $f6
-	ble.s	$f6, $f0, ble.s_then.29357
+	ble.s	$f6, $f0, ble.s_then.29328
 	lw	$13, 24($13)
-	beq	$13, $0, beq_then.29359
+	beq	$13, $0, beq_then.29330
 	sqrt.s	$f6, $f6
 	add.s	$f5, $f5, $f6
 	lw.s	$f6, 16($12)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-	j	beq_cont.29360
-beq_then.29359:
+	j	beq_cont.29331
+beq_then.29330:
 	sqrt.s	$f6, $f6
 	sub.s	$f5, $f5, $f6
 	lw.s	$f6, 16($12)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
-beq_cont.29360:
+beq_cont.29331:
 	li	$12, 1
-	j	ble.s_cont.29358
-ble.s_then.29357:
+	j	ble.s_cont.29329
+ble.s_then.29328:
 	li	$12, 0
-ble.s_cont.29358:
-	j	beq.s_cont.29356
-beq.s_then.29355:
+ble.s_cont.29329:
+	j	beq.s_cont.29327
+beq.s_then.29326:
 	li	$12, 0
-beq.s_cont.29356:
-	j	beq_cont.29354
-beq_then.29353:
+beq.s_cont.29327:
+	j	beq_cont.29325
+beq_then.29324:
 	lw.s	$f5, 0($12)
-	ble.s	$f0, $f5, ble.s_then.29361
+	ble.s	$f0, $f5, ble.s_then.29332
 	lw.s	$f5, 0($12)
 	lw.s	$f6, 12($14)
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 572($0)
 	li	$12, 1
-	j	ble.s_cont.29362
-ble.s_then.29361:
+	j	ble.s_cont.29333
+ble.s_then.29332:
 	li	$12, 0
-ble.s_cont.29362:
-beq_cont.29354:
-	j	beq_cont.29352
-beq_then.29351:
+ble.s_cont.29333:
+beq_cont.29325:
+	j	beq_cont.29323
+beq_then.29322:
 	lw	$14, 0($10)
 	lw.s	$f8, 0($12)
 	sub.s	$f8, $f8, $f5
@@ -4988,34 +4930,34 @@ beq_then.29351:
 	abs.s	$f9, $f9
 	lw	$15, 16($13)
 	lw.s	$f10, 4($15)
-	ble.s	$f10, $f9, ble.s_then.29363
+	ble.s	$f10, $f9, ble.s_then.29334
 	lw.s	$f9, 8($14)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$15, 16($13)
 	lw.s	$f10, 8($15)
-	ble.s	$f10, $f9, ble.s_then.29365
+	ble.s	$f10, $f9, ble.s_then.29336
 	lw.s	$f9, 4($12)
-	beq.s	$f9, $f0, beq.s_then.29367
+	beq.s	$f9, $f0, beq.s_then.29338
 	li	$15, 1
-	j	beq.s_cont.29368
-beq.s_then.29367:
+	j	beq.s_cont.29339
+beq.s_then.29338:
 	li	$15, 0
-beq.s_cont.29368:
-	j	ble.s_cont.29366
-ble.s_then.29365:
+beq.s_cont.29339:
+	j	ble.s_cont.29337
+ble.s_then.29336:
 	li	$15, 0
-ble.s_cont.29366:
-	j	ble.s_cont.29364
-ble.s_then.29363:
+ble.s_cont.29337:
+	j	ble.s_cont.29335
+ble.s_then.29334:
 	li	$15, 0
-ble.s_cont.29364:
-	beq	$15, $0, beq_then.29369
+ble.s_cont.29335:
+	beq	$15, $0, beq_then.29340
 	sw.s	$f8, 572($0)
 	li	$12, 1
-	j	beq_cont.29370
-beq_then.29369:
+	j	beq_cont.29341
+beq_then.29340:
 	lw.s	$f8, 8($12)
 	sub.s	$f8, $f8, $f6
 	lw.s	$f9, 12($12)
@@ -5026,34 +4968,34 @@ beq_then.29369:
 	abs.s	$f9, $f9
 	lw	$15, 16($13)
 	lw.s	$f10, 0($15)
-	ble.s	$f10, $f9, ble.s_then.29371
+	ble.s	$f10, $f9, ble.s_then.29342
 	lw.s	$f9, 8($14)
 	mul.s	$f9, $f8, $f9
 	add.s	$f9, $f9, $f7
 	abs.s	$f9, $f9
 	lw	$15, 16($13)
 	lw.s	$f10, 8($15)
-	ble.s	$f10, $f9, ble.s_then.29373
+	ble.s	$f10, $f9, ble.s_then.29344
 	lw.s	$f9, 12($12)
-	beq.s	$f9, $f0, beq.s_then.29375
+	beq.s	$f9, $f0, beq.s_then.29346
 	li	$15, 1
-	j	beq.s_cont.29376
-beq.s_then.29375:
+	j	beq.s_cont.29347
+beq.s_then.29346:
 	li	$15, 0
-beq.s_cont.29376:
-	j	ble.s_cont.29374
-ble.s_then.29373:
+beq.s_cont.29347:
+	j	ble.s_cont.29345
+ble.s_then.29344:
 	li	$15, 0
-ble.s_cont.29374:
-	j	ble.s_cont.29372
-ble.s_then.29371:
+ble.s_cont.29345:
+	j	ble.s_cont.29343
+ble.s_then.29342:
 	li	$15, 0
-ble.s_cont.29372:
-	beq	$15, $0, beq_then.29377
+ble.s_cont.29343:
+	beq	$15, $0, beq_then.29348
 	sw.s	$f8, 572($0)
 	li	$12, 2
-	j	beq_cont.29378
-beq_then.29377:
+	j	beq_cont.29349
+beq_then.29348:
 	lw.s	$f8, 16($12)
 	sub.s	$f7, $f8, $f7
 	lw.s	$f8, 20($12)
@@ -5064,43 +5006,43 @@ beq_then.29377:
 	abs.s	$f5, $f5
 	lw	$15, 16($13)
 	lw.s	$f8, 0($15)
-	ble.s	$f8, $f5, ble.s_then.29379
+	ble.s	$f8, $f5, ble.s_then.29350
 	lw.s	$f5, 4($14)
 	mul.s	$f5, $f7, $f5
 	add.s	$f5, $f5, $f6
 	abs.s	$f5, $f5
 	lw	$13, 16($13)
 	lw.s	$f6, 4($13)
-	ble.s	$f6, $f5, ble.s_then.29381
+	ble.s	$f6, $f5, ble.s_then.29352
 	lw.s	$f5, 20($12)
-	beq.s	$f5, $f0, beq.s_then.29383
+	beq.s	$f5, $f0, beq.s_then.29354
 	li	$12, 1
-	j	beq.s_cont.29384
-beq.s_then.29383:
+	j	beq.s_cont.29355
+beq.s_then.29354:
 	li	$12, 0
-beq.s_cont.29384:
-	j	ble.s_cont.29382
-ble.s_then.29381:
+beq.s_cont.29355:
+	j	ble.s_cont.29353
+ble.s_then.29352:
 	li	$12, 0
-ble.s_cont.29382:
-	j	ble.s_cont.29380
-ble.s_then.29379:
+ble.s_cont.29353:
+	j	ble.s_cont.29351
+ble.s_then.29350:
 	li	$12, 0
-ble.s_cont.29380:
-	beq	$12, $0, beq_then.29385
+ble.s_cont.29351:
+	beq	$12, $0, beq_then.29356
 	sw.s	$f7, 572($0)
 	li	$12, 3
-	j	beq_cont.29386
-beq_then.29385:
+	j	beq_cont.29357
+beq_then.29356:
 	li	$12, 0
-beq_cont.29386:
-beq_cont.29378:
-beq_cont.29370:
-beq_cont.29352:
-	beq	$12, $0, beq_then.29387
+beq_cont.29357:
+beq_cont.29349:
+beq_cont.29341:
+beq_cont.29323:
+	beq	$12, $0, beq_then.29358
 	lw.s	$f5, 572($0)
 	lw.s	$f6, 580($0)
-	ble.s	$f6, $f5, ble.s_then.29389
+	ble.s	$f6, $f5, ble.s_then.29360
 	li	$12, 1
 	mv	$9, $11
 	mv	$8, $12
@@ -5109,14 +5051,14 @@ beq_cont.29352:
 	jal	solve_one_or_network_fast..7225
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-	j	ble.s_cont.29390
-ble.s_then.29389:
-ble.s_cont.29390:
-	j	beq_cont.29388
-beq_then.29387:
-beq_cont.29388:
-	j	beq_cont.29350
-beq_then.29349:
+	j	ble.s_cont.29361
+ble.s_then.29360:
+ble.s_cont.29361:
+	j	beq_cont.29359
+beq_then.29358:
+beq_cont.29359:
+	j	beq_cont.29321
+beq_then.29320:
 	li	$12, 1
 	mv	$9, $11
 	mv	$8, $12
@@ -5125,18 +5067,18 @@ beq_then.29349:
 	jal	solve_one_or_network_fast..7225
 	addi	$sp, $sp, -16
 	lw	$ra, 12($sp)
-beq_cont.29350:
+beq_cont.29321:
 	lw	$8, 8($sp)
 	addi	$8, $8, 1
 	lw	$9, 4($sp)
 	lw	$10, 0($sp)
 	j	trace_or_matrix_fast..7229
-beq_then.29348:
+beq_then.29319:
 	jr	$ra
 trace_reflections..7251:
-	ble	$0, $8, ble_then.29392
+	ble	$0, $8, ble_then.29363
 	jr	$ra
-ble_then.29392:
+ble_then.29363:
 	sll	$10, $8, 2
 	lw	$10, 1048($10)
 	lw	$11, 4($10)
@@ -5160,29 +5102,29 @@ ble_then.29392:
 	lw.s	$f5, 580($0)
 	lui.s	$f6, 0xbdcc	# -0.100000の上位16ビット
 	lli.s	$f6, 0xcccd	# -0.100000の下位16ビット
-	ble.s	$f5, $f6, ble.s_then.29394
+	ble.s	$f5, $f6, ble.s_then.29365
 	lui.s	$f6, 0x4cbe	# 100000000.000000の上位16ビット
 	lli.s	$f6, 0xbc20	# 100000000.000000の下位16ビット
-	ble.s	$f6, $f5, ble.s_then.29396
+	ble.s	$f6, $f5, ble.s_then.29367
 	li	$8, 1
-	j	ble.s_cont.29397
-ble.s_then.29396:
+	j	ble.s_cont.29368
+ble.s_then.29367:
 	li	$8, 0
-ble.s_cont.29397:
-	j	ble.s_cont.29395
-ble.s_then.29394:
+ble.s_cont.29368:
+	j	ble.s_cont.29366
+ble.s_then.29365:
 	li	$8, 0
-ble.s_cont.29395:
-	beq	$8, $0, beq_then.29398
+ble.s_cont.29366:
+	beq	$8, $0, beq_then.29369
 	lw	$8, 596($0)
 	sll	$8, $8, 2
 	lw	$9, 576($0)
 	add	$8, $8, $9
 	lw	$9, 20($sp)
 	lw	$10, 0($9)
-	beq	$8, $10, beq_then.29400
-	j	beq_cont.29401
-beq_then.29400:
+	beq	$8, $10, beq_then.29371
+	j	beq_cont.29372
+beq_then.29371:
 	li	$8, 0
 	lw	$10, 568($0)
 	mv	$9, $10
@@ -5191,9 +5133,9 @@ beq_then.29400:
 	jal	shadow_check_one_or_matrix..7204
 	addi	$sp, $sp, -28
 	lw	$ra, 24($sp)
-	beq	$8, $0, beq_then.29402
-	j	beq_cont.29403
-beq_then.29402:
+	beq	$8, $0, beq_then.29373
+	j	beq_cont.29374
+beq_then.29373:
 	lw	$8, 16($sp)
 	lw	$9, 0($8)
 	lw.s	$f5, 600($0)
@@ -5226,7 +5168,7 @@ beq_then.29402:
 	mul.s	$f9, $f9, $f10
 	add.s	$f8, $f8, $f9
 	mul.s	$f6, $f6, $f8
-	ble.s	$f5, $f0, ble.s_then.29404
+	ble.s	$f5, $f0, ble.s_then.29375
 	lw.s	$f8, 636($0)
 	lw.s	$f9, 612($0)
 	mul.s	$f9, $f5, $f9
@@ -5242,10 +5184,10 @@ beq_then.29402:
 	mul.s	$f5, $f5, $f9
 	add.s	$f5, $f8, $f5
 	sw.s	$f5, 644($0)
-	j	ble.s_cont.29405
-ble.s_then.29404:
-ble.s_cont.29405:
-	ble.s	$f6, $f0, ble.s_then.29406
+	j	ble.s_cont.29376
+ble.s_then.29375:
+ble.s_cont.29376:
+	ble.s	$f6, $f0, ble.s_then.29377
 	mul.s	$f5, $f6, $f6
 	mul.s	$f5, $f5, $f5
 	lw.s	$f6, 4($sp)
@@ -5259,14 +5201,14 @@ ble.s_cont.29405:
 	lw.s	$f8, 644($0)
 	add.s	$f5, $f8, $f5
 	sw.s	$f5, 644($0)
-	j	ble.s_cont.29407
-ble.s_then.29406:
-ble.s_cont.29407:
-beq_cont.29403:
-beq_cont.29401:
-	j	beq_cont.29399
-beq_then.29398:
-beq_cont.29399:
+	j	ble.s_cont.29378
+ble.s_then.29377:
+ble.s_cont.29378:
+beq_cont.29374:
+beq_cont.29372:
+	j	beq_cont.29370
+beq_then.29369:
+beq_cont.29370:
 	lw	$8, 0($sp)
 	addi	$8, $8, -1
 	lw.s	$f5, 12($sp)
@@ -5275,9 +5217,9 @@ beq_cont.29399:
 	j	trace_reflections..7251
 trace_ray.A(f)A(A(f))A(i).7256:
 	li	$11, 584
-	ble	$8, $4, ble_then.29408
+	ble	$8, $4, ble_then.29379
 	jr	$ra
-ble_then.29408:
+ble_then.29379:
 	lw	$12, 8($10)
 	sw.s	$f3, 580($0)
 	li	$13, 0
@@ -5300,20 +5242,20 @@ ble_then.29408:
 	lw.s	$f5, 580($0)
 	lui.s	$f6, 0xbdcc	# -0.100000の上位16ビット
 	lli.s	$f6, 0xcccd	# -0.100000の下位16ビット
-	ble.s	$f5, $f6, ble.s_then.29410
+	ble.s	$f5, $f6, ble.s_then.29381
 	lui.s	$f6, 0x4cbe	# 100000000.000000の上位16ビット
 	lli.s	$f6, 0xbc20	# 100000000.000000の下位16ビット
-	ble.s	$f6, $f5, ble.s_then.29412
+	ble.s	$f6, $f5, ble.s_then.29383
 	li	$8, 1
-	j	ble.s_cont.29413
-ble.s_then.29412:
+	j	ble.s_cont.29384
+ble.s_then.29383:
 	li	$8, 0
-ble.s_cont.29413:
-	j	ble.s_cont.29411
-ble.s_then.29410:
+ble.s_cont.29384:
+	j	ble.s_cont.29382
+ble.s_then.29381:
 	li	$8, 0
-ble.s_cont.29411:
-	beq	$8, $0, beq_then.29414
+ble.s_cont.29382:
+	beq	$8, $0, beq_then.29385
 	lw	$8, 596($0)
 	sll	$9, $8, 2
 	lw	$9, 80($9)
@@ -5323,8 +5265,8 @@ ble.s_cont.29411:
 	lw.s	$f6, 12($sp)
 	mul.s	$f5, $f5, $f6
 	lw	$11, 4($9)
-	beq	$11, $1, beq_then.29415
-	beq	$11, $2, beq_then.29417
+	beq	$11, $1, beq_then.29386
+	beq	$11, $2, beq_then.29388
 	lw.s	$f7, 584($0)
 	lw	$11, 20($9)
 	lw.s	$f8, 0($11)
@@ -5347,7 +5289,7 @@ ble.s_cont.29411:
 	lw.s	$f12, 8($11)
 	mul.s	$f12, $f9, $f12
 	lw	$11, 12($9)
-	beq	$11, $0, beq_then.29419
+	beq	$11, $0, beq_then.29390
 	lw	$11, 36($9)
 	lw.s	$f13, 8($11)
 	mul.s	$f13, $f8, $f13
@@ -5378,12 +5320,12 @@ ble.s_cont.29411:
 	mul.s	$f7, $f7, $f2
 	add.s	$f7, $f12, $f7
 	sw.s	$f7, 608($0)
-	j	beq_cont.29420
-beq_then.29419:
+	j	beq_cont.29391
+beq_then.29390:
 	sw.s	$f10, 600($0)
 	sw.s	$f11, 604($0)
 	sw.s	$f12, 608($0)
-beq_cont.29420:
+beq_cont.29391:
 	lw	$11, 24($9)
 	lw.s	$f7, 600($0)
 	mul.s	$f7, $f7, $f7
@@ -5394,18 +5336,18 @@ beq_cont.29420:
 	mul.s	$f8, $f8, $f8
 	add.s	$f7, $f7, $f8
 	sqrt.s	$f7, $f7
-	beq.s	$f7, $f0, beq.s_then.29421
-	beq	$11, $0, beq_then.29423
+	beq.s	$f7, $f0, beq.s_then.29392
+	beq	$11, $0, beq_then.29394
 	inv.s	$f7, $f7
 	neg.s	$f7, $f7
-	j	beq_cont.29424
-beq_then.29423:
+	j	beq_cont.29395
+beq_then.29394:
 	inv.s	$f7, $f7
-beq_cont.29424:
-	j	beq.s_cont.29422
-beq.s_then.29421:
+beq_cont.29395:
+	j	beq.s_cont.29393
+beq.s_then.29392:
 	lui.s	$f7, 0x3f80	# 1.000000の上位16ビット
-beq.s_cont.29422:
+beq.s_cont.29393:
 	lw.s	$f8, 600($0)
 	mul.s	$f8, $f8, $f7
 	sw.s	$f8, 600($0)
@@ -5415,8 +5357,8 @@ beq.s_cont.29422:
 	lw.s	$f8, 608($0)
 	mul.s	$f7, $f8, $f7
 	sw.s	$f7, 608($0)
-	j	beq_cont.29418
-beq_then.29417:
+	j	beq_cont.29389
+beq_then.29388:
 	lw	$11, 16($9)
 	lw.s	$f7, 0($11)
 	neg.s	$f7, $f7
@@ -5429,9 +5371,9 @@ beq_then.29417:
 	lw.s	$f7, 8($11)
 	neg.s	$f7, $f7
 	sw.s	$f7, 608($0)
-beq_cont.29418:
-	j	beq_cont.29416
-beq_then.29415:
+beq_cont.29389:
+	j	beq_cont.29387
+beq_then.29386:
 	lw	$11, 576($0)
 	sw.s	$f0, 600($0)
 	sw.s	$f0, 604($0)
@@ -5442,22 +5384,22 @@ beq_then.29415:
 	lw	$13, 16($sp)
 	add	$11, $13, $11
 	lw.s	$f7, 0($11)
-	beq.s	$f7, $f0, beq.s_then.29425
-	ble.s	$f7, $f0, ble.s_then.29427
+	beq.s	$f7, $f0, beq.s_then.29396
+	ble.s	$f7, $f0, ble.s_then.29398
 	lui.s	$f7, 0x3f80	# 1.000000の上位16ビット
-	j	ble.s_cont.29428
-ble.s_then.29427:
+	j	ble.s_cont.29399
+ble.s_then.29398:
 	lui.s	$f7, 0xbf80	# -1.000000の上位16ビット
-ble.s_cont.29428:
-	j	beq.s_cont.29426
-beq.s_then.29425:
+ble.s_cont.29399:
+	j	beq.s_cont.29397
+beq.s_then.29396:
 	lui.s	$f7, 0x0	# 0.000000の上位16ビット
-beq.s_cont.29426:
+beq.s_cont.29397:
 	neg.s	$f7, $f7
 	sll	$11, $12, 2
 	addi	$11, $11, 600
 	sw.s	$f7, 0($11)
-beq_cont.29416:
+beq_cont.29387:
 	lw.s	$f7, 584($0)
 	sw.s	$f7, 668($0)
 	lw.s	$f7, 588($0)
@@ -5478,12 +5420,12 @@ beq_cont.29416:
 	sw.s	$f5, 32($sp)
 	sw	$9, 36($sp)
 	sw	$8, 40($sp)
-	beq	$11, $1, beq_then.29429
-	beq	$11, $2, beq_then.29431
-	beq	$11, $3, beq_then.29433
-	beq	$11, $4, beq_then.29435
-	j	beq_cont.29436
-beq_then.29435:
+	beq	$11, $1, beq_then.29400
+	beq	$11, $2, beq_then.29402
+	beq	$11, $3, beq_then.29404
+	beq	$11, $4, beq_then.29406
+	j	beq_cont.29407
+beq_then.29406:
 	lw.s	$f7, 584($0)
 	lw	$11, 20($9)
 	lw.s	$f8, 0($11)
@@ -5506,10 +5448,10 @@ beq_then.29435:
 	abs.s	$f10, $f7
 	lui.s	$f11, 0x38d1	# 0.000100の上位16ビット
 	lli.s	$f11, 0xb717	# 0.000100の下位16ビット
-	ble.s	$f11, $f10, ble.s_then.29437
+	ble.s	$f11, $f10, ble.s_then.29408
 	lui.s	$f7, 0x4170	# 15.000000の上位16ビット
-	j	ble.s_cont.29438
-ble.s_then.29437:
+	j	ble.s_cont.29409
+ble.s_then.29408:
 	inv.s	$f7, $f7
 	mul.s	$f7, $f8, $f7
 	abs.s	$f7, $f7
@@ -5532,19 +5474,19 @@ ble.s_then.29437:
 	lui.s	$f8, 0x3ea2	# 0.318310の上位16ビット
 	lli.s	$f8, 0xf983	# 0.318310の下位16ビット
 	mul.s	$f7, $f7, $f8
-ble.s_cont.29438:
+ble.s_cont.29409:
 	ftoi	$11, $f7
 	itof	$f8, $11
-	ble.s	$f0, $f7, ble.s_then.29439
-	beq.s	$f7, $f8, beq.s_then.29441
+	ble.s	$f0, $f7, ble.s_then.29410
+	beq.s	$f7, $f8, beq.s_then.29412
 	sub.s	$f8, $f8, $f1
-	j	beq.s_cont.29442
-beq.s_then.29441:
+	j	beq.s_cont.29413
+beq.s_then.29412:
 	mv.s	$f8, $f7
-beq.s_cont.29442:
-	j	ble.s_cont.29440
-ble.s_then.29439:
-ble.s_cont.29440:
+beq.s_cont.29413:
+	j	ble.s_cont.29411
+ble.s_then.29410:
+ble.s_cont.29411:
 	sub.s	$f7, $f7, $f8
 	lw.s	$f8, 588($0)
 	lw	$11, 20($9)
@@ -5557,10 +5499,10 @@ ble.s_cont.29440:
 	abs.s	$f10, $f9
 	lui.s	$f11, 0x38d1	# 0.000100の上位16ビット
 	lli.s	$f11, 0xb717	# 0.000100の下位16ビット
-	ble.s	$f11, $f10, ble.s_then.29443
+	ble.s	$f11, $f10, ble.s_then.29414
 	lui.s	$f8, 0x4170	# 15.000000の上位16ビット
-	j	ble.s_cont.29444
-ble.s_then.29443:
+	j	ble.s_cont.29415
+ble.s_then.29414:
 	inv.s	$f9, $f9
 	mul.s	$f8, $f8, $f9
 	abs.s	$f8, $f8
@@ -5583,19 +5525,19 @@ ble.s_then.29443:
 	lui.s	$f9, 0x3ea2	# 0.318310の上位16ビット
 	lli.s	$f9, 0xf983	# 0.318310の下位16ビット
 	mul.s	$f8, $f8, $f9
-ble.s_cont.29444:
+ble.s_cont.29415:
 	ftoi	$11, $f8
 	itof	$f9, $11
-	ble.s	$f0, $f8, ble.s_then.29445
-	beq.s	$f8, $f9, beq.s_then.29447
+	ble.s	$f0, $f8, ble.s_then.29416
+	beq.s	$f8, $f9, beq.s_then.29418
 	sub.s	$f9, $f9, $f1
-	j	beq.s_cont.29448
-beq.s_then.29447:
+	j	beq.s_cont.29419
+beq.s_then.29418:
 	mv.s	$f9, $f8
-beq.s_cont.29448:
-	j	ble.s_cont.29446
-ble.s_then.29445:
-ble.s_cont.29446:
+beq.s_cont.29419:
+	j	ble.s_cont.29417
+ble.s_then.29416:
+ble.s_cont.29417:
 	sub.s	$f8, $f8, $f9
 	lui.s	$f9, 0x3e19	# 0.150000の上位16ビット
 	lli.s	$f9, 0x999a	# 0.150000の下位16ビット
@@ -5605,20 +5547,20 @@ ble.s_cont.29446:
 	sub.s	$f8, $f2, $f8
 	mul.s	$f8, $f8, $f8
 	sub.s	$f7, $f7, $f8
-	ble.s	$f0, $f7, ble.s_then.29449
+	ble.s	$f0, $f7, ble.s_then.29420
 	lui.s	$f7, 0x0	# 0.000000の上位16ビット
-	j	ble.s_cont.29450
-ble.s_then.29449:
-ble.s_cont.29450:
+	j	ble.s_cont.29421
+ble.s_then.29420:
+ble.s_cont.29421:
 	lui.s	$f8, 0x437f	# 255.000000の上位16ビット
 	mul.s	$f7, $f8, $f7
 	lui.s	$f8, 0x4055	# 3.333333の上位16ビット
 	lli.s	$f8, 0x5555	# 3.333333の下位16ビット
 	mul.s	$f7, $f7, $f8
 	sw.s	$f7, 620($0)
-beq_cont.29436:
-	j	beq_cont.29434
-beq_then.29433:
+beq_cont.29407:
+	j	beq_cont.29405
+beq_then.29404:
 	lw.s	$f7, 584($0)
 	lw	$11, 20($9)
 	lw.s	$f8, 0($11)
@@ -5636,16 +5578,16 @@ beq_then.29433:
 	mul.s	$f7, $f7, $f8
 	ftoi	$11, $f7
 	itof	$f8, $11
-	ble.s	$f0, $f7, ble.s_then.29451
-	beq.s	$f7, $f8, beq.s_then.29453
+	ble.s	$f0, $f7, ble.s_then.29422
+	beq.s	$f7, $f8, beq.s_then.29424
 	sub.s	$f8, $f8, $f1
-	j	beq.s_cont.29454
-beq.s_then.29453:
+	j	beq.s_cont.29425
+beq.s_then.29424:
 	mv.s	$f8, $f7
-beq.s_cont.29454:
-	j	ble.s_cont.29452
-ble.s_then.29451:
-ble.s_cont.29452:
+beq.s_cont.29425:
+	j	ble.s_cont.29423
+ble.s_then.29422:
+ble.s_cont.29423:
 	sub.s	$f7, $f7, $f8
 	lui.s	$f8, 0x4049	# 3.141593の上位16ビット
 	lli.s	$f8, 0xfdb	# 3.141593の下位16ビット
@@ -5664,9 +5606,9 @@ ble.s_cont.29452:
 	lui.s	$f6, 0x437f	# 255.000000の上位16ビット
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 620($0)
-beq_cont.29434:
-	j	beq_cont.29432
-beq_then.29431:
+beq_cont.29405:
+	j	beq_cont.29403
+beq_then.29402:
 	lw.s	$f7, 588($0)
 	lui.s	$f8, 0x3e80	# 0.250000の上位16ビット
 	mul.s	$f7, $f7, $f8
@@ -5684,9 +5626,9 @@ beq_then.29431:
 	sub.s	$f5, $f1, $f5
 	mul.s	$f5, $f6, $f5
 	sw.s	$f5, 616($0)
-beq_cont.29432:
-	j	beq_cont.29430
-beq_then.29429:
+beq_cont.29403:
+	j	beq_cont.29401
+beq_then.29400:
 	lw.s	$f7, 584($0)
 	lw	$11, 20($9)
 	lw.s	$f8, 0($11)
@@ -5696,73 +5638,61 @@ beq_then.29429:
 	mul.s	$f8, $f7, $f8
 	ftoi	$11, $f8
 	itof	$f9, $11
-	ble.s	$f0, $f8, ble.s_then.29455
-	beq.s	$f8, $f9, beq.s_then.29457
+	ble.s	$f0, $f8, ble.s_then.29426
+	beq.s	$f8, $f9, beq.s_then.29428
 	sub.s	$f8, $f9, $f1
-	j	beq.s_cont.29458
-beq.s_then.29457:
-beq.s_cont.29458:
-	j	ble.s_cont.29456
-ble.s_then.29455:
+	j	beq.s_cont.29429
+beq.s_then.29428:
+beq.s_cont.29429:
+	j	ble.s_cont.29427
+ble.s_then.29426:
 	mv.s	$f8, $f9
-ble.s_cont.29456:
+ble.s_cont.29427:
 	lui.s	$f9, 0x41a0	# 20.000000の上位16ビット
 	mul.s	$f8, $f8, $f9
 	sub.s	$f7, $f7, $f8
 	lui.s	$f8, 0x4120	# 10.000000の上位16ビット
-	ble.s	$f8, $f7, ble.s_then.29459
-	li	$11, 1
-	j	ble.s_cont.29460
-ble.s_then.29459:
-	li	$11, 0
-ble.s_cont.29460:
-	lw.s	$f7, 592($0)
-	lw	$12, 20($9)
-	lw.s	$f8, 8($12)
-	sub.s	$f7, $f7, $f8
-	lui.s	$f8, 0x3d4c	# 0.050000の上位16ビット
-	lli.s	$f8, 0xcccd	# 0.050000の下位16ビット
-	mul.s	$f8, $f7, $f8
-	ftoi	$12, $f8
-	itof	$f9, $12
-	ble.s	$f0, $f8, ble.s_then.29461
-	beq.s	$f8, $f9, beq.s_then.29463
-	sub.s	$f8, $f9, $f1
-	j	beq.s_cont.29464
-beq.s_then.29463:
-beq.s_cont.29464:
-	j	ble.s_cont.29462
-ble.s_then.29461:
-	mv.s	$f8, $f9
-ble.s_cont.29462:
-	lui.s	$f9, 0x41a0	# 20.000000の上位16ビット
-	mul.s	$f8, $f8, $f9
-	sub.s	$f7, $f7, $f8
-	lui.s	$f8, 0x4120	# 10.000000の上位16ビット
-	ble.s	$f8, $f7, ble.s_then.29465
-	li	$12, 1
-	j	ble.s_cont.29466
-ble.s_then.29465:
-	li	$12, 0
-ble.s_cont.29466:
-	beq	$11, $0, beq_then.29467
-	beq	$12, $0, beq_then.29469
+	lw.s	$f9, 592($0)
+	lw	$11, 20($9)
+	lw.s	$f10, 8($11)
+	sub.s	$f9, $f9, $f10
+	lui.s	$f10, 0x3d4c	# 0.050000の上位16ビット
+	lli.s	$f10, 0xcccd	# 0.050000の下位16ビット
+	mul.s	$f10, $f9, $f10
+	ftoi	$11, $f10
+	itof	$f11, $11
+	ble.s	$f0, $f10, ble.s_then.29430
+	beq.s	$f10, $f11, beq.s_then.29432
+	sub.s	$f10, $f11, $f1
+	j	beq.s_cont.29433
+beq.s_then.29432:
+beq.s_cont.29433:
+	j	ble.s_cont.29431
+ble.s_then.29430:
+	mv.s	$f10, $f11
+ble.s_cont.29431:
+	lui.s	$f11, 0x41a0	# 20.000000の上位16ビット
+	mul.s	$f10, $f10, $f11
+	sub.s	$f9, $f9, $f10
+	lui.s	$f10, 0x4120	# 10.000000の上位16ビット
+	ble.s	$f8, $f7, ble.s_then.29434
+	ble.s	$f10, $f9, ble.s_then.29436
 	lui.s	$f7, 0x437f	# 255.000000の上位16ビット
-	j	beq_cont.29470
-beq_then.29469:
+	j	ble.s_cont.29437
+ble.s_then.29436:
 	lui.s	$f7, 0x0	# 0.000000の上位16ビット
-beq_cont.29470:
-	j	beq_cont.29468
-beq_then.29467:
-	beq	$12, $0, beq_then.29471
+ble.s_cont.29437:
+	j	ble.s_cont.29435
+ble.s_then.29434:
+	ble.s	$f10, $f9, ble.s_then.29438
 	lui.s	$f7, 0x0	# 0.000000の上位16ビット
-	j	beq_cont.29472
-beq_then.29471:
+	j	ble.s_cont.29439
+ble.s_then.29438:
 	lui.s	$f7, 0x437f	# 255.000000の上位16ビット
-beq_cont.29472:
-beq_cont.29468:
+ble.s_cont.29439:
+ble.s_cont.29435:
 	sw.s	$f7, 616($0)
-beq_cont.29430:
+beq_cont.29401:
 	lw	$8, 40($sp)
 	sll	$8, $8, 2
 	lw	$9, 576($0)
@@ -5787,12 +5717,12 @@ beq_cont.29430:
 	lw	$12, 36($sp)
 	lw	$13, 28($12)
 	lw.s	$f5, 0($13)
-	ble.s	$f2, $f5, ble.s_then.29473
+	ble.s	$f2, $f5, ble.s_then.29440
 	sll	$13, $9, 2
 	add	$10, $10, $13
 	sw	$0, 0($10)
-	j	ble.s_cont.29474
-ble.s_then.29473:
+	j	ble.s_cont.29441
+ble.s_then.29440:
 	sll	$13, $9, 2
 	add	$10, $10, $13
 	sw	$1, 0($10)
@@ -5832,7 +5762,7 @@ ble.s_then.29473:
 	lw.s	$f5, 608($0)
 	addi	$10, $10, 8
 	sw.s	$f5, 0($10)
-ble.s_cont.29474:
+ble.s_cont.29441:
 	lui.s	$f5, 0xc000	# -2.000000の上位16ビット
 	lw	$10, 16($sp)
 	lw.s	$f6, 0($10)
@@ -5876,9 +5806,9 @@ ble.s_cont.29474:
 	jal	shadow_check_one_or_matrix..7204
 	addi	$sp, $sp, -52
 	lw	$ra, 48($sp)
-	beq	$8, $0, beq_then.29475
-	j	beq_cont.29476
-beq_then.29475:
+	beq	$8, $0, beq_then.29442
+	j	beq_cont.29443
+beq_then.29442:
 	lw.s	$f5, 600($0)
 	lw.s	$f6, 344($0)
 	mul.s	$f5, $f5, $f6
@@ -5906,7 +5836,7 @@ beq_then.29475:
 	mul.s	$f8, $f8, $f9
 	add.s	$f7, $f7, $f8
 	neg.s	$f7, $f7
-	ble.s	$f5, $f0, ble.s_then.29477
+	ble.s	$f5, $f0, ble.s_then.29444
 	lw.s	$f8, 636($0)
 	lw.s	$f9, 612($0)
 	mul.s	$f9, $f5, $f9
@@ -5922,10 +5852,10 @@ beq_then.29475:
 	mul.s	$f5, $f5, $f9
 	add.s	$f5, $f8, $f5
 	sw.s	$f5, 644($0)
-	j	ble.s_cont.29478
-ble.s_then.29477:
-ble.s_cont.29478:
-	ble.s	$f7, $f0, ble.s_then.29479
+	j	ble.s_cont.29445
+ble.s_then.29444:
+ble.s_cont.29445:
+	ble.s	$f7, $f0, ble.s_then.29446
 	mul.s	$f5, $f7, $f7
 	mul.s	$f5, $f5, $f5
 	lw.s	$f7, 44($sp)
@@ -5939,10 +5869,10 @@ ble.s_cont.29478:
 	lw.s	$f8, 644($0)
 	add.s	$f5, $f8, $f5
 	sw.s	$f5, 644($0)
-	j	ble.s_cont.29480
-ble.s_then.29479:
-ble.s_cont.29480:
-beq_cont.29476:
+	j	ble.s_cont.29447
+ble.s_then.29446:
+ble.s_cont.29447:
+beq_cont.29443:
 	lw.s	$f5, 584($0)
 	sw.s	$f5, 680($0)
 	lw.s	$f5, 588($0)
@@ -5970,21 +5900,21 @@ beq_cont.29476:
 	lui.s	$f5, 0x3dcc	# 0.100000の上位16ビット
 	lli.s	$f5, 0xcccd	# 0.100000の下位16ビット
 	lw.s	$f6, 12($sp)
-	ble.s	$f6, $f5, ble.s_then.29481
+	ble.s	$f6, $f5, ble.s_then.29448
 	lw	$8, 24($sp)
-	ble	$4, $8, ble_then.29482
+	ble	$4, $8, ble_then.29449
 	addi	$9, $8, 1
 	sll	$9, $9, 2
 	lw	$10, 20($sp)
 	add	$9, $10, $9
 	sw	$7, 0($9)
-	j	ble_cont.29483
-ble_then.29482:
-ble_cont.29483:
+	j	ble_cont.29450
+ble_then.29449:
+ble_cont.29450:
 	lw	$9, 28($sp)
-	beq	$9, $2, beq_then.29484
+	beq	$9, $2, beq_then.29451
 	jr	$ra
-beq_then.29484:
+beq_then.29451:
 	lw	$9, 36($sp)
 	lw	$9, 28($9)
 	lw.s	$f5, 0($9)
@@ -5997,15 +5927,15 @@ beq_then.29484:
 	lw	$9, 16($sp)
 	lw	$10, 8($sp)
 	j	trace_ray.A(f)A(A(f))A(i).7256
-ble.s_then.29481:
+ble.s_then.29448:
 	jr	$ra
-beq_then.29414:
+beq_then.29385:
 	lw	$8, 24($sp)
 	sll	$9, $8, 2
 	lw	$10, 20($sp)
 	add	$9, $10, $9
 	sw	$7, 0($9)
-	beq	$8, $0, beq_then.29487
+	beq	$8, $0, beq_then.29454
 	lw	$8, 16($sp)
 	lw.s	$f5, 0($8)
 	lw.s	$f6, 344($0)
@@ -6019,7 +5949,7 @@ beq_then.29414:
 	mul.s	$f6, $f6, $f7
 	add.s	$f5, $f5, $f6
 	neg.s	$f5, $f5
-	ble.s	$f5, $f0, ble.s_then.29488
+	ble.s	$f5, $f0, ble.s_then.29455
 	mul.s	$f6, $f5, $f5
 	mul.s	$f5, $f6, $f5
 	lw.s	$f6, 12($sp)
@@ -6036,14 +5966,14 @@ beq_then.29414:
 	add.s	$f5, $f6, $f5
 	sw.s	$f5, 644($0)
 	jr	$ra
-ble.s_then.29488:
+ble.s_then.29455:
 	jr	$ra
-beq_then.29487:
+beq_then.29454:
 	jr	$ra
 iter_trace_diffuse_rays.A(f).7265:
-	ble	$0, $11, ble_then.29492
+	ble	$0, $11, ble_then.29459
 	jr	$ra
-ble_then.29492:
+ble_then.29459:
 	sll	$12, $11, 2
 	add	$12, $8, $12
 	lw	$12, 0($12)
@@ -6063,7 +5993,7 @@ ble_then.29492:
 	sw	$9, 4($sp)
 	sw	$8, 8($sp)
 	sw	$11, 12($sp)
-	ble.s	$f0, $f5, ble.s_then.29494
+	ble.s	$f0, $f5, ble.s_then.29461
 	addi	$12, $11, 1
 	sll	$12, $12, 2
 	add	$12, $8, $12
@@ -6087,28 +6017,28 @@ ble_then.29492:
 	lw.s	$f5, 580($0)
 	lui.s	$f6, 0xbdcc	# -0.100000の上位16ビット
 	lli.s	$f6, 0xcccd	# -0.100000の下位16ビット
-	ble.s	$f5, $f6, ble.s_then.29496
+	ble.s	$f5, $f6, ble.s_then.29463
 	lui.s	$f6, 0x4cbe	# 100000000.000000の上位16ビット
 	lli.s	$f6, 0xbc20	# 100000000.000000の下位16ビット
-	ble.s	$f6, $f5, ble.s_then.29498
+	ble.s	$f6, $f5, ble.s_then.29465
 	li	$8, 1
-	j	ble.s_cont.29499
-ble.s_then.29498:
+	j	ble.s_cont.29466
+ble.s_then.29465:
 	li	$8, 0
-ble.s_cont.29499:
-	j	ble.s_cont.29497
-ble.s_then.29496:
+ble.s_cont.29466:
+	j	ble.s_cont.29464
+ble.s_then.29463:
 	li	$8, 0
-ble.s_cont.29497:
-	beq	$8, $0, beq_then.29500
+ble.s_cont.29464:
+	beq	$8, $0, beq_then.29467
 	lw	$8, 596($0)
 	sll	$8, $8, 2
 	lw	$8, 80($8)
 	lw	$9, 20($sp)
 	lw	$9, 0($9)
 	lw	$10, 4($8)
-	beq	$10, $1, beq_then.29502
-	beq	$10, $2, beq_then.29504
+	beq	$10, $1, beq_then.29469
+	beq	$10, $2, beq_then.29471
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6131,7 +6061,7 @@ ble.s_cont.29497:
 	lw.s	$f10, 8($9)
 	mul.s	$f10, $f7, $f10
 	lw	$9, 12($8)
-	beq	$9, $0, beq_then.29506
+	beq	$9, $0, beq_then.29473
 	lw	$9, 36($8)
 	lw.s	$f11, 8($9)
 	mul.s	$f11, $f6, $f11
@@ -6162,12 +6092,12 @@ ble.s_cont.29497:
 	mul.s	$f5, $f5, $f2
 	add.s	$f5, $f10, $f5
 	sw.s	$f5, 608($0)
-	j	beq_cont.29507
-beq_then.29506:
+	j	beq_cont.29474
+beq_then.29473:
 	sw.s	$f8, 600($0)
 	sw.s	$f9, 604($0)
 	sw.s	$f10, 608($0)
-beq_cont.29507:
+beq_cont.29474:
 	lw	$9, 24($8)
 	lw.s	$f5, 600($0)
 	mul.s	$f5, $f5, $f5
@@ -6178,18 +6108,18 @@ beq_cont.29507:
 	mul.s	$f6, $f6, $f6
 	add.s	$f5, $f5, $f6
 	sqrt.s	$f5, $f5
-	beq.s	$f5, $f0, beq.s_then.29508
-	beq	$9, $0, beq_then.29510
+	beq.s	$f5, $f0, beq.s_then.29475
+	beq	$9, $0, beq_then.29477
 	inv.s	$f5, $f5
 	neg.s	$f5, $f5
-	j	beq_cont.29511
-beq_then.29510:
+	j	beq_cont.29478
+beq_then.29477:
 	inv.s	$f5, $f5
-beq_cont.29511:
-	j	beq.s_cont.29509
-beq.s_then.29508:
+beq_cont.29478:
+	j	beq.s_cont.29476
+beq.s_then.29475:
 	lui.s	$f5, 0x3f80	# 1.000000の上位16ビット
-beq.s_cont.29509:
+beq.s_cont.29476:
 	lw.s	$f6, 600($0)
 	mul.s	$f6, $f6, $f5
 	sw.s	$f6, 600($0)
@@ -6199,8 +6129,8 @@ beq.s_cont.29509:
 	lw.s	$f6, 608($0)
 	mul.s	$f5, $f6, $f5
 	sw.s	$f5, 608($0)
-	j	beq_cont.29505
-beq_then.29504:
+	j	beq_cont.29472
+beq_then.29471:
 	lw	$9, 16($8)
 	lw.s	$f5, 0($9)
 	neg.s	$f5, $f5
@@ -6213,9 +6143,9 @@ beq_then.29504:
 	lw.s	$f5, 8($9)
 	neg.s	$f5, $f5
 	sw.s	$f5, 608($0)
-beq_cont.29505:
-	j	beq_cont.29503
-beq_then.29502:
+beq_cont.29472:
+	j	beq_cont.29470
+beq_then.29469:
 	lw	$10, 576($0)
 	sw.s	$f0, 600($0)
 	sw.s	$f0, 604($0)
@@ -6225,22 +6155,22 @@ beq_then.29502:
 	sll	$10, $10, 2
 	add	$9, $9, $10
 	lw.s	$f5, 0($9)
-	beq.s	$f5, $f0, beq.s_then.29512
-	ble.s	$f5, $f0, ble.s_then.29514
+	beq.s	$f5, $f0, beq.s_then.29479
+	ble.s	$f5, $f0, ble.s_then.29481
 	lui.s	$f5, 0x3f80	# 1.000000の上位16ビット
-	j	ble.s_cont.29515
-ble.s_then.29514:
+	j	ble.s_cont.29482
+ble.s_then.29481:
 	lui.s	$f5, 0xbf80	# -1.000000の上位16ビット
-ble.s_cont.29515:
-	j	beq.s_cont.29513
-beq.s_then.29512:
+ble.s_cont.29482:
+	j	beq.s_cont.29480
+beq.s_then.29479:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-beq.s_cont.29513:
+beq.s_cont.29480:
 	neg.s	$f5, $f5
 	sll	$9, $11, 2
 	addi	$9, $9, 600
 	sw.s	$f5, 0($9)
-beq_cont.29503:
+beq_cont.29470:
 	lw	$9, 0($8)
 	lw	$10, 32($8)
 	lw.s	$f5, 0($10)
@@ -6252,12 +6182,12 @@ beq_cont.29503:
 	lw.s	$f5, 8($10)
 	sw.s	$f5, 620($0)
 	sw	$8, 24($sp)
-	beq	$9, $1, beq_then.29516
-	beq	$9, $2, beq_then.29518
-	beq	$9, $3, beq_then.29520
-	beq	$9, $4, beq_then.29522
-	j	beq_cont.29523
-beq_then.29522:
+	beq	$9, $1, beq_then.29483
+	beq	$9, $2, beq_then.29485
+	beq	$9, $3, beq_then.29487
+	beq	$9, $4, beq_then.29489
+	j	beq_cont.29490
+beq_then.29489:
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6280,10 +6210,10 @@ beq_then.29522:
 	abs.s	$f8, $f5
 	lui.s	$f9, 0x38d1	# 0.000100の上位16ビット
 	lli.s	$f9, 0xb717	# 0.000100の下位16ビット
-	ble.s	$f9, $f8, ble.s_then.29524
+	ble.s	$f9, $f8, ble.s_then.29491
 	lui.s	$f5, 0x4170	# 15.000000の上位16ビット
-	j	ble.s_cont.29525
-ble.s_then.29524:
+	j	ble.s_cont.29492
+ble.s_then.29491:
 	inv.s	$f5, $f5
 	mul.s	$f5, $f6, $f5
 	abs.s	$f5, $f5
@@ -6306,19 +6236,19 @@ ble.s_then.29524:
 	lui.s	$f6, 0x3ea2	# 0.318310の上位16ビット
 	lli.s	$f6, 0xf983	# 0.318310の下位16ビット
 	mul.s	$f5, $f5, $f6
-ble.s_cont.29525:
+ble.s_cont.29492:
 	ftoi	$9, $f5
 	itof	$f6, $9
-	ble.s	$f0, $f5, ble.s_then.29526
-	beq.s	$f5, $f6, beq.s_then.29528
+	ble.s	$f0, $f5, ble.s_then.29493
+	beq.s	$f5, $f6, beq.s_then.29495
 	sub.s	$f6, $f6, $f1
-	j	beq.s_cont.29529
-beq.s_then.29528:
+	j	beq.s_cont.29496
+beq.s_then.29495:
 	mv.s	$f6, $f5
-beq.s_cont.29529:
-	j	ble.s_cont.29527
-ble.s_then.29526:
-ble.s_cont.29527:
+beq.s_cont.29496:
+	j	ble.s_cont.29494
+ble.s_then.29493:
+ble.s_cont.29494:
 	sub.s	$f5, $f5, $f6
 	lw.s	$f6, 588($0)
 	lw	$9, 20($8)
@@ -6331,10 +6261,10 @@ ble.s_cont.29527:
 	abs.s	$f8, $f7
 	lui.s	$f9, 0x38d1	# 0.000100の上位16ビット
 	lli.s	$f9, 0xb717	# 0.000100の下位16ビット
-	ble.s	$f9, $f8, ble.s_then.29530
+	ble.s	$f9, $f8, ble.s_then.29497
 	lui.s	$f6, 0x4170	# 15.000000の上位16ビット
-	j	ble.s_cont.29531
-ble.s_then.29530:
+	j	ble.s_cont.29498
+ble.s_then.29497:
 	inv.s	$f7, $f7
 	mul.s	$f6, $f6, $f7
 	abs.s	$f6, $f6
@@ -6357,19 +6287,19 @@ ble.s_then.29530:
 	lui.s	$f7, 0x3ea2	# 0.318310の上位16ビット
 	lli.s	$f7, 0xf983	# 0.318310の下位16ビット
 	mul.s	$f6, $f6, $f7
-ble.s_cont.29531:
+ble.s_cont.29498:
 	ftoi	$9, $f6
 	itof	$f7, $9
-	ble.s	$f0, $f6, ble.s_then.29532
-	beq.s	$f6, $f7, beq.s_then.29534
+	ble.s	$f0, $f6, ble.s_then.29499
+	beq.s	$f6, $f7, beq.s_then.29501
 	sub.s	$f7, $f7, $f1
-	j	beq.s_cont.29535
-beq.s_then.29534:
+	j	beq.s_cont.29502
+beq.s_then.29501:
 	mv.s	$f7, $f6
-beq.s_cont.29535:
-	j	ble.s_cont.29533
-ble.s_then.29532:
-ble.s_cont.29533:
+beq.s_cont.29502:
+	j	ble.s_cont.29500
+ble.s_then.29499:
+ble.s_cont.29500:
 	sub.s	$f6, $f6, $f7
 	lui.s	$f7, 0x3e19	# 0.150000の上位16ビット
 	lli.s	$f7, 0x999a	# 0.150000の下位16ビット
@@ -6379,20 +6309,20 @@ ble.s_cont.29533:
 	sub.s	$f6, $f2, $f6
 	mul.s	$f6, $f6, $f6
 	sub.s	$f5, $f5, $f6
-	ble.s	$f0, $f5, ble.s_then.29536
+	ble.s	$f0, $f5, ble.s_then.29503
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-	j	ble.s_cont.29537
-ble.s_then.29536:
-ble.s_cont.29537:
+	j	ble.s_cont.29504
+ble.s_then.29503:
+ble.s_cont.29504:
 	lui.s	$f6, 0x437f	# 255.000000の上位16ビット
 	mul.s	$f5, $f6, $f5
 	lui.s	$f6, 0x4055	# 3.333333の上位16ビット
 	lli.s	$f6, 0x5555	# 3.333333の下位16ビット
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 620($0)
-beq_cont.29523:
-	j	beq_cont.29521
-beq_then.29520:
+beq_cont.29490:
+	j	beq_cont.29488
+beq_then.29487:
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6410,16 +6340,16 @@ beq_then.29520:
 	mul.s	$f5, $f5, $f6
 	ftoi	$9, $f5
 	itof	$f6, $9
-	ble.s	$f0, $f5, ble.s_then.29538
-	beq.s	$f5, $f6, beq.s_then.29540
+	ble.s	$f0, $f5, ble.s_then.29505
+	beq.s	$f5, $f6, beq.s_then.29507
 	sub.s	$f6, $f6, $f1
-	j	beq.s_cont.29541
-beq.s_then.29540:
+	j	beq.s_cont.29508
+beq.s_then.29507:
 	mv.s	$f6, $f5
-beq.s_cont.29541:
-	j	ble.s_cont.29539
-ble.s_then.29538:
-ble.s_cont.29539:
+beq.s_cont.29508:
+	j	ble.s_cont.29506
+ble.s_then.29505:
+ble.s_cont.29506:
 	sub.s	$f5, $f5, $f6
 	lui.s	$f6, 0x4049	# 3.141593の上位16ビット
 	lli.s	$f6, 0xfdb	# 3.141593の下位16ビット
@@ -6437,9 +6367,9 @@ ble.s_cont.29539:
 	lui.s	$f6, 0x437f	# 255.000000の上位16ビット
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 620($0)
-beq_cont.29521:
-	j	beq_cont.29519
-beq_then.29518:
+beq_cont.29488:
+	j	beq_cont.29486
+beq_then.29485:
 	lw.s	$f5, 588($0)
 	lui.s	$f6, 0x3e80	# 0.250000の上位16ビット
 	mul.s	$f5, $f5, $f6
@@ -6456,9 +6386,9 @@ beq_then.29518:
 	sub.s	$f5, $f1, $f5
 	mul.s	$f5, $f6, $f5
 	sw.s	$f5, 616($0)
-beq_cont.29519:
-	j	beq_cont.29517
-beq_then.29516:
+beq_cont.29486:
+	j	beq_cont.29484
+beq_then.29483:
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6468,73 +6398,61 @@ beq_then.29516:
 	mul.s	$f6, $f5, $f6
 	ftoi	$9, $f6
 	itof	$f7, $9
-	ble.s	$f0, $f6, ble.s_then.29542
-	beq.s	$f6, $f7, beq.s_then.29544
+	ble.s	$f0, $f6, ble.s_then.29509
+	beq.s	$f6, $f7, beq.s_then.29511
 	sub.s	$f6, $f7, $f1
-	j	beq.s_cont.29545
-beq.s_then.29544:
-beq.s_cont.29545:
-	j	ble.s_cont.29543
-ble.s_then.29542:
+	j	beq.s_cont.29512
+beq.s_then.29511:
+beq.s_cont.29512:
+	j	ble.s_cont.29510
+ble.s_then.29509:
 	mv.s	$f6, $f7
-ble.s_cont.29543:
+ble.s_cont.29510:
 	lui.s	$f7, 0x41a0	# 20.000000の上位16ビット
 	mul.s	$f6, $f6, $f7
 	sub.s	$f5, $f5, $f6
 	lui.s	$f6, 0x4120	# 10.000000の上位16ビット
-	ble.s	$f6, $f5, ble.s_then.29546
-	li	$9, 1
-	j	ble.s_cont.29547
-ble.s_then.29546:
-	li	$9, 0
-ble.s_cont.29547:
-	lw.s	$f5, 592($0)
-	lw	$10, 20($8)
-	lw.s	$f6, 8($10)
-	sub.s	$f5, $f5, $f6
-	lui.s	$f6, 0x3d4c	# 0.050000の上位16ビット
-	lli.s	$f6, 0xcccd	# 0.050000の下位16ビット
-	mul.s	$f6, $f5, $f6
-	ftoi	$10, $f6
-	itof	$f7, $10
-	ble.s	$f0, $f6, ble.s_then.29548
-	beq.s	$f6, $f7, beq.s_then.29550
-	sub.s	$f6, $f7, $f1
-	j	beq.s_cont.29551
-beq.s_then.29550:
-beq.s_cont.29551:
-	j	ble.s_cont.29549
-ble.s_then.29548:
-	mv.s	$f6, $f7
-ble.s_cont.29549:
-	lui.s	$f7, 0x41a0	# 20.000000の上位16ビット
-	mul.s	$f6, $f6, $f7
-	sub.s	$f5, $f5, $f6
-	lui.s	$f6, 0x4120	# 10.000000の上位16ビット
-	ble.s	$f6, $f5, ble.s_then.29552
-	li	$10, 1
-	j	ble.s_cont.29553
-ble.s_then.29552:
-	li	$10, 0
-ble.s_cont.29553:
-	beq	$9, $0, beq_then.29554
-	beq	$10, $0, beq_then.29556
+	lw.s	$f7, 592($0)
+	lw	$9, 20($8)
+	lw.s	$f8, 8($9)
+	sub.s	$f7, $f7, $f8
+	lui.s	$f8, 0x3d4c	# 0.050000の上位16ビット
+	lli.s	$f8, 0xcccd	# 0.050000の下位16ビット
+	mul.s	$f8, $f7, $f8
+	ftoi	$9, $f8
+	itof	$f9, $9
+	ble.s	$f0, $f8, ble.s_then.29513
+	beq.s	$f8, $f9, beq.s_then.29515
+	sub.s	$f8, $f9, $f1
+	j	beq.s_cont.29516
+beq.s_then.29515:
+beq.s_cont.29516:
+	j	ble.s_cont.29514
+ble.s_then.29513:
+	mv.s	$f8, $f9
+ble.s_cont.29514:
+	lui.s	$f9, 0x41a0	# 20.000000の上位16ビット
+	mul.s	$f8, $f8, $f9
+	sub.s	$f7, $f7, $f8
+	lui.s	$f8, 0x4120	# 10.000000の上位16ビット
+	ble.s	$f6, $f5, ble.s_then.29517
+	ble.s	$f8, $f7, ble.s_then.29519
 	lui.s	$f5, 0x437f	# 255.000000の上位16ビット
-	j	beq_cont.29557
-beq_then.29556:
+	j	ble.s_cont.29520
+ble.s_then.29519:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-beq_cont.29557:
-	j	beq_cont.29555
-beq_then.29554:
-	beq	$10, $0, beq_then.29558
+ble.s_cont.29520:
+	j	ble.s_cont.29518
+ble.s_then.29517:
+	ble.s	$f8, $f7, ble.s_then.29521
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-	j	beq_cont.29559
-beq_then.29558:
+	j	ble.s_cont.29522
+ble.s_then.29521:
 	lui.s	$f5, 0x437f	# 255.000000の上位16ビット
-beq_cont.29559:
-beq_cont.29555:
+ble.s_cont.29522:
+ble.s_cont.29518:
 	sw.s	$f5, 616($0)
-beq_cont.29517:
+beq_cont.29484:
 	li	$8, 0
 	lw	$9, 568($0)
 	sw	$ra, 28($sp)
@@ -6542,9 +6460,9 @@ beq_cont.29517:
 	jal	shadow_check_one_or_matrix..7204
 	addi	$sp, $sp, -32
 	lw	$ra, 28($sp)
-	beq	$8, $0, beq_then.29560
-	j	beq_cont.29561
-beq_then.29560:
+	beq	$8, $0, beq_then.29523
+	j	beq_cont.29524
+beq_then.29523:
 	lw.s	$f5, 600($0)
 	lw.s	$f6, 344($0)
 	mul.s	$f5, $f5, $f6
@@ -6557,11 +6475,11 @@ beq_then.29560:
 	mul.s	$f6, $f6, $f7
 	add.s	$f5, $f5, $f6
 	neg.s	$f5, $f5
-	ble.s	$f5, $f0, ble.s_then.29562
-	j	ble.s_cont.29563
-ble.s_then.29562:
+	ble.s	$f5, $f0, ble.s_then.29525
+	j	ble.s_cont.29526
+ble.s_then.29525:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-ble.s_cont.29563:
+ble.s_cont.29526:
 	lw.s	$f6, 16($sp)
 	mul.s	$f5, $f6, $f5
 	lw	$8, 24($sp)
@@ -6583,12 +6501,12 @@ ble.s_cont.29563:
 	mul.s	$f5, $f5, $f7
 	add.s	$f5, $f6, $f5
 	sw.s	$f5, 632($0)
-beq_cont.29561:
-	j	beq_cont.29501
-beq_then.29500:
-beq_cont.29501:
-	j	ble.s_cont.29495
-ble.s_then.29494:
+beq_cont.29524:
+	j	beq_cont.29468
+beq_then.29467:
+beq_cont.29468:
+	j	ble.s_cont.29462
+ble.s_then.29461:
 	sll	$12, $11, 2
 	add	$12, $8, $12
 	lw	$12, 0($12)
@@ -6611,28 +6529,28 @@ ble.s_then.29494:
 	lw.s	$f5, 580($0)
 	lui.s	$f6, 0xbdcc	# -0.100000の上位16ビット
 	lli.s	$f6, 0xcccd	# -0.100000の下位16ビット
-	ble.s	$f5, $f6, ble.s_then.29564
+	ble.s	$f5, $f6, ble.s_then.29527
 	lui.s	$f6, 0x4cbe	# 100000000.000000の上位16ビット
 	lli.s	$f6, 0xbc20	# 100000000.000000の下位16ビット
-	ble.s	$f6, $f5, ble.s_then.29566
+	ble.s	$f6, $f5, ble.s_then.29529
 	li	$8, 1
-	j	ble.s_cont.29567
-ble.s_then.29566:
+	j	ble.s_cont.29530
+ble.s_then.29529:
 	li	$8, 0
-ble.s_cont.29567:
-	j	ble.s_cont.29565
-ble.s_then.29564:
+ble.s_cont.29530:
+	j	ble.s_cont.29528
+ble.s_then.29527:
 	li	$8, 0
-ble.s_cont.29565:
-	beq	$8, $0, beq_then.29568
+ble.s_cont.29528:
+	beq	$8, $0, beq_then.29531
 	lw	$8, 596($0)
 	sll	$8, $8, 2
 	lw	$8, 80($8)
 	lw	$9, 32($sp)
 	lw	$9, 0($9)
 	lw	$10, 4($8)
-	beq	$10, $1, beq_then.29570
-	beq	$10, $2, beq_then.29572
+	beq	$10, $1, beq_then.29533
+	beq	$10, $2, beq_then.29535
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6655,7 +6573,7 @@ ble.s_cont.29565:
 	lw.s	$f10, 8($9)
 	mul.s	$f10, $f7, $f10
 	lw	$9, 12($8)
-	beq	$9, $0, beq_then.29574
+	beq	$9, $0, beq_then.29537
 	lw	$9, 36($8)
 	lw.s	$f11, 8($9)
 	mul.s	$f11, $f6, $f11
@@ -6686,12 +6604,12 @@ ble.s_cont.29565:
 	mul.s	$f5, $f5, $f2
 	add.s	$f5, $f10, $f5
 	sw.s	$f5, 608($0)
-	j	beq_cont.29575
-beq_then.29574:
+	j	beq_cont.29538
+beq_then.29537:
 	sw.s	$f8, 600($0)
 	sw.s	$f9, 604($0)
 	sw.s	$f10, 608($0)
-beq_cont.29575:
+beq_cont.29538:
 	lw	$9, 24($8)
 	lw.s	$f5, 600($0)
 	mul.s	$f5, $f5, $f5
@@ -6702,18 +6620,18 @@ beq_cont.29575:
 	mul.s	$f6, $f6, $f6
 	add.s	$f5, $f5, $f6
 	sqrt.s	$f5, $f5
-	beq.s	$f5, $f0, beq.s_then.29576
-	beq	$9, $0, beq_then.29578
+	beq.s	$f5, $f0, beq.s_then.29539
+	beq	$9, $0, beq_then.29541
 	inv.s	$f5, $f5
 	neg.s	$f5, $f5
-	j	beq_cont.29579
-beq_then.29578:
+	j	beq_cont.29542
+beq_then.29541:
 	inv.s	$f5, $f5
-beq_cont.29579:
-	j	beq.s_cont.29577
-beq.s_then.29576:
+beq_cont.29542:
+	j	beq.s_cont.29540
+beq.s_then.29539:
 	lui.s	$f5, 0x3f80	# 1.000000の上位16ビット
-beq.s_cont.29577:
+beq.s_cont.29540:
 	lw.s	$f6, 600($0)
 	mul.s	$f6, $f6, $f5
 	sw.s	$f6, 600($0)
@@ -6723,8 +6641,8 @@ beq.s_cont.29577:
 	lw.s	$f6, 608($0)
 	mul.s	$f5, $f6, $f5
 	sw.s	$f5, 608($0)
-	j	beq_cont.29573
-beq_then.29572:
+	j	beq_cont.29536
+beq_then.29535:
 	lw	$9, 16($8)
 	lw.s	$f5, 0($9)
 	neg.s	$f5, $f5
@@ -6737,9 +6655,9 @@ beq_then.29572:
 	lw.s	$f5, 8($9)
 	neg.s	$f5, $f5
 	sw.s	$f5, 608($0)
-beq_cont.29573:
-	j	beq_cont.29571
-beq_then.29570:
+beq_cont.29536:
+	j	beq_cont.29534
+beq_then.29533:
 	lw	$10, 576($0)
 	sw.s	$f0, 600($0)
 	sw.s	$f0, 604($0)
@@ -6749,22 +6667,22 @@ beq_then.29570:
 	sll	$10, $10, 2
 	add	$9, $9, $10
 	lw.s	$f5, 0($9)
-	beq.s	$f5, $f0, beq.s_then.29580
-	ble.s	$f5, $f0, ble.s_then.29582
+	beq.s	$f5, $f0, beq.s_then.29543
+	ble.s	$f5, $f0, ble.s_then.29545
 	lui.s	$f5, 0x3f80	# 1.000000の上位16ビット
-	j	ble.s_cont.29583
-ble.s_then.29582:
+	j	ble.s_cont.29546
+ble.s_then.29545:
 	lui.s	$f5, 0xbf80	# -1.000000の上位16ビット
-ble.s_cont.29583:
-	j	beq.s_cont.29581
-beq.s_then.29580:
+ble.s_cont.29546:
+	j	beq.s_cont.29544
+beq.s_then.29543:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-beq.s_cont.29581:
+beq.s_cont.29544:
 	neg.s	$f5, $f5
 	sll	$9, $11, 2
 	addi	$9, $9, 600
 	sw.s	$f5, 0($9)
-beq_cont.29571:
+beq_cont.29534:
 	lw	$9, 0($8)
 	lw	$10, 32($8)
 	lw.s	$f5, 0($10)
@@ -6776,12 +6694,12 @@ beq_cont.29571:
 	lw.s	$f5, 8($10)
 	sw.s	$f5, 620($0)
 	sw	$8, 36($sp)
-	beq	$9, $1, beq_then.29584
-	beq	$9, $2, beq_then.29586
-	beq	$9, $3, beq_then.29588
-	beq	$9, $4, beq_then.29590
-	j	beq_cont.29591
-beq_then.29590:
+	beq	$9, $1, beq_then.29547
+	beq	$9, $2, beq_then.29549
+	beq	$9, $3, beq_then.29551
+	beq	$9, $4, beq_then.29553
+	j	beq_cont.29554
+beq_then.29553:
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6804,10 +6722,10 @@ beq_then.29590:
 	abs.s	$f8, $f5
 	lui.s	$f9, 0x38d1	# 0.000100の上位16ビット
 	lli.s	$f9, 0xb717	# 0.000100の下位16ビット
-	ble.s	$f9, $f8, ble.s_then.29592
+	ble.s	$f9, $f8, ble.s_then.29555
 	lui.s	$f5, 0x4170	# 15.000000の上位16ビット
-	j	ble.s_cont.29593
-ble.s_then.29592:
+	j	ble.s_cont.29556
+ble.s_then.29555:
 	inv.s	$f5, $f5
 	mul.s	$f5, $f6, $f5
 	abs.s	$f5, $f5
@@ -6830,19 +6748,19 @@ ble.s_then.29592:
 	lui.s	$f6, 0x3ea2	# 0.318310の上位16ビット
 	lli.s	$f6, 0xf983	# 0.318310の下位16ビット
 	mul.s	$f5, $f5, $f6
-ble.s_cont.29593:
+ble.s_cont.29556:
 	ftoi	$9, $f5
 	itof	$f6, $9
-	ble.s	$f0, $f5, ble.s_then.29594
-	beq.s	$f5, $f6, beq.s_then.29596
+	ble.s	$f0, $f5, ble.s_then.29557
+	beq.s	$f5, $f6, beq.s_then.29559
 	sub.s	$f6, $f6, $f1
-	j	beq.s_cont.29597
-beq.s_then.29596:
+	j	beq.s_cont.29560
+beq.s_then.29559:
 	mv.s	$f6, $f5
-beq.s_cont.29597:
-	j	ble.s_cont.29595
-ble.s_then.29594:
-ble.s_cont.29595:
+beq.s_cont.29560:
+	j	ble.s_cont.29558
+ble.s_then.29557:
+ble.s_cont.29558:
 	sub.s	$f5, $f5, $f6
 	lw.s	$f6, 588($0)
 	lw	$9, 20($8)
@@ -6855,10 +6773,10 @@ ble.s_cont.29595:
 	abs.s	$f8, $f7
 	lui.s	$f9, 0x38d1	# 0.000100の上位16ビット
 	lli.s	$f9, 0xb717	# 0.000100の下位16ビット
-	ble.s	$f9, $f8, ble.s_then.29598
+	ble.s	$f9, $f8, ble.s_then.29561
 	lui.s	$f6, 0x4170	# 15.000000の上位16ビット
-	j	ble.s_cont.29599
-ble.s_then.29598:
+	j	ble.s_cont.29562
+ble.s_then.29561:
 	inv.s	$f7, $f7
 	mul.s	$f6, $f6, $f7
 	abs.s	$f6, $f6
@@ -6881,19 +6799,19 @@ ble.s_then.29598:
 	lui.s	$f7, 0x3ea2	# 0.318310の上位16ビット
 	lli.s	$f7, 0xf983	# 0.318310の下位16ビット
 	mul.s	$f6, $f6, $f7
-ble.s_cont.29599:
+ble.s_cont.29562:
 	ftoi	$9, $f6
 	itof	$f7, $9
-	ble.s	$f0, $f6, ble.s_then.29600
-	beq.s	$f6, $f7, beq.s_then.29602
+	ble.s	$f0, $f6, ble.s_then.29563
+	beq.s	$f6, $f7, beq.s_then.29565
 	sub.s	$f7, $f7, $f1
-	j	beq.s_cont.29603
-beq.s_then.29602:
+	j	beq.s_cont.29566
+beq.s_then.29565:
 	mv.s	$f7, $f6
-beq.s_cont.29603:
-	j	ble.s_cont.29601
-ble.s_then.29600:
-ble.s_cont.29601:
+beq.s_cont.29566:
+	j	ble.s_cont.29564
+ble.s_then.29563:
+ble.s_cont.29564:
 	sub.s	$f6, $f6, $f7
 	lui.s	$f7, 0x3e19	# 0.150000の上位16ビット
 	lli.s	$f7, 0x999a	# 0.150000の下位16ビット
@@ -6903,20 +6821,20 @@ ble.s_cont.29601:
 	sub.s	$f6, $f2, $f6
 	mul.s	$f6, $f6, $f6
 	sub.s	$f5, $f5, $f6
-	ble.s	$f0, $f5, ble.s_then.29604
+	ble.s	$f0, $f5, ble.s_then.29567
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-	j	ble.s_cont.29605
-ble.s_then.29604:
-ble.s_cont.29605:
+	j	ble.s_cont.29568
+ble.s_then.29567:
+ble.s_cont.29568:
 	lui.s	$f6, 0x437f	# 255.000000の上位16ビット
 	mul.s	$f5, $f6, $f5
 	lui.s	$f6, 0x4055	# 3.333333の上位16ビット
 	lli.s	$f6, 0x5555	# 3.333333の下位16ビット
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 620($0)
-beq_cont.29591:
-	j	beq_cont.29589
-beq_then.29588:
+beq_cont.29554:
+	j	beq_cont.29552
+beq_then.29551:
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6934,16 +6852,16 @@ beq_then.29588:
 	mul.s	$f5, $f5, $f6
 	ftoi	$9, $f5
 	itof	$f6, $9
-	ble.s	$f0, $f5, ble.s_then.29606
-	beq.s	$f5, $f6, beq.s_then.29608
+	ble.s	$f0, $f5, ble.s_then.29569
+	beq.s	$f5, $f6, beq.s_then.29571
 	sub.s	$f6, $f6, $f1
-	j	beq.s_cont.29609
-beq.s_then.29608:
+	j	beq.s_cont.29572
+beq.s_then.29571:
 	mv.s	$f6, $f5
-beq.s_cont.29609:
-	j	ble.s_cont.29607
-ble.s_then.29606:
-ble.s_cont.29607:
+beq.s_cont.29572:
+	j	ble.s_cont.29570
+ble.s_then.29569:
+ble.s_cont.29570:
 	sub.s	$f5, $f5, $f6
 	lui.s	$f6, 0x4049	# 3.141593の上位16ビット
 	lli.s	$f6, 0xfdb	# 3.141593の下位16ビット
@@ -6961,9 +6879,9 @@ ble.s_cont.29607:
 	lui.s	$f6, 0x437f	# 255.000000の上位16ビット
 	mul.s	$f5, $f5, $f6
 	sw.s	$f5, 620($0)
-beq_cont.29589:
-	j	beq_cont.29587
-beq_then.29586:
+beq_cont.29552:
+	j	beq_cont.29550
+beq_then.29549:
 	lw.s	$f5, 588($0)
 	lui.s	$f6, 0x3e80	# 0.250000の上位16ビット
 	mul.s	$f5, $f5, $f6
@@ -6980,9 +6898,9 @@ beq_then.29586:
 	sub.s	$f5, $f1, $f5
 	mul.s	$f5, $f6, $f5
 	sw.s	$f5, 616($0)
-beq_cont.29587:
-	j	beq_cont.29585
-beq_then.29584:
+beq_cont.29550:
+	j	beq_cont.29548
+beq_then.29547:
 	lw.s	$f5, 584($0)
 	lw	$9, 20($8)
 	lw.s	$f6, 0($9)
@@ -6992,73 +6910,61 @@ beq_then.29584:
 	mul.s	$f6, $f5, $f6
 	ftoi	$9, $f6
 	itof	$f7, $9
-	ble.s	$f0, $f6, ble.s_then.29610
-	beq.s	$f6, $f7, beq.s_then.29612
+	ble.s	$f0, $f6, ble.s_then.29573
+	beq.s	$f6, $f7, beq.s_then.29575
 	sub.s	$f6, $f7, $f1
-	j	beq.s_cont.29613
-beq.s_then.29612:
-beq.s_cont.29613:
-	j	ble.s_cont.29611
-ble.s_then.29610:
+	j	beq.s_cont.29576
+beq.s_then.29575:
+beq.s_cont.29576:
+	j	ble.s_cont.29574
+ble.s_then.29573:
 	mv.s	$f6, $f7
-ble.s_cont.29611:
+ble.s_cont.29574:
 	lui.s	$f7, 0x41a0	# 20.000000の上位16ビット
 	mul.s	$f6, $f6, $f7
 	sub.s	$f5, $f5, $f6
 	lui.s	$f6, 0x4120	# 10.000000の上位16ビット
-	ble.s	$f6, $f5, ble.s_then.29614
-	li	$9, 1
-	j	ble.s_cont.29615
-ble.s_then.29614:
-	li	$9, 0
-ble.s_cont.29615:
-	lw.s	$f5, 592($0)
-	lw	$10, 20($8)
-	lw.s	$f6, 8($10)
-	sub.s	$f5, $f5, $f6
-	lui.s	$f6, 0x3d4c	# 0.050000の上位16ビット
-	lli.s	$f6, 0xcccd	# 0.050000の下位16ビット
-	mul.s	$f6, $f5, $f6
-	ftoi	$10, $f6
-	itof	$f7, $10
-	ble.s	$f0, $f6, ble.s_then.29616
-	beq.s	$f6, $f7, beq.s_then.29618
-	sub.s	$f6, $f7, $f1
-	j	beq.s_cont.29619
-beq.s_then.29618:
-beq.s_cont.29619:
-	j	ble.s_cont.29617
-ble.s_then.29616:
-	mv.s	$f6, $f7
-ble.s_cont.29617:
-	lui.s	$f7, 0x41a0	# 20.000000の上位16ビット
-	mul.s	$f6, $f6, $f7
-	sub.s	$f5, $f5, $f6
-	lui.s	$f6, 0x4120	# 10.000000の上位16ビット
-	ble.s	$f6, $f5, ble.s_then.29620
-	li	$10, 1
-	j	ble.s_cont.29621
-ble.s_then.29620:
-	li	$10, 0
-ble.s_cont.29621:
-	beq	$9, $0, beq_then.29622
-	beq	$10, $0, beq_then.29624
+	lw.s	$f7, 592($0)
+	lw	$9, 20($8)
+	lw.s	$f8, 8($9)
+	sub.s	$f7, $f7, $f8
+	lui.s	$f8, 0x3d4c	# 0.050000の上位16ビット
+	lli.s	$f8, 0xcccd	# 0.050000の下位16ビット
+	mul.s	$f8, $f7, $f8
+	ftoi	$9, $f8
+	itof	$f9, $9
+	ble.s	$f0, $f8, ble.s_then.29577
+	beq.s	$f8, $f9, beq.s_then.29579
+	sub.s	$f8, $f9, $f1
+	j	beq.s_cont.29580
+beq.s_then.29579:
+beq.s_cont.29580:
+	j	ble.s_cont.29578
+ble.s_then.29577:
+	mv.s	$f8, $f9
+ble.s_cont.29578:
+	lui.s	$f9, 0x41a0	# 20.000000の上位16ビット
+	mul.s	$f8, $f8, $f9
+	sub.s	$f7, $f7, $f8
+	lui.s	$f8, 0x4120	# 10.000000の上位16ビット
+	ble.s	$f6, $f5, ble.s_then.29581
+	ble.s	$f8, $f7, ble.s_then.29583
 	lui.s	$f5, 0x437f	# 255.000000の上位16ビット
-	j	beq_cont.29625
-beq_then.29624:
+	j	ble.s_cont.29584
+ble.s_then.29583:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-beq_cont.29625:
-	j	beq_cont.29623
-beq_then.29622:
-	beq	$10, $0, beq_then.29626
+ble.s_cont.29584:
+	j	ble.s_cont.29582
+ble.s_then.29581:
+	ble.s	$f8, $f7, ble.s_then.29585
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-	j	beq_cont.29627
-beq_then.29626:
+	j	ble.s_cont.29586
+ble.s_then.29585:
 	lui.s	$f5, 0x437f	# 255.000000の上位16ビット
-beq_cont.29627:
-beq_cont.29623:
+ble.s_cont.29586:
+ble.s_cont.29582:
 	sw.s	$f5, 616($0)
-beq_cont.29585:
+beq_cont.29548:
 	li	$8, 0
 	lw	$9, 568($0)
 	sw	$ra, 40($sp)
@@ -7066,9 +6972,9 @@ beq_cont.29585:
 	jal	shadow_check_one_or_matrix..7204
 	addi	$sp, $sp, -44
 	lw	$ra, 40($sp)
-	beq	$8, $0, beq_then.29628
-	j	beq_cont.29629
-beq_then.29628:
+	beq	$8, $0, beq_then.29587
+	j	beq_cont.29588
+beq_then.29587:
 	lw.s	$f5, 600($0)
 	lw.s	$f6, 344($0)
 	mul.s	$f5, $f5, $f6
@@ -7081,11 +6987,11 @@ beq_then.29628:
 	mul.s	$f6, $f6, $f7
 	add.s	$f5, $f5, $f6
 	neg.s	$f5, $f5
-	ble.s	$f5, $f0, ble.s_then.29630
-	j	ble.s_cont.29631
-ble.s_then.29630:
+	ble.s	$f5, $f0, ble.s_then.29589
+	j	ble.s_cont.29590
+ble.s_then.29589:
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
-ble.s_cont.29631:
+ble.s_cont.29590:
 	lw.s	$f6, 28($sp)
 	mul.s	$f5, $f6, $f5
 	lw	$8, 36($sp)
@@ -7107,11 +7013,11 @@ ble.s_cont.29631:
 	mul.s	$f5, $f5, $f7
 	add.s	$f5, $f6, $f5
 	sw.s	$f5, 632($0)
-beq_cont.29629:
-	j	beq_cont.29569
-beq_then.29568:
-beq_cont.29569:
-ble.s_cont.29495:
+beq_cont.29588:
+	j	beq_cont.29532
+beq_then.29531:
+beq_cont.29532:
+ble.s_cont.29462:
 	lw	$8, 12($sp)
 	addi	$11, $8, -2
 	lw	$8, 8($sp)
@@ -7119,23 +7025,23 @@ ble.s_cont.29495:
 	lw	$10, 0($sp)
 	j	iter_trace_diffuse_rays.A(f).7265
 do_without_neighbors.A(f).7287:
-	ble	$9, $4, ble_then.29632
+	ble	$9, $4, ble_then.29591
 	jr	$ra
-ble_then.29632:
+ble_then.29591:
 	lw	$10, 8($8)
 	sll	$11, $9, 2
 	add	$10, $10, $11
 	lw	$10, 0($10)
-	ble	$0, $10, ble_then.29634
+	ble	$0, $10, ble_then.29593
 	jr	$ra
-ble_then.29634:
+ble_then.29593:
 	lw	$10, 12($8)
 	sll	$11, $9, 2
 	add	$10, $10, $11
 	lw	$10, 0($10)
 	sw	$8, 0($sp)
 	sw	$9, 4($sp)
-	beq	$10, $0, beq_then.29636
+	beq	$10, $0, beq_then.29595
 	lw	$10, 20($8)
 	lw	$11, 28($8)
 	lw	$12, 4($8)
@@ -7161,7 +7067,7 @@ ble_then.29634:
 	sw	$11, 12($sp)
 	sw	$12, 16($sp)
 	sw	$10, 20($sp)
-	beq	$10, $0, beq_then.29638
+	beq	$10, $0, beq_then.29597
 	lw	$14, 748($0)
 	lw.s	$f5, 0($12)
 	sw.s	$f5, 680($0)
@@ -7188,11 +7094,11 @@ ble_then.29634:
 	jal	iter_trace_diffuse_rays.A(f).7265
 	addi	$sp, $sp, -32
 	lw	$ra, 28($sp)
-	j	beq_cont.29639
-beq_then.29638:
-beq_cont.29639:
+	j	beq_cont.29598
+beq_then.29597:
+beq_cont.29598:
 	lw	$8, 20($sp)
-	beq	$8, $1, beq_then.29640
+	beq	$8, $1, beq_then.29599
 	lw	$9, 752($0)
 	lw	$10, 16($sp)
 	lw.s	$f5, 0($10)
@@ -7220,11 +7126,11 @@ beq_cont.29639:
 	jal	iter_trace_diffuse_rays.A(f).7265
 	addi	$sp, $sp, -36
 	lw	$ra, 32($sp)
-	j	beq_cont.29641
-beq_then.29640:
-beq_cont.29641:
+	j	beq_cont.29600
+beq_then.29599:
+beq_cont.29600:
 	lw	$8, 20($sp)
-	beq	$8, $2, beq_then.29642
+	beq	$8, $2, beq_then.29601
 	lw	$9, 756($0)
 	lw	$10, 16($sp)
 	lw.s	$f5, 0($10)
@@ -7252,11 +7158,11 @@ beq_cont.29641:
 	jal	iter_trace_diffuse_rays.A(f).7265
 	addi	$sp, $sp, -40
 	lw	$ra, 36($sp)
-	j	beq_cont.29643
-beq_then.29642:
-beq_cont.29643:
+	j	beq_cont.29602
+beq_then.29601:
+beq_cont.29602:
 	lw	$8, 20($sp)
-	beq	$8, $3, beq_then.29644
+	beq	$8, $3, beq_then.29603
 	lw	$9, 760($0)
 	lw	$10, 16($sp)
 	lw.s	$f5, 0($10)
@@ -7284,11 +7190,11 @@ beq_cont.29643:
 	jal	iter_trace_diffuse_rays.A(f).7265
 	addi	$sp, $sp, -44
 	lw	$ra, 40($sp)
-	j	beq_cont.29645
-beq_then.29644:
-beq_cont.29645:
+	j	beq_cont.29604
+beq_then.29603:
+beq_cont.29604:
 	lw	$8, 20($sp)
-	beq	$8, $4, beq_then.29646
+	beq	$8, $4, beq_then.29605
 	lw	$8, 764($0)
 	lw	$9, 16($sp)
 	lw.s	$f5, 0($9)
@@ -7316,9 +7222,9 @@ beq_cont.29645:
 	jal	iter_trace_diffuse_rays.A(f).7265
 	addi	$sp, $sp, -48
 	lw	$ra, 44($sp)
-	j	beq_cont.29647
-beq_then.29646:
-beq_cont.29647:
+	j	beq_cont.29606
+beq_then.29605:
+beq_cont.29606:
 	lw	$8, 4($sp)
 	sll	$9, $8, 2
 	lw	$10, 8($sp)
@@ -7342,9 +7248,9 @@ beq_cont.29647:
 	mul.s	$f6, $f6, $f7
 	add.s	$f5, $f5, $f6
 	sw.s	$f5, 644($0)
-	j	beq_cont.29637
-beq_then.29636:
-beq_cont.29637:
+	j	beq_cont.29596
+beq_then.29595:
+beq_cont.29596:
 	lw	$8, 4($sp)
 	addi	$9, $8, 1
 	lw	$8, 0($sp)
@@ -7353,16 +7259,16 @@ try_exploit_neighbors.iA(f)A(A(f))A(f)A(b)A(A(f))A(i)A(A(f))A(A(f))A(f)A(b)A(A(f
 	sll	$14, $8, 2
 	add	$14, $11, $14
 	lw	$14, 0($14)
-	ble	$13, $4, ble_then.29648
+	ble	$13, $4, ble_then.29607
 	jr	$ra
-ble_then.29648:
+ble_then.29607:
 	lw	$15, 8($14)
 	sll	$16, $13, 2
 	add	$15, $15, $16
 	lw	$15, 0($15)
-	ble	$0, $15, ble_then.29650
+	ble	$0, $15, ble_then.29609
 	jr	$ra
-ble_then.29650:
+ble_then.29609:
 	sll	$15, $8, 2
 	add	$15, $11, $15
 	lw	$15, 0($15)
@@ -7377,10 +7283,10 @@ ble_then.29650:
 	sll	$17, $13, 2
 	add	$16, $16, $17
 	lw	$16, 0($16)
-	beq	$16, $15, beq_then.29652
+	beq	$16, $15, beq_then.29611
 	li	$15, 0
-	j	beq_cont.29653
-beq_then.29652:
+	j	beq_cont.29612
+beq_then.29611:
 	sll	$16, $8, 2
 	add	$16, $12, $16
 	lw	$16, 0($16)
@@ -7388,10 +7294,10 @@ beq_then.29652:
 	sll	$17, $13, 2
 	add	$16, $16, $17
 	lw	$16, 0($16)
-	beq	$16, $15, beq_then.29654
+	beq	$16, $15, beq_then.29613
 	li	$15, 0
-	j	beq_cont.29655
-beq_then.29654:
+	j	beq_cont.29614
+beq_then.29613:
 	addi	$16, $8, -1
 	sll	$16, $16, 2
 	add	$16, $11, $16
@@ -7400,10 +7306,10 @@ beq_then.29654:
 	sll	$17, $13, 2
 	add	$16, $16, $17
 	lw	$16, 0($16)
-	beq	$16, $15, beq_then.29656
+	beq	$16, $15, beq_then.29615
 	li	$15, 0
-	j	beq_cont.29657
-beq_then.29656:
+	j	beq_cont.29616
+beq_then.29615:
 	addi	$16, $8, 1
 	sll	$16, $16, 2
 	add	$16, $11, $16
@@ -7412,21 +7318,21 @@ beq_then.29656:
 	sll	$17, $13, 2
 	add	$16, $16, $17
 	lw	$16, 0($16)
-	beq	$16, $15, beq_then.29658
+	beq	$16, $15, beq_then.29617
 	li	$15, 0
-	j	beq_cont.29659
-beq_then.29658:
+	j	beq_cont.29618
+beq_then.29617:
 	li	$15, 1
-beq_cont.29659:
-beq_cont.29657:
-beq_cont.29655:
-beq_cont.29653:
-	beq	$15, $0, beq_then.29660
+beq_cont.29618:
+beq_cont.29616:
+beq_cont.29614:
+beq_cont.29612:
+	beq	$15, $0, beq_then.29619
 	lw	$14, 12($14)
 	sll	$15, $13, 2
 	add	$14, $14, $15
 	lw	$14, 0($14)
-	beq	$14, $0, beq_then.29661
+	beq	$14, $0, beq_then.29620
 	sll	$14, $8, 2
 	add	$14, $10, $14
 	lw	$14, 0($14)
@@ -7543,34 +7449,34 @@ beq_cont.29653:
 	mul.s	$f6, $f6, $f7
 	add.s	$f5, $f5, $f6
 	sw.s	$f5, 644($0)
-	j	beq_cont.29662
-beq_then.29661:
-beq_cont.29662:
+	j	beq_cont.29621
+beq_then.29620:
+beq_cont.29621:
 	addi	$13, $13, 1
 	j	try_exploit_neighbors.iA(f)A(A(f))A(f)A(b)A(A(f))A(i)A(A(f))A(A(f))A(f)A(b)A(A(f))A(i)A(A(f)).7303
-beq_then.29660:
+beq_then.29619:
 	sll	$8, $8, 2
 	add	$8, $11, $8
 	lw	$8, 0($8)
 	mv	$9, $13
 	j	do_without_neighbors.A(f).7287
 pretrace_diffuse_rays.A(f)A(A(f)).7316:
-	ble	$9, $4, ble_then.29663
+	ble	$9, $4, ble_then.29622
 	jr	$ra
-ble_then.29663:
+ble_then.29622:
 	lw	$10, 8($8)
 	sll	$11, $9, 2
 	add	$10, $10, $11
 	lw	$10, 0($10)
-	ble	$0, $10, ble_then.29665
+	ble	$0, $10, ble_then.29624
 	jr	$ra
-ble_then.29665:
+ble_then.29624:
 	lw	$10, 12($8)
 	sll	$11, $9, 2
 	add	$10, $10, $11
 	lw	$10, 0($10)
 	sw	$9, 0($sp)
-	beq	$10, $0, beq_then.29667
+	beq	$10, $0, beq_then.29626
 	lw	$10, 24($8)
 	lw	$10, 0($10)
 	sw.s	$f0, 624($0)
@@ -7627,17 +7533,17 @@ ble_then.29665:
 	lw.s	$f5, 632($0)
 	addi	$9, $9, 8
 	sw.s	$f5, 0($9)
-	j	beq_cont.29668
-beq_then.29667:
-beq_cont.29668:
+	j	beq_cont.29627
+beq_then.29626:
+beq_cont.29627:
 	lw	$9, 0($sp)
 	addi	$9, $9, 1
 	j	pretrace_diffuse_rays.A(f)A(A(f)).7316
 pretrace_pixels..7319:
 	li	$11, 728
-	ble	$0, $9, ble_then.29669
+	ble	$0, $9, ble_then.29628
 	jr	$ra
-ble_then.29669:
+ble_then.29628:
 	lw.s	$f8, 664($0)
 	lw	$12, 656($0)
 	sub	$12, $9, $12
@@ -7664,12 +7570,12 @@ ble_then.29669:
 	mul.s	$f9, $f9, $f9
 	add.s	$f8, $f8, $f9
 	sqrt.s	$f8, $f8
-	beq.s	$f8, $f0, beq.s_then.29671
+	beq.s	$f8, $f0, beq.s_then.29630
 	inv.s	$f8, $f8
-	j	beq.s_cont.29672
-beq.s_then.29671:
+	j	beq.s_cont.29631
+beq.s_then.29630:
 	lui.s	$f8, 0x3f80	# 1.000000の上位16ビット
-beq.s_cont.29672:
+beq.s_cont.29631:
 	lw.s	$f9, 728($0)
 	mul.s	$f9, $f9, $f8
 	sw.s	$f9, 728($0)
@@ -7743,12 +7649,12 @@ beq.s_cont.29672:
 	addi	$9, $8, -1
 	lw	$8, 12($sp)
 	addi	$8, $8, 1
-	ble	$5, $8, ble_then.29673
+	ble	$5, $8, ble_then.29632
 	mv	$10, $8
-	j	ble_cont.29674
-ble_then.29673:
+	j	ble_cont.29633
+ble_then.29632:
 	addi	$10, $8, -5
-ble_cont.29674:
+ble_cont.29633:
 	lw.s	$f5, 8($sp)
 	lw.s	$f6, 4($sp)
 	lw.s	$f7, 0($sp)
@@ -7756,7 +7662,7 @@ ble_cont.29674:
 	j	pretrace_pixels..7319
 scan_pixel.A(A(f))A(f)A(b)A(A(f))A(i)A(A(f))A(A(f))A(f)A(b)A(A(f))A(i)A(A(f)).7330:
 	lw	$13, 648($0)
-	ble	$13, $8, ble_then.29675
+	ble	$13, $8, ble_then.29634
 	sll	$13, $8, 2
 	add	$13, $11, $13
 	lw	$13, 0($13)
@@ -7769,43 +7675,43 @@ scan_pixel.A(A(f))A(f)A(b)A(A(f))A(i)A(A(f))A(A(f))A(f)A(b)A(A(f))A(i)A(A(f)).73
 	sw.s	$f5, 644($0)
 	lw	$13, 652($0)
 	addi	$14, $9, 1
-	ble	$13, $14, ble_then.29676
-	ble	$9, $0, ble_then.29678
+	ble	$13, $14, ble_then.29635
+	ble	$9, $0, ble_then.29637
 	lw	$13, 648($0)
 	addi	$14, $8, 1
-	ble	$13, $14, ble_then.29680
-	ble	$8, $0, ble_then.29682
+	ble	$13, $14, ble_then.29639
+	ble	$8, $0, ble_then.29641
 	li	$13, 1
-	j	ble_cont.29683
-ble_then.29682:
+	j	ble_cont.29642
+ble_then.29641:
 	li	$13, 0
-ble_cont.29683:
-	j	ble_cont.29681
-ble_then.29680:
+ble_cont.29642:
+	j	ble_cont.29640
+ble_then.29639:
 	li	$13, 0
-ble_cont.29681:
-	j	ble_cont.29679
-ble_then.29678:
+ble_cont.29640:
+	j	ble_cont.29638
+ble_then.29637:
 	li	$13, 0
-ble_cont.29679:
-	j	ble_cont.29677
-ble_then.29676:
+ble_cont.29638:
+	j	ble_cont.29636
+ble_then.29635:
 	li	$13, 0
-ble_cont.29677:
+ble_cont.29636:
 	sw	$12, 0($sp)
 	sw	$11, 4($sp)
 	sw	$10, 8($sp)
 	sw	$9, 12($sp)
 	sw	$8, 16($sp)
-	beq	$13, $0, beq_then.29684
+	beq	$13, $0, beq_then.29643
 	li	$13, 0
 	sw	$ra, 20($sp)
 	addi	$sp, $sp, 24
 	jal	try_exploit_neighbors.iA(f)A(A(f))A(f)A(b)A(A(f))A(i)A(A(f))A(A(f))A(f)A(b)A(A(f))A(i)A(A(f)).7303
 	addi	$sp, $sp, -24
 	lw	$ra, 20($sp)
-	j	beq_cont.29685
-beq_then.29684:
+	j	beq_cont.29644
+beq_then.29643:
 	sll	$13, $8, 2
 	add	$13, $11, $13
 	lw	$13, 0($13)
@@ -7817,49 +7723,49 @@ beq_then.29684:
 	jal	do_without_neighbors.A(f).7287
 	addi	$sp, $sp, -24
 	lw	$ra, 20($sp)
-beq_cont.29685:
+beq_cont.29644:
 	lw.s	$f5, 636($0)
 	ftoi	$8, $f5
-	ble	$8, $6, ble_then.29686
+	ble	$8, $6, ble_then.29645
 	li	$8, 255
-	j	ble_cont.29687
-ble_then.29686:
-	ble	$0, $8, ble_then.29688
+	j	ble_cont.29646
+ble_then.29645:
+	ble	$0, $8, ble_then.29647
 	li	$8, 0
-	j	ble_cont.29689
-ble_then.29688:
-ble_cont.29689:
-ble_cont.29687:
+	j	ble_cont.29648
+ble_then.29647:
+ble_cont.29648:
+ble_cont.29646:
 	outint	$8
 	li	$8, 32
 	out	$8
 	lw.s	$f5, 640($0)
 	ftoi	$8, $f5
-	ble	$8, $6, ble_then.29690
+	ble	$8, $6, ble_then.29649
 	li	$8, 255
-	j	ble_cont.29691
-ble_then.29690:
-	ble	$0, $8, ble_then.29692
+	j	ble_cont.29650
+ble_then.29649:
+	ble	$0, $8, ble_then.29651
 	li	$8, 0
-	j	ble_cont.29693
-ble_then.29692:
-ble_cont.29693:
-ble_cont.29691:
+	j	ble_cont.29652
+ble_then.29651:
+ble_cont.29652:
+ble_cont.29650:
 	outint	$8
 	li	$8, 32
 	out	$8
 	lw.s	$f5, 644($0)
 	ftoi	$8, $f5
-	ble	$8, $6, ble_then.29694
+	ble	$8, $6, ble_then.29653
 	li	$8, 255
-	j	ble_cont.29695
-ble_then.29694:
-	ble	$0, $8, ble_then.29696
+	j	ble_cont.29654
+ble_then.29653:
+	ble	$0, $8, ble_then.29655
 	li	$8, 0
-	j	ble_cont.29697
-ble_then.29696:
-ble_cont.29697:
-ble_cont.29695:
+	j	ble_cont.29656
+ble_then.29655:
+ble_cont.29656:
+ble_cont.29654:
 	outint	$8
 	li	$8, 10
 	out	$8
@@ -7870,11 +7776,11 @@ ble_cont.29695:
 	lw	$11, 4($sp)
 	lw	$12, 0($sp)
 	j	scan_pixel.A(A(f))A(f)A(b)A(A(f))A(i)A(A(f))A(A(f))A(f)A(b)A(A(f))A(i)A(A(f)).7330
-ble_then.29675:
+ble_then.29634:
 	jr	$ra
 scan_line..7336:
 	lw	$13, 652($0)
-	ble	$13, $8, ble_then.29699
+	ble	$13, $8, ble_then.29658
 	lw	$13, 652($0)
 	addi	$13, $13, -1
 	sw	$12, 0($sp)
@@ -7882,7 +7788,7 @@ scan_line..7336:
 	sw	$10, 8($sp)
 	sw	$9, 12($sp)
 	sw	$8, 16($sp)
-	ble	$13, $8, ble_then.29700
+	ble	$13, $8, ble_then.29659
 	addi	$13, $8, 1
 	lw.s	$f5, 664($0)
 	lw	$14, 660($0)
@@ -7915,9 +7821,9 @@ scan_line..7336:
 	jal	pretrace_pixels..7319
 	addi	$sp, $sp, -24
 	lw	$ra, 20($sp)
-	j	ble_cont.29701
-ble_then.29700:
-ble_cont.29701:
+	j	ble_cont.29660
+ble_then.29659:
+ble_cont.29660:
 	li	$8, 0
 	lw	$9, 16($sp)
 	lw	$10, 12($sp)
@@ -7932,22 +7838,22 @@ ble_cont.29701:
 	addi	$8, $8, 1
 	lw	$9, 0($sp)
 	addi	$9, $9, 2
-	ble	$5, $9, ble_then.29702
+	ble	$5, $9, ble_then.29661
 	mv	$12, $9
-	j	ble_cont.29703
-ble_then.29702:
+	j	ble_cont.29662
+ble_then.29661:
 	addi	$12, $9, -5
-ble_cont.29703:
+ble_cont.29662:
 	lw	$9, 8($sp)
 	lw	$10, 4($sp)
 	lw	$11, 12($sp)
 	j	scan_line..7336
-ble_then.29699:
+ble_then.29658:
 	jr	$ra
 init_line_elements..7346:
-	ble	$0, $9, ble_then.29705
+	ble	$0, $9, ble_then.29664
 	jr	$ra
-ble_then.29705:
+ble_then.29664:
 	li	$10, 3
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
 	mv	$11, $gp
@@ -8298,7 +8204,7 @@ ble_then.29705:
 	mv	$8, $11
 	j	init_line_elements..7346
 calc_dirvec..7354:
-	ble	$5, $8, ble_then.29706
+	ble	$5, $8, ble_then.29665
 	mul.s	$f5, $f6, $f6
 	lui.s	$f6, 0x3dcc	# 0.100000の上位16ビット
 	lli.s	$f6, 0xcccd	# 0.100000の下位16ビット
@@ -8376,7 +8282,7 @@ calc_dirvec..7354:
 	lw	$9, 8($sp)
 	lw	$10, 4($sp)
 	j	calc_dirvec..7354
-ble_then.29706:
+ble_then.29665:
 	mul.s	$f7, $f5, $f5
 	mul.s	$f8, $f6, $f6
 	add.s	$f7, $f7, $f8
@@ -8448,9 +8354,9 @@ ble_then.29706:
 	sw.s	$f6, 0($8)
 	jr	$ra
 calc_dirvecs..7362:
-	ble	$0, $8, ble_then.29708
+	ble	$0, $8, ble_then.29667
 	jr	$ra
-ble_then.29708:
+ble_then.29667:
 	itof	$f6, $8
 	lui.s	$f7, 0x3e4c	# 0.200000の上位16ビット
 	lli.s	$f7, 0xcccd	# 0.200000の下位16ビット
@@ -8502,18 +8408,18 @@ ble_then.29708:
 	addi	$8, $8, -1
 	lw	$9, 4($sp)
 	addi	$9, $9, 1
-	ble	$5, $9, ble_then.29710
-	j	ble_cont.29711
-ble_then.29710:
+	ble	$5, $9, ble_then.29669
+	j	ble_cont.29670
+ble_then.29669:
 	addi	$9, $9, -5
-ble_cont.29711:
+ble_cont.29670:
 	lw.s	$f5, 0($sp)
 	lw	$10, 8($sp)
 	j	calc_dirvecs..7362
 calc_dirvec_rows..7367:
-	ble	$0, $8, ble_then.29712
+	ble	$0, $8, ble_then.29671
 	jr	$ra
-ble_then.29712:
+ble_then.29671:
 	itof	$f5, $8
 	lui.s	$f6, 0x3e4c	# 0.200000の上位16ビット
 	lli.s	$f6, 0xcccd	# 0.200000の下位16ビット
@@ -8535,18 +8441,18 @@ ble_then.29712:
 	addi	$8, $8, -1
 	lw	$9, 4($sp)
 	addi	$9, $9, 2
-	ble	$5, $9, ble_then.29714
-	j	ble_cont.29715
-ble_then.29714:
+	ble	$5, $9, ble_then.29673
+	j	ble_cont.29674
+ble_then.29673:
 	addi	$9, $9, -5
-ble_cont.29715:
+ble_cont.29674:
 	lw	$10, 0($sp)
 	addi	$10, $10, 4
 	j	calc_dirvec_rows..7367
 create_dirvec_elements..7373:
-	ble	$0, $9, ble_then.29716
+	ble	$0, $9, ble_then.29675
 	jr	$ra
-ble_then.29716:
+ble_then.29675:
 	li	$10, 3
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
 	mv	$11, $gp
@@ -8584,9 +8490,9 @@ ble_then.29716:
 	mv	$8, $11
 	j	create_dirvec_elements..7373
 create_dirvecs..7376:
-	ble	$0, $8, ble_then.29718
+	ble	$0, $8, ble_then.29677
 	jr	$ra
-ble_then.29718:
+ble_then.29677:
 	li	$9, 120
 	li	$10, 3
 	lui.s	$f5, 0x0	# 0.000000の上位16ビット
@@ -8643,9 +8549,9 @@ ble_then.29718:
 	addi	$8, $8, -1
 	j	create_dirvecs..7376
 init_dirvec_constants..7378:
-	ble	$0, $9, ble_then.29720
+	ble	$0, $9, ble_then.29679
 	jr	$ra
-ble_then.29720:
+ble_then.29679:
 	sll	$10, $9, 2
 	add	$10, $8, $10
 	lw	$10, 0($10)
@@ -8665,9 +8571,9 @@ ble_then.29720:
 	lw	$8, 0($sp)
 	j	init_dirvec_constants..7378
 init_vecset_constants..7381:
-	ble	$0, $8, ble_then.29722
+	ble	$0, $8, ble_then.29681
 	jr	$ra
-ble_then.29722:
+ble_then.29681:
 	sll	$9, $8, 2
 	lw	$9, 748($9)
 	li	$10, 119
